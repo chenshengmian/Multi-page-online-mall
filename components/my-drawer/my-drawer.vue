@@ -1,0 +1,135 @@
+<template>
+	<div class="my-drawer">
+		<el-menu default-active="1-5-1" class="el-menu-vertical-demo" 
+			:collapse="isCollapse">
+			<el-menu-item index="1"  @tap="handleperson">
+				<i class="el-icon-menu"></i>
+				<span slot="title">主页</span>
+			</el-menu-item>
+			<el-submenu index="2">
+				<template slot="title">
+					<i class="el-icon-s-fold"></i>
+					<span slot="title"  >电子钱包</span>
+				</template>
+				<el-menu-item-group>
+					<!-- <span slot="title">电子钱包</span> -->
+					<el-menu-item index="2-1" @tap="handlepurchasehistory">电子钱包历史记录</el-menu-item>
+					<el-menu-item index="2-2" @tap="handlewithdraw">电子钱包取款</el-menu-item>
+					<el-menu-item index="2-3" @tap="handlewithdrawStatus">电子钱包取款状况</el-menu-item>
+					<el-menu-item index="2-4" @tap="handlebonus">奖金说明</el-menu-item>
+					<el-menu-item index="2-5" @tap="handlekycgo">KYC</el-menu-item>
+				</el-menu-item-group>
+			</el-submenu>
+			<!-- <el-menu-item index="3">
+				<i class="el-icon-menu"></i>
+				<span slot="title">经销商注册</span>
+			</el-menu-item> -->
+			<el-submenu index="4">
+				<template slot="title">
+					<i class="el-icon-s-fold"></i>
+					<span slot="title"  >购物</span>
+				</template>
+				<el-menu-item-group>
+					<!-- <span slot="title">购物</span> -->
+					<el-menu-item @tap="handleProduct">产品购买</el-menu-item>
+					<el-menu-item @tap="handlepurchase">购买历史记录</el-menu-item>
+				</el-menu-item-group>
+			</el-submenu>
+			<!-- <el-submenu index="5">
+				<template slot="title">
+					<i class="el-icon-s-fold"></i>
+					<span slot="title"  >报告</span>
+				</template>
+				<el-menu-item-group>
+					<span slot="title">报告</span>
+					<el-menu-item index="5-1">小组销售报告</el-menu-item>
+					<el-menu-item index="5-2">Member Tree</el-menu-item>
+				</el-menu-item-group>
+			</el-submenu> -->
+			<el-menu-item index="6" @tap="handlebinarytree">
+				<i class="el-icon-menu"></i>
+				<span slot="title">架构图</span>
+			</el-menu-item>
+			<el-menu-item index="10" @tap="handleannucement">
+				<i class="el-icon-menu"></i>
+				<span slot="title">公告表</span>
+			</el-menu-item>
+		</el-menu>
+	</div>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				isCollapse: false,
+			};
+		},
+		methods: {
+			handlepurchasehistory(){
+				// console.log(111)
+				uni.navigateTo({
+					url:'/pages/wallet-records/wallet-records'
+				})
+			},
+			handleperson(){
+				uni.navigateTo({
+					url:'/pages/personalPage/personalPage'
+				})
+			},
+			handlewithdraw(){
+				uni.navigateTo({
+					url:'/pages/withdraw-money/withdraw-money'
+				})
+			},
+			handlewithdrawStatus(){
+				uni.navigateTo({
+					url:'/pages/withdrawal-status/withdrawal-status'
+				})
+			},
+			handlebonus(){
+				uni.navigateTo({
+					url:'/pages/bonus-description/bonus-description'
+				})
+			},
+			handlekycgo(){
+				uni.navigateTo({
+					url:'/pages/know-yourCustomer/know-yourCustomer'
+				})
+			},
+			handlebinarytree(){
+				uni.navigateTo({
+					url:'/pages/binary-tree/binary-tree'
+				})
+			},
+			handleannucement(){
+				uni.navigateTo({
+					url:'/pages/announcement-table/announcement-table'
+				})
+			},
+			handleProduct(){
+				uni.navigateTo({
+					url:'/pages/product-purchase/product-purchase'
+				})
+			},
+			handlepurchase(){
+				uni.navigateTo({
+					url:'/pages/purchase-history/purchase-history'
+				})
+			},
+		},
+	};
+</script>
+
+<style scoped>
+	*{
+		padding: 0rpx;
+		margin: 0rpx;
+	}
+
+	.my-drawer {
+		/* 样式规则 */
+		width: 100%;
+		z-index: 9999;
+	}
+</style>

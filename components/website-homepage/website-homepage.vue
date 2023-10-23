@@ -5,7 +5,7 @@
 			<el-header>
 				<div class="header">
 					<div class="logo">
-						<img :src="logo" alt="" style="width: 30%;height: 60%;">
+						<img :src="logo" alt="" style="width: 100rpx;height: 100rpx;border-radius: 50%;">
 					</div>
 					<div class="sreach">
 						<el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
@@ -17,13 +17,13 @@
 							<el-button class="imgsreach" slot="append" icon="el-icon-search"></el-button>
 						</el-input>
 					</div>
-					<div>
+					<!-- <div>
 						<el-button type="primary" @tap="handlelogo">登陆</el-button>
-					</div>
+					</div> -->
 				</div>
 
 			</el-header>
-			<div  style="margin-bottom: 120rpx;">
+			<div  >
 				<el-main>
 					<el-card>
 						<el-tabs @tab-click="handleSelect" v-model="activeIndex" :stretch='true'>
@@ -70,13 +70,14 @@
 						<el-empty :image-size="200"  v-show="prounddatastatus"></el-empty>
 						<el-row  v-show="!prounddatastatus">
 							<el-col :span="span" v-for="item in prounddata">
-								<el-card :body-style="{ padding: '20px' }" @click.native="handelDetail(item.id)">
+								<el-card :body-style="{ padding: '20px' }" >
 									<img :src="item.thumb" class="image">
 									<div style="padding: 14px;">
 										<!-- <h6>内容：</h6> -->
 										<span>{{item.title}}</span>
 										<div class="bottom clearfix">
 											<time class="time">MYR {{ item.marketprice }}</time>
+											<el-button type="text" class="button"@click.native="handelDetail(item.id)">购买</el-button>
 										</div>
 									</div>
 								</el-card>
@@ -354,7 +355,7 @@
 				this.screenWidth = window.innerWidth;
 				if (this.screenWidth <= 990) {
 					// this.drawerSize = '60%'
-					this.span = 12
+					this.span = 24
 					this.diawidth = '90%'
 				} else {
 					this.span = 8
@@ -367,7 +368,7 @@
 					this.screenWidth = newScreenWidth;
 					console.log(newScreenWidth);
 					if (newScreenWidth <= 990) {
-						this.span = 12
+						this.span = 24
 						this.diawidth = '90%'
 					} else {
 						this.span = 8
@@ -601,11 +602,13 @@
 		.el-carousel {
 			height: 300rpx;
 		}
-
+		
+		/* .el-main{
+			height: 100vh;
+		} */
 
 		.logo img {
-			width: 45% !important;
-			height: 43% !important;
+			width: 50rpx;
 		}
 
 		.sreach {
@@ -613,9 +616,9 @@
 		}
 
 
-		.logo {
+		/* .logo {
 			width: 25% !important;
-		}
+		} */
 
 		.el-select {
 			width: 170rpx;

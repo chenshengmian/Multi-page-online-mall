@@ -6,15 +6,15 @@
 						Purchase</b></span>
 			</div>
 			<el-form :label-position="labelPosition" label-width="140px" :style="{marginLeft: fromleft}">
-				<div style="display: flex;justify-content: space-around;">
-					<div>
+				<div style="display: flex;justify-content: start;">
+					<!-- <div>
 						<el-form-item label="电子邮件	:">
 							{{email}}
 						</el-form-item>
 						<el-form-item label="联系电话	:">
 							{{phone}}
 						</el-form-item>
-					</div>
+					</div> -->
 					<div style="line-height: 280rpx;">
 						<el-button size="mini" @tap="hanlderesrt">返回列表</el-button>
 					</div>
@@ -56,8 +56,8 @@
 		name: "product-detail",
 		props: {
 			todatail: {
-				type: Object,
-				default: {}
+				type: String,
+				default: ''
 			},
 		},
 		data() {
@@ -66,12 +66,13 @@
 				currentPage1: 5,
 				labelPosition: 'right',
 				fromleft: '40rpx',
-				email: '',
-				phone: '',
+				// email: '',
+				// phone: '',
 				tableData: [],
 			};
 		},
 		mounted() {
+			// console.log('接收到的数据', this.todatail)
 			this.initialize()
 			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 		},
@@ -80,23 +81,22 @@
 		},
 		methods: {
 			hanlderesrt(){
-				let _this = this
-				_this.$emit('getresrt','4-1')
+				uni.navigateBack()
 			},
 			initialize() {
-				console.log('接收到的数据', this.todatail)
-				let productDetails = this.todatail
+				// console.log('接收到的数据', this.todatail)
+				// let productDetails = this.todatail
 				let self = this
-				const {
-					phone,
-					email,
-					id
-				} = productDetails
+				// const {
+				// 	phone,
+				// 	email,
+				// 	id
+				// } = productDetails
 				// console.log(id)
-				self.email = email
-				self.phone = phone
+				// self.email = email
+				// self.phone = phone
 				self.$axios.get(
-						'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.detail&id=' + id)
+						'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.detail&id=' + self.todatail)
 					.then(res => {
 						const {
 							result

@@ -12,6 +12,14 @@ import 'element-ui/lib/theme-chalk/index.css'
 import request  from './utils/request.js'
 import print from './utils/print.js'
 import * as echarts from 'echarts'
+import VueI18n from 'vue-i18n'
+import messages from '@/locale/index.js'
+Vue.use(VueI18n)
+// console.log(uni.getLocale())
+const i18n = new VueI18n({
+	locale:uni.getLocale(),//获取设置语言
+	messages
+})
 Vue.use(ElementUI)
 import vueSeamlessScroll from 'vue-seamless-scroll' 
 Vue.use(vueSeamlessScroll)
@@ -20,7 +28,8 @@ Vue.prototype.$axios = request
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
-  ...App
+	i18n,
+	...App
 })
 app.$mount()
 // #endif

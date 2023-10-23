@@ -4,19 +4,19 @@
 			:collapse="isCollapse">
 			<el-menu-item index="1"  @tap="handleperson">
 				<i class="el-icon-menu"></i>
-				<span slot="title">主页</span>
+				<span slot="title">{{$t('menu.home')}}</span>
 			</el-menu-item>
 			<el-submenu index="2">
 				<template slot="title">
 					<i class="el-icon-s-fold"></i>
-					<span slot="title"  >电子钱包</span>
+					<span slot="title"  >{{$t('menu.ewallets')}}</span>
 				</template>
 				<el-menu-item-group>
 					<!-- <span slot="title">电子钱包</span> -->
-					<el-menu-item index="2-1" @tap="handlepurchasehistory">电子钱包历史记录</el-menu-item>
-					<el-menu-item index="2-2" @tap="handlewithdraw">电子钱包取款</el-menu-item>
-					<el-menu-item index="2-3" @tap="handlewithdrawStatus">电子钱包取款状况</el-menu-item>
-					<el-menu-item index="2-4" @tap="handlebonus">奖金说明</el-menu-item>
+					<el-menu-item index="2-1" @tap="handlepurchasehistory">{{$t('menu.ewallethistory')}}</el-menu-item>
+					<el-menu-item index="2-2" @tap="handlewithdraw">{{$t('menu.ewalletwithdrawals')}}</el-menu-item>
+					<el-menu-item index="2-3" @tap="handlewithdrawStatus">{{$t('menu.ewalletwithdrawalstatus')}}</el-menu-item>
+					<el-menu-item index="2-4" @tap="handlebonus">{{$t('menu.bonuseshelp')}}</el-menu-item>
 					<el-menu-item index="2-5" @tap="handlekycgo">KYC</el-menu-item>
 				</el-menu-item-group>
 			</el-submenu>
@@ -27,12 +27,13 @@
 			<el-submenu index="4">
 				<template slot="title">
 					<i class="el-icon-s-fold"></i>
-					<span slot="title"  >购物</span>
+					<span slot="title"  >{{$t('menu.shopping')}}</span>
 				</template>
 				<el-menu-item-group>
 					<!-- <span slot="title">购物</span> -->
-					<el-menu-item @tap="handleProduct">产品购买</el-menu-item>
-					<el-menu-item @tap="handlepurchase">购买历史记录</el-menu-item>
+					<el-menu-item @tap="handleshopping">{{$t('menu.allCommodities')}}</el-menu-item>
+					<el-menu-item @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item>
+					<el-menu-item @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
 				</el-menu-item-group>
 			</el-submenu>
 			<!-- <el-submenu index="5">
@@ -48,11 +49,11 @@
 			</el-submenu> -->
 			<el-menu-item index="6" @tap="handlebinarytree">
 				<i class="el-icon-menu"></i>
-				<span slot="title">架构图</span>
+				<span slot="title">{{$t('menu.architecturediagram')}}</span>
 			</el-menu-item>
 			<el-menu-item index="10" @tap="handleannucement">
 				<i class="el-icon-menu"></i>
-				<span slot="title">公告表</span>
+				<span slot="title">{{$t('menu.announcementtable')}}</span>
 			</el-menu-item>
 		</el-menu>
 	</div>
@@ -66,6 +67,11 @@
 			};
 		},
 		methods: {
+			handleshopping(){
+				uni.navigateTo({
+					url:'/pages/shopping/shopping'
+				})
+			},
 			handlepurchasehistory(){
 				// console.log(111)
 				uni.navigateTo({

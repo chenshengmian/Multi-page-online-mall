@@ -5,29 +5,35 @@
 				<div style="width: 100%;display: flex;justify-content: center;"><img src="../../static/img/logo.png"
 						alt=""></div>
 				<div style="margin-top: 50rpx;font-size: 26rpx;display: flex;justify-content: center;color: #409EFF;"><a
-						href=""><b>English</b></a> | <a href=""><b>简体中文</b>
-						</a> <!--| <a href=""><b>繁體中文</b></a> | <a href=""><b>Melayu</b></a> | <a
-						href=""><b>한국어</b></a> -->
-					</div>
+						href="javascript:void(0);" @tap="change('en')"><b>{{$t('locale.en')}}</b></a> <el-divider
+						direction="vertical"></el-divider><a href="javascript:void(0);"
+						@tap="change('zh-Hans')"><b>{{$t('locale.zhHans')}}</b>
+					</a> <el-divider direction="vertical"></el-divider><a href="javascript:void(0);"
+						@tap="change('zh-Hant')"><b>{{$t('locale.zhHant')}}</b></a>
+					<!--| <a href="javascript:void(0);"><b>Melayu</b></a> | <a href="javascript:void(0);"><b>한국어</b></a> -->
+				</div>
 				<div>
 					<el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
-						<el-form-item label="email">
-							<el-input v-model="formLabelAlign.useraccount" placeholder="邮箱"></el-input>
+						<el-form-item :label="$t('login.eamil')">
+							<el-input v-model="formLabelAlign.useraccount" :placeholder="$t('login.eamil')"></el-input>
 						</el-form-item>
-						<el-form-item label="password">
-							<el-input type="password" placeholder="密码" v-model="formLabelAlign.userpass"></el-input>
+						<el-form-item :label="$t('login.password')">
+							<el-input type="password" :placeholder="$t('login.password')"
+								v-model="formLabelAlign.userpass"></el-input>
 						</el-form-item>
 						<div style="width: 100%;display: flex;justify-content: center;margin-bottom: 10rpx;"
 							@tap="newCaptcha" v-show="showCaptcha"><img :src="captcha" alt=""></div>
-						<div style="text-align: center;font-size: 26rpx;">请输入以上字符</div>
+						<div style="text-align: center;font-size: 26rpx;">{{$t('login.input')}}</div>
 						<el-form-item>
 							<el-input v-model="formLabelAlign.verifycode"></el-input>
 						</el-form-item>
 						<el-form-item style="display: flex;justify-content: end;">
-							<el-button type="primary" @click="submitForm('ruleForm')">登陆</el-button>
+							<el-button type="primary"
+								@click="submitForm('ruleForm')">{{$t('login.debarkation')}}</el-button>
 						</el-form-item>
 						<el-form-item>
-							<div><i class="el-icon-lock"></i> <span style="margin-left: 10rpx;">忘记密码？点击这里</span></div>
+							<div><i class="el-icon-lock"></i> <span
+									style="margin-left: 10rpx;">{{$t('login.Forgot')}}</span></div>
 						</el-form-item>
 					</el-form>
 				</div>
@@ -70,6 +76,16 @@
 			// }
 		},
 		methods: {
+			handleshopping(){
+				uni.navigateTo({
+					url:'/pages/shopping/shopping'
+				})
+			},
+			change(lan) {
+				// console.log(lan)
+				uni.setLocale(lan)
+				this.$i18n.locale = lan
+			},
 			getUserInfo() {
 				let self = this
 				uni.request({
@@ -143,7 +159,7 @@
 								'access_token': access_token
 							}
 							uni.setStorageSync('tokenArray', refid)
-							uni.setStorageSync('pageSize',10)
+							uni.setStorageSync('pageSize', 10)
 							uni.navigateTo({
 								url: '/pages/personalPage/personalPage'
 							})
@@ -201,7 +217,8 @@
 		.footer {
 			bottom: 4.5%;
 		}
-		.container{
+
+		.container {
 			height: 90vh;
 		}
 	}

@@ -7,6 +7,7 @@
     "echarts": "^5.4.3",
     "element-ui": "^2.15.14",
     "fastclick": "^1.0.6",
+    "vue-i18n": "^8.2.1",
     "vue-seamless-scroll": "^1.1.23"
   },
   "devDependencies": {

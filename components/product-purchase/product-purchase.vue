@@ -18,7 +18,7 @@
 					<el-menu-item :index="item.id">{{item.name}}</el-menu-item>
 				</block>
 			</el-menu>
-			<el-table :data="tableData" style="width: 100%;margin-top: 20rpx;" @row-click="hanldedetail">
+			<el-table :data="tableData" style="width: 100%;margin-top: 20rpx;"@row-click="hanldedetail">
 				<el-table-column prop="id" label="ID" align="center" width="150">
 				</el-table-column>
 				<!-- <el-table-column fixed>
@@ -32,12 +32,22 @@
 				</el-table-column>
 				<el-table-column prop="marketprice" label="价格 MYR" align="center">
 					<template slot-scope="scope">
-						MYR    {{scope.row.marketprice}}  
+						MYR {{scope.row.marketprice}}
 					</template>
 				</el-table-column>
 				<el-table-column prop="minprice" label="最低价 MYR" align="center">
 					<template slot-scope="scope">
-						MYR    {{scope.row.minprice}}  
+						MYR {{scope.row.minprice}}
+					</template>
+				</el-table-column>
+				<el-table-column label="最低价 MYR" align="center">
+					<template slot-scope="scope">
+						MYR {{scope.row.minprice}}
+					</template>
+				</el-table-column>
+				<el-table-column label="操作" align="center" width="80">
+					<template slot-scope="scope">
+						<el-button size="mini" type="primary">详情</el-button>
 					</template>
 				</el-table-column>
 				<!-- <el-table-column prop="count" label="数量" align="center">
@@ -47,7 +57,7 @@
 				</el-table-column> -->
 			</el-table>
 			<!-- <div class="sumbit">
-				 <el-button size="small" type="primary" @tap="hanldedetail">提交</el-button>
+				<el-button size="small" type="primary" @tap="hanldedetail">提交</el-button>
 			</div> -->
 			<div v-show="paginations" class="pagination sumbit">
 				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
@@ -67,18 +77,17 @@
 				currentPage1: 5,
 				labelPosition: 'right',
 				fromleft: '40rpx',
-				formLabelAlign: {
-					email: '',
-					phone: '',
-					id:'4-3'
+				formLabelAlign:{
+					email:'',
+					phone:''
 				},
 				counttotal: 0,
 				tableData: [], // 表格数据源
 				currentPage: 1, // 当前页码
 				pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
-				activeIndex:'',
-				tabbleTap:'',
-				paginations:false
+				activeIndex: '',
+				tabbleTap: '',
+				paginations: false
 			};
 		},
 		mounted() {
@@ -91,28 +100,33 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			handleSelect(param){
+			handleSelect(param) {
 				// console.log(param)
 				let self = this
 				self.activeIndex = param
 				self.getProduct()
 			},
-			getcatelist(){
+			getcatelist() {
 				let self = this
-				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.goodscates&pagesize=100')
-					.then(res=>{
+				self.$axios.get(
+						'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.goodscates&pagesize=100')
+					.then(res => {
 						console.log(res)
-						const { result:{list} } = res
+						const {
+							result: {
+								list
+							}
+						} = res
 						self.tabbleTap = list
 					})
-					.catch(err=>{
+					.catch(err => {
 						console.log(err)
 					})
 			},
 			// 处理每页显示条数变化
 			handleSizeChange(val) {
 				// console.log('处理每页显示条数变化',this.pageSize)
-				uni.setStorageSync('pageSize',val)
+				uni.setStorageSync('pageSize', val)
 				this.pageSize = val;
 				this.getProduct();
 			},
@@ -124,7 +138,8 @@
 			},
 			getProduct() {
 				let self = this
-				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.getlist&page=' + self.currentPage+'&pagesize='+self.pageSize+'&cate='+self.activeIndex)
+				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.getlist&page=' + self
+						.currentPage + '&pagesize=' + self.pageSize + '&cate=' + self.activeIndex)
 					.then(res => {
 						// console.log(res)
 						const {
@@ -134,11 +149,11 @@
 							}
 						} = res
 						console.log(list)
-						if(total==undefined){
+						if (total == undefined) {
 							self.counttotal = 0
-						}else{
+						} else {
 							self.counttotal = parseInt(total)
-							if(Number(total)>0){
+							if (Number(total) > 0) {
 								self.paginations = true
 							}
 						}
@@ -149,33 +164,36 @@
 					})
 			},
 			hanldedetail(param){
-				// console.log(this.tableData)
-				// let newdata = [];
-				// let alldata = this.tableData
-				// for(let i=0;i<alldata.length;i++){
-				// 	if(alldata[i].hasOwnProperty('count')){
-				// 		newdata.push(alldata[i])
-				// 	}
-				// }
-				// if(newdata==''){
-				// 	this.$message({
-				// 		showClose: true,
-				// 		message: '请填写需要购买产品的数量',
-				// 		type: 'warning'
-				// 	});
-				// }else{
-				// 	newdata.push(this.formLabelAlign)
-				console.log('parm',param)
+				// console.log('parm',param)
 				const { id } = param
 				const array = {
-					'index': '4-3',
 					'id' : id,
 					'email':this.formLabelAlign.email,
 					'phone':this.formLabelAlign.phone
 				}
-				this.$emit('godatail',array)
-				// }
+				uni.navigateTo({
+					url:'/pages/product-purchase/product-detail?id='+id
+				})
 			},
+			// hanldedetail(param) {
+			// 	console.log(this.tableData)
+			// 	let newdata = [];
+			// 	let alldata = this.tableData
+			// 	for(let i=0;i<alldata.length;i++){
+			// 		if(alldata[i].hasOwnProperty('count')){
+			// 			newdata.push(alldata[i])
+			// 		}
+			// 	}
+			// 	if(newdata==''){
+			// 		this.$message({
+			// 			showClose: true,
+			// 			message: '请填写需要购买产品的数量',
+			// 			type: 'warning'
+			// 		});
+			// 	}else{
+			// 		console.log('newdata', newdata)
+			// 	}
+			// },
 			getScreenWidth() {
 				this.screenWidth = window.innerWidth;
 				if (this.screenWidth <= 990) {
@@ -213,7 +231,8 @@
 	.equal-width-column {
 		width: 100%;
 	}
-	.sumbit{
+
+	.sumbit {
 		margin-top: 20rpx;
 		display: flex;
 		justify-content: center;

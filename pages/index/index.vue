@@ -1,5 +1,5 @@
 <template>
-	<view class="content" style="background-color: #F5F5F5;height: 100vh;">
+	<view class="content" style="background-color: #F5F5F5;">
 		<div style="display: flex;justify-content: center;width: 100%;">
 			<div class="homepage">
 				<website-homepage @getstatus="getstatus" />

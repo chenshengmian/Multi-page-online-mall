@@ -7,19 +7,19 @@
 				<image src="../../static/img/favicon.png" v-else class="userLogo"></image>
 				<el-menu-item index="1" @tap="handleperson">
 					<i class="el-icon-menu"></i>
-					<span slot="title">主页</span>
+					<span slot="title">{{$t('menu.home')}}</span>
 				</el-menu-item>
 				<el-submenu index="2">
 					<template slot="title">
 						<i class="el-icon-s-fold"></i>
-						<span slot="title" v-if="disable">电子钱包</span>
+						<span slot="title" v-if="disable">{{$t('menu.ewallets')}}</span>
 					</template>
 					<el-menu-item-group>
-						<!-- <span slot="title">电子钱包</span> -->
-						<el-menu-item index="2-1" @tap="handlepurchasehistory">电子钱包历史记录</el-menu-item>
-						<el-menu-item index="2-2" @tap="handlewithdraw">电子钱包取款</el-menu-item>
-						<el-menu-item index="2-3" @tap="handlewithdrawStatus">电子钱包取款状况</el-menu-item>
-						<el-menu-item index="2-4" @tap="handlebonus">奖金说明</el-menu-item>
+						<!-- <span slot="title">{{$t('menu.ewallets')}}</span> -->
+						<el-menu-item index="2-1" @tap="handlepurchasehistory">{{$t('menu.ewallethistory')}}</el-menu-item>
+						<el-menu-item index="2-2" @tap="handlewithdraw">{{$t('menu.ewalletwithdrawals')}}</el-menu-item>
+						<el-menu-item index="2-3" @tap="handlewithdrawStatus">{{$t('menu.ewalletwithdrawalstatus')}}</el-menu-item>
+						<el-menu-item index="2-4" @tap="handlebonus">{{$t('menu.bonuseshelp')}}</el-menu-item>
 						<el-menu-item index="2-5" @tap="handlekycgo">KYC</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
@@ -30,12 +30,13 @@
 				<el-submenu index="4">
 					<template slot="title">
 						<i class="el-icon-s-fold"></i>
-						<span slot="title" v-if="disable">购物</span>
+						<span slot="title" v-if="disable">{{$t('menu.shopping')}}</span>
 					</template>
 					<el-menu-item-group>
-						<!-- <span slot="title">购物</span> -->
-						<el-menu-item index="4-1" @tap="handleProduct">产品购买</el-menu-item>
-						<el-menu-item index="4-2" @tap="handlepurchase">购买历史记录</el-menu-item>
+						<!-- <span slot="title">{{$t('menu.shopping')}}</span> -->
+						<el-menu-item index="4-0" @tap="handleshopping">{{$t('menu.allCommodities')}}</el-menu-item>
+						<el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item>
+						<el-menu-item index="4-2" @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
 				<!-- <el-submenu index="5">
@@ -51,11 +52,11 @@
 				</el-submenu> -->
 				<el-menu-item index="6" @tap="handlebinarytree">
 					<i class="el-icon-menu"></i>
-					<span slot="title">架构图</span>
+					<span slot="title">{{$t('menu.architecturediagram')}}</span>
 				</el-menu-item>
 				<el-menu-item index="10" @tap="handleannucement">
 					<i class="el-icon-menu"></i>
-					<span slot="title">公告表</span>
+					<span slot="title">{{$t('menu.announcementtable')}}</span>
 				</el-menu-item>
 			</el-menu>
 			<!-- <div :class="classp?'placeholder':'newplaceholder'"></div> -->
@@ -81,14 +82,14 @@
 									<div @tap="hanldeChangepass">
 										<el-row>
 											<el-dropdown-item>
-												<i class="el-icon-user-solid"></i>更改登录密码
+												<i class="el-icon-user-solid"></i>{{$t('menu.newloginPassword')}}
 											</el-dropdown-item>
 										</el-row>
 									</div>
 									<div @tap="hanldeChangeEwalletspass">
 										<el-row>
 											<el-dropdown-item>
-												<i class="el-icon-user-solid"></i>修改电子钱包密码
+												<i class="el-icon-user-solid"></i>{{$t('menu.newEwallectPassword')}}
 											</el-dropdown-item>
 										</el-row>
 									</div>
@@ -102,7 +103,7 @@
 									<el-row>
 										<el-dropdown-item style="border-top: 2rpx solid #DCDFE6;">
 											<div @tap="logOff"><i class="el-icon-switch-button"></i><el-link href="#"
-													type="danger">登出</el-link></div>
+													type="danger">{{$t('menu.logoff')}}</el-link></div>
 										</el-dropdown-item>
 									</el-row>
 								</el-dropdown-menu>
@@ -235,6 +236,11 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleshopping(){
+				uni.navigateTo({
+					url:'/pages/shopping/shopping'
+				})
+			},
 			hanldeChangepass(){
 				uni.navigateTo({
 					url:'/pages/login-password/login-password'
@@ -481,7 +487,7 @@
 	}
 
 	.placeholder {
-		width: 400rpx;
+		width: 440rpx;
 		height: 100vh;
 		visibility: hidden;
 		/* 或者使用 opacity: 0; */
@@ -528,7 +534,7 @@
 	}
 
 	.el-menu-vertical-demo:not(.el-menu--collapse) {
-		width: 400rpx;
+		width: 440rpx;
 		min-height: 800rpx;
 	}
 
@@ -628,7 +634,7 @@
 
 		.ableta {
 			position: fixed;
-			width: 400rpx;
+			width: 440rpx;
 			top: 100rpx;
 			margin-top: 20rpx;
 			z-index: 99;

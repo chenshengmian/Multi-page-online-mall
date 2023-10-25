@@ -135,6 +135,8 @@
 
 	.my-drawer {
 		/* 样式规则 */
+		height: 100vh;
+		background-color: white;
 		width: 100%;
 		z-index: 9999;
 	}

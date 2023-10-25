@@ -2,15 +2,15 @@
 	<view>
 		<el-card class="box-card">
 			<div slot="header" class="clearfix">
-				<span>电子钱包取款</span>
+				<span>{{$t('menu.ewalletwithdrawals')}}</span>
 			</div>
-			<div style="font-size: 26rpx;text-decoration: underline;">账户摘要</div>
+			<div style="font-size: 26rpx;text-decoration: underline;">{{$t('withdrawal.accountSummary')}}</div>
 			<el-row>
-				<el-col :span="elleft">现金积分余额</el-col>
+				<el-col :span="elleft">{{$t('withdrawal.cashPointsBalance')}}</el-col>
 				<el-col :span="elright">：{{credit2}}</el-col>
 			</el-row>
 			<el-row>
-				<el-col :span="elleft">可转账余额</el-col>
+				<el-col :span="elleft">{{$t('withdrawal.transferableBalance')}}</el-col>
 				<el-col :span="elright">：{{credit5}}</el-col>
 			</el-row>
 			<!-- <el-row>
@@ -26,23 +26,23 @@
 				<el-col :span="elright">：TAN LAY FONG</el-col>
 			</el-row> -->
 			<el-row>
-				<el-col :span="elleft">Identity card (Front) 身份证前</el-col>
+				<el-col :span="elleft">{{$t('withdrawal.identityCard')}}</el-col>
 				<el-col :span="elright">：{{Identitycard}}</el-col>
 			</el-row>
 			<el-row>
-				<el-col :span="elleft">Account Holder 持卡者名字</el-col>
+				<el-col :span="elleft">{{$t('withdrawal.accountHolder')}}</el-col>
 				<el-col :span="elright">：{{AccountHolder}}</el-col>
 			</el-row>
 			<el-row>
-				<el-col :span="elleft">Bank Name 银行名字</el-col>
+				<el-col :span="elleft">{{$t('withdrawal.bankName')}}</el-col>
 				<el-col :span="elright">：{{BankName}}</el-col>
 			</el-row>
 			<el-row>
-				<el-col :span="elleft">Bank Branch 银行分行</el-col>
+				<el-col :span="elleft">{{$t('withdrawal.bankBranch')}}</el-col>
 				<el-col :span="elright">：{{BankBranch}}</el-col>
 			</el-row>
 			<el-row>
-				<el-col :span="elleft">Bank Account Number 户口号码</el-col>
+				<el-col :span="elleft">{{$t('withdrawal.bankAccountNumber')}}</el-col>
 				<el-col :span="elright">：{{BankAccountNumber}}</el-col>
 			</el-row>
 			<el-row>
@@ -50,34 +50,37 @@
 				<el-col :span="elright">：{{Swiftcode}}</el-col>
 			</el-row>
 			<el-row>
-				<el-col :span="elleft">Supporting Document 支持文件</el-col>
-				<el-col :span="elright">：<el-link :href="SupportingDocument" type="primary" target="_blank">支持文件</el-link></el-col>
+				<el-col :span="elleft">{{$t('withdrawal.supportingDocument')}}</el-col>
+				<el-col :span="elright">：<el-link :href="SupportingDocument" type="primary"
+						target="_blank">{{$t('withdrawal.supportingDocument')}}</el-link></el-col>
 			</el-row>
 			<el-row>
-				<el-col :span="elleft">ID/ Passport Number 身份证号码</el-col>
+				<el-col :span="elleft">{{$t('withdrawal.idCard')}}</el-col>
 				<el-col :span="elright">：{{idNumber}}</el-col>
 			</el-row>
 			<el-row>
-				<el-col :span="elleft">Email</el-col>
+				<el-col :span="elleft">{{$t('login.eamil')}}</el-col>
 				<el-col :span="elright">：{{eamil}}</el-col>
 			</el-row>
 			<el-row>
-				<el-col :span="elleft">转账金额</el-col>
+				<el-col :span="elleft">{{$t('withdrawal.transferAmount')}}</el-col>
 				<el-col :span="elright"><span>：</span><el-input v-model="mony" size="mini"></el-input></el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft"></el-col>
-				<el-col :span="elright" style="margin-top: 25rpx;"><el-checkbox v-model="checked">Save bank infomation
-						above</el-checkbox></el-col>
+				<el-col :span="elright" style="margin-top: 25rpx;"><el-checkbox
+						v-model="checked">{{$t('withdrawal.agreement')}}</el-checkbox></el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft"></el-col>
-				<el-col :span="elright" style="margin-top: 25rpx;color: red;">Any request for cash withdrawal from CP
-					wallet is subjected to an admin fee of USD 1 per transaction</el-col>
+				<el-col :span="elright" style="margin-top: 25rpx;color: red;">{{$t('withdrawal.statement')}}</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft"></el-col>
-				<el-col :span="elright" style="margin-top: 25rpx;"><el-button size="mini" @tap="handleWithdrawal">提款</el-button></el-col>
+				<el-col :span="elright" style="margin-top: 25rpx;"><el-button size="mini"
+						@tap="handleWithdrawal">{{$t('withdrawal.withdrawals')}}</el-button>
+						<el-button size="mini"
+								@tap="handleChangebank">{{$t('withdrawal.newBankInfo')}}</el-button></el-col>
 			</el-row>
 		</el-card>
 
@@ -101,13 +104,14 @@
 				BankAccountNumber: 0,
 				BankBranch: '',
 				BankName: "",
-				mony:0,
-				credit5:'',
-				credit2:''
+				mony: 0,
+				credit5: '',
+				credit2: ''
 			};
 		},
 		mounted() {
-			this.getkyc()
+			this.login()
+			// this.getkyc()
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
 			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 		},
@@ -115,9 +119,40 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			getkyc() {
+			handleChangebank(){
+				uni.navigateTo({
+					url:'/pages/know-yourCustomer/know-yourCustomer'
+				})
+			},
+			async login() {
+				// console.log(new Date().getTime())
+				let self = this
+				await this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member')
+					.then(res => {
+						// console.log('登录状态',res)
+						const {
+							status,
+						} = res
+						if (status == 100) {
+							self.$message({
+								message: '登录状态已过期！',
+								center: true
+							});
+							uni.navigateTo({
+								url: '/pages/userLogin/userLogin'
+							})
+						} else {
+							this.getkyc()
+						}
+					})
+					.catch(err => {
+						console.log(err)
+					})
+			},
+			async getkyc() {
+				// console.log(new Date().getTime())
 				let _this = this
-				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc')
+				await _this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc')
 					.then(res => {
 						console.log(res)
 						const {
@@ -156,7 +191,7 @@
 								callback: action => {
 									// _this.$emit('changekyc', '2-5')
 									uni.navigateTo({
-										url:'/pages/know-yourCustomer/know-yourCustomer'
+										url: '/pages/know-yourCustomer/know-yourCustomer'
 									})
 								}
 							});
@@ -176,26 +211,32 @@
 					this.elright = 8
 				}
 			},
-			handleWithdrawal(){
+			handleWithdrawal() {
 				let _this = this
 				let type = 0
 				_this.checked ? type = 1 : type = 0
 				console.log(type)
-				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc.withdrawalmoney&type=' + type + '&money=' + _this.mony)
-					.then(res=>{
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc.withdrawalmoney&type=' +
+						type + '&money=' + _this.mony)
+					.then(res => {
 						console.log(res)
-						const { status,result:{message}} = res
+						const {
+							status,
+							result: {
+								message
+							}
+						} = res
 						let msgstatus = status == 0 ? 'error' : 'success'
 						_this.$message({
 							showClose: true,
 							message: message,
 							type: msgstatus
 						})
-						if(status==1){
-							_this.$emit('wmindex','2-3')
+						if (status == 1) {
+							_this.$emit('wmindex', '2-3')
 						}
 					})
-					.catch(err=>{
+					.catch(err => {
 						console.log(err)
 					})
 			},
@@ -256,8 +297,8 @@
 
 	@media screen and (max-width: 990px) {
 		.el-row {
-			display: grid;
-			grid-template-columns: 1fr;
+			display: flex;
+			justify-content: space-between;
 		}
 	}
 </style>

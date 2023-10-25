@@ -16,24 +16,24 @@
 					</div>
 				</div>
 				<div style="margin-top: 60rpx;">
-					<div class="fristcardbottom">Register Point</div>
+					<div class="fristcardbottom">{{$t('home.registerPoint')}}</div>
 					<div class="fristcardbottomtwo">MYR {{registerPoint}}</div>
 				</div>
 				<div>
-					<div class="fristcardbottom">Joining Date</div>
+					<div class="fristcardbottom">{{$t('home.joiningDate')}}</div>
 					<div class="fristcardbottomtwo">{{joiningDate}}</div>
 				</div>
 				<div>
-					<div class="fristcardbottom">Product Point</div>
+					<div class="fristcardbottom">{{$t('home.productPoint')}}</div>
 					<div class="fristcardbottomtwo">MYR {{credit5}}</div>
 				</div>
 				<div>
-					<div class="fristcardbottom">Total Cash Point</div>
+					<div class="fristcardbottom">{{$t('home.totalCashPoint')}}</div>
 					<div class="fristcardbottomtwo">MYR {{credit2}}</div>
 				</div>
 				<div style="margin-top: 20rpx;">
-					<el-tag @tap="handleAdstatus(0)">查看协议</el-tag>
-					<el-tag @tap="handleAdstatus(1)" style="margin-left: 20rpx;">查看弹窗</el-tag>
+					<el-tag @tap="handleAdstatus(0)">{{$t('home.reviewagreement')}}</el-tag>
+					<el-tag @tap="handleAdstatus(1)" style="margin-left: 20rpx;">{{$t('home.Checkthepopupwindow')}}</el-tag>
 				</div>
 				<!-- <div>
 					<div class="fristcardbottom">Product Point (PP)</div> 
@@ -72,25 +72,25 @@
 			</el-card>
 			<el-card class="box-card second">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
-					GROUP MEMBERS
+					{{$t('home.Groupmembership')}}
 				</div>
 				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{flevelchildrennum}}</div>
 			</el-card>
 			<el-card class="box-card three">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
-					GROUP SALES (FV)
+					{{$t('home.Groupsales')}}
 				</div>
 				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{childrenordermoney}}</div>
 			</el-card>
 			<el-card class="box-card four">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
-					COMMISSION (MYR)
+					{{$t('home.commission')}}
 				</div>
 				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{commissionmoney}}</div>
 			</el-card>
 			<el-card class="box-card wu">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
-					Bonus Type (MYR)
+					{{$t('home.Bonustype')}}
 				</div>
 				<!-- <div class="container">
 					<div class="box">
@@ -129,27 +129,28 @@
 				</div> -->
 				<div v-for="item in typesArray" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
 					<div class="bonustype">
-						<div>{{item.levelname_en}}{{item.levelname}}:</div>
+						<!-- <div v-show="">{{item.levelname_en}}:</div> -->
+						<div>{{item.levelname}}:</div>
 						<div>{{item.bonus}}</div>
 					</div>
 				</div>
 			</el-card>
 			<el-card class="box-card sex">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
-					Monthly Earnings (MYR)
+					{{$t('home.Monthlyincome')}}
 				</div>
 				<div v-for="item in weeksArray" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
 					<div class="bonustype">
-						<div>week{{item.num}}:</div>
+						<div>{{$t('home.week')}}{{item.num}}:</div>
 						<div>{{item.sumordermoney}}</div>
 					</div>
 				</div>
 				<div class="bonustype" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
-					<div>Total Cash Point:</div>
+					<div>{{$t('home.totalCashPoint')}}:</div>
 					<div>{{sumbonus}}</div>
 				</div>
 				<div class="bonustype" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
-					<div>Total Withdraw:</div>
+					<div>{{$t('home.Totalwithdraw')}}:</div>
 					<div>{{totalWithdraw}}</div>
 				</div>
 			</el-card>
@@ -159,10 +160,10 @@
 				<div slot="header" class="clearfix headers">
 					<div class="yearmonth">
 						<div style="font-size: 20rpx;font-weight: 600;line-height: 72rpx;">
-							新闻/公告
+							{{$t('home.news')}}
 						</div>
 						<div class="gt" style="display: flex;justify-content: space-between;">
-							<div class="monthright" style="font-size: 20rpx;line-height: 60rpx;">年-月：</div>
+							<div class="monthright" style="font-size: 20rpx;line-height: 60rpx;">{{$t('home.yearmonth')}}：</div>
 							<div class="year">
 								<el-select v-model="year" slot="prepend" placeholder="请选择" size="mini"
 									@change="gettable">
@@ -264,9 +265,19 @@
 			},
 			async getinfo() {
 				let _this = this
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner')
+					.then(res=>{
+						// console.log(res)
+						const {result:{shopmes:{logo,name}}} = res
+						// uni.setStorageSync('name',name)
+						_this.avatarUrl = logo
+					})
+					.catch(err=>{
+						console.log(err)
+					})
 				await _this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.infomes')
 					.then(res => {
-						console.log(res)
+						// console.log(res)
 						const {
 							status,
 							result: {
@@ -463,10 +474,10 @@
 
 	/* 在屏幕宽度小于990px时 */
 	@media screen and (max-width: 990px) {
-		.bonustype {
+		/* .bonustype {
 			display: grid;
 			grid-template-columns: 1fr;
-		}
+		} */
 
 		.grid-container {
 			grid-template-columns: 100%;

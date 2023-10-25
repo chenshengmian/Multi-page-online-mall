@@ -8,15 +8,15 @@
 							{{ (scope.$index+1)+(currentPage-1)*pageSize }}
 						</template>
 					</el-table-column>
-					<el-table-column prop="title" label="标题" align="center">
+					<el-table-column prop="title" :label="$t('home.title')" align="center">
 					</el-table-column>
 					<!-- <el-table-column prop="detail" label="内容" align="center">
 					</el-table-column> -->
-					<el-table-column prop="createtime" label="更新时间" align="center">
+					<el-table-column prop="createtime" :label="$t('home.updatetime')" align="center">
 					</el-table-column>
-					<el-table-column label="操作" align="center" width="80">
+					<el-table-column :label="$t('home.operate')" align="center" width="80">
 						<template slot-scope="scope">
-							<el-button size="mini" type="primary">详情</el-button>
+							<el-button size="mini" type="primary">{{$t('home.operate')}}</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -33,18 +33,18 @@
 		<div v-else>
 			<el-main>
 			<!-- <el-card> -->
-				<el-descriptions title="公告"  :size="size" border>
-					<el-descriptions-item label="公告ID"><el-tag size="small">{{id}}</el-tag></el-descriptions-item>
-					<el-descriptions-item label="公告标题">{{title}}</el-descriptions-item>
-					<el-descriptions-item label="公告时间">{{time}}</el-descriptions-item>
-					<el-descriptions-item label="公告内容">
+				<el-descriptions :title="$t('table.announcement')"  :size="size" border>
+					<el-descriptions-item :label="$t('table.announcementid')"><el-tag size="small">{{id}}</el-tag></el-descriptions-item>
+					<el-descriptions-item :label="$t('table.announcementtitle')">{{title}}</el-descriptions-item>
+					<el-descriptions-item :label="$t('table.announcementtime')">{{time}}</el-descriptions-item>
+					<el-descriptions-item :label="$t('table.announcementcontent')">
 						<div v-html="detail"></div>
 					</el-descriptions-item>
-					<el-descriptions-item label="商品图片">
+					<el-descriptions-item :label="$t('table.productimages')">
 						<img :src="img" style="width: 100rpx;">
 					</el-descriptions-item>
 				</el-descriptions>
-				<el-button @tap="resert" size="mini" style="margin-top: 20rpx;">返回主页</el-button>
+				<el-button @tap="resert" size="mini" style="margin-top: 20rpx;">{{$t('table.raturnhome')}}</el-button>
 			<!-- </el-card> -->
 			</el-main>
 		</div>

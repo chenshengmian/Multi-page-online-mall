@@ -29,24 +29,29 @@
 				}
 				// console.log(data1[0])
 				var option = {
+
 					series: [{
 						type: 'tree',
 						initialTreeDepth: 2,
 						name: 'tree1',
 						data: [data1[0]],
-						top: '4%',
+						top: '8%',
 						left: '2%',
-						bottom: '4%',
+						bottom: '50%',
 						right: '2%',
 						symbolSize: [30, 30],
 						symbol: 'emptyCircle', 
+						edgeShape: 'polyline',
 						lineStyle: {
 							curveness: 0 // 设置连接线为直线
 						},
+						// grid: {
+						//     height: '100px' // 替换为你所需的高度
+						// },
 						orient: 'TB',
 						label: {
 							normal: {
-								position: 'inside',
+								position: 'top',
 								verticalAlign: 'middle',
 								align: 'center', 
 								color: 'black'
@@ -60,7 +65,7 @@
 					if(params.name==''){
 						console.log('Clicked node:', params.data.id);
 						let fatree = params.treeAncestors
-						if(fatree[fatree.length-2].name !=''){
+						if(fatree[fatree.length-2].userid !=''){
 							let datato = {
 								'index': 3,
 								'nodeid':params.data.id

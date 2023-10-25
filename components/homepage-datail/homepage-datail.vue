@@ -2,27 +2,27 @@
 	<div class="home">
 		<div class="homep" style="width: 100%;">
 			<el-container>
-				<el-header>
-					<div class="header">
-						<div class="logo">
+				<!-- <el-header>
+					<div class="header"> -->
+						<!-- <div class="logo">
 							<img :src="logo" alt="" style="width: 100rpx;height: 100rpx;border-radius: 50%;">
-						</div>
-						<div class="sreach">
-							<el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
+						</div> -->
+						<!-- <div class="sreach">
+							<el-input placeholder="请输入内容" v-model="input3" class="input-with-select"> -->
 								<!-- <el-select v-model="select" slot="prepend" placeholder="请选择">
 								<el-option label="一球" value="1"></el-option>
 								<el-option label="三球" value="2"></el-option>
 								<el-option label="七球" value="3"></el-option>
 							</el-select> -->
-								<el-button class="imgsreach" slot="append" icon="el-icon-search"></el-button>
-							</el-input>
-						</div>
+								<!-- <el-button class="imgsreach" slot="append" icon="el-icon-search"></el-button>
+							</el-input> 
+						</div> -->
 						<!-- <div>
 							<el-button type="primary" @tap="handlelogo">登陆</el-button>
 						</div> -->
-					</div>
+					<!-- </div>
 
-				</el-header>
+				</el-header> -->
 				<el-main>
 					<el-card shadow="never">
 						<!-- <el-descriptions title="商品信息" :column="3" border>
@@ -44,19 +44,27 @@
 						<div v-html="content"></div>
 
 						<el-button @tap="resert" size="mini" style="margin-top: 20rpx;">返回主页</el-button> -->
-						<el-carousel height="200px" :autoplay="false">
+						<el-carousel height="200px" :autoplay="false" arrow="never">
 						    <el-carousel-item v-for="item in imgarr" :key="item">
 								<img :src="item" alt="" class="carousel-image">
 						    </el-carousel-item>
 						</el-carousel>
-						<div style="font-size: 30rpx;margin-top: 15rpx;"><b>商品信息</b></div>
-						<div style="font-size: 25rpx;margin-top: 15rpx;">商品名称：{{title}}</div>
-						<div style="font-size: 25rpx;margin-top: 15rpx;color: orangered;display: flex;">商品价格：{{price}}</div>
-						<div style="font-size: 20rpx;margin-top: 15rpx;color: #777070;">商品库存：{{total}}</div>
-						<el-button type="primary" size="mini">购买</el-button>
+						<div style="font-size: 30rpx;margin-top: 15rpx;"><b>{{title}}</b></div>
+						<!-- <div style="font-size: 25rpx;margin-top: 15rpx;color: orangered;display: flex;">商品价格：{{price}}</div> -->
+						<div style="display: flex;justify-content: space-between;margin-top: 40rpx;">
+							<div>
+								<span style="font-size: 28rpx;margin-top: 15rpx;color: #777070;">库存：{{total}}</span>
+								<el-divider direction="vertical"></el-divider>
+								<span style="font-size: 28rpx;margin-top: 15rpx;color: #777070;">销量：{{sales}}</span>
+							</div>
+							<div style="color: red;">
+								<span style="font-size: 28rpx;">￥</span><b style="font-size: 45rpx;">{{price}}</b>
+							</div>
+						</div>
 						<div style="font-size: 30rpx;margin-top: 15rpx;"><b>商品详情</b></div>
 						<div v-html="content" style="margin-top: 15rpx;" v-show="deatilStatus"></div>
 						<el-empty description="暂时数据为空"  v-show="!deatilStatus"></el-empty>
+						<el-button type="danger" size="mini"><b>立即购买</b></el-button>
 					</el-card>
 				</el-main>
 				<el-footer>
@@ -82,6 +90,7 @@
 		},
 		data() {
 			return {
+				sales:0,
 				prounddatastatus: false,
 				dialogTableVisible: false,
 				input3: '',
@@ -139,20 +148,22 @@
 				_this.homediable = false
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.goodsdetail&id=' + this.ids)
 					.then(res => {
-						// console.log(res)
+						console.log(res)
 						const {
 							result: {
 								title,
 								productprice,
 								total,
 								thumb_url,
-								content
+								content,
+								sales
 							}
 						} = res
 						// console.log(content)
 						if(content==''){
 							_this.deatilStatus = false
 						}
+						_this.sales = sales
 						_this.title = title
 						_this.price = productprice
 						_this.total = Number(total)
@@ -216,7 +227,22 @@
 </script>
 
 <style scoped>
-	.el-button--primary{
+	/deep/ .el-carousel__indicator--horizontal .el-carousel__button {
+	  width: 25rpx;
+	  height: 25rpx;
+	  background: transparent;
+	  border: 1px solid #ffffff;
+	  border-radius: 50%;
+	  opacity: 0.5;
+	}  
+	/deep/ .el-carousel__indicator--horizontal.is-active .el-carousel__button{
+	  width: 25rpx;
+	  height: 25rpx;
+	  background: #ffffff;
+	  border-radius: 50%;
+	  opacity: 1;
+	}
+	.el-button--danger{
 		width: 100%;
 		margin-top: 10rpx;
 	}
@@ -348,7 +374,7 @@
 	}
 
 	.sreach {
-		width: 50%;
+		width: 100%;
 	}
 
 	.el-menu-demo {
@@ -473,7 +499,7 @@
 		}
 
 		.sreach {
-			width: 86% !important;
+			width: 100% !important;
 		}
 
 

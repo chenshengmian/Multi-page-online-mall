@@ -16,7 +16,7 @@
 								style="width: 1820rpx">
 								<el-option label="现金积分 (CP)" value="1"></el-option>
 								<el-option label="旅游积分 (TP)" value="2"></el-option>
-								<el-option label="Product Point (PP)" value="3"></el-option>
+								<el-option label="产品点 (PP)" value="3"></el-option>
 							</el-select>
 						</div>
 					</div>
@@ -46,14 +46,16 @@
 					</div>
 				</div>
 				<el-table :data="tableData" class="custom-table">
-					<el-table-column label="ID" width="40">
+					<div v-if="idstatus">
+					<el-table-column label="ID" width="40" >
 						<template slot-scope="scope">
 							{{ (scope.$index+1)+(currentPage-1)*pageSize }}
 						</template>
 					</el-table-column>
+					</div>
 					<el-table-column prop="timestr" label="日期" align="center">
 					</el-table-column>
-					<el-table-column prop="remark" label="交易说明" width="380" align="center">
+					<el-table-column prop="remark" label="交易说明" align="center">
 					</el-table-column>
 					<el-table-column prop="num" label="进账(-)为出账" align="center">
 					</el-table-column>
@@ -61,7 +63,7 @@
 						<template slot-scope="scope">
 							<div v-if="scope.row.credittype=='credit1'">现金积分 (CP)</div>
 							<div v-else-if="scope.row.credittype=='credit2'">旅游积分 (TP)</div>
-							<div v-else>Product Point (PP)</div>
+							<div v-else>产品点 (PP)</div>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -85,22 +87,43 @@
 				value3: '',
 				mouth: '',
 				year: '',
-				mouthArr: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-					'October', 'November', 'December'
-				],
+				mouthArr: [1, 2, 3, 4, 5, 6, 7,8,9,10,11,12],
 				yearArr: [],
 				counttotal: 0,
 				tableData: [], // 表格数据源
 				currentPage: 1, // 当前页码
 				pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
-				paginations:false
+				paginations:false,
+				idstatus:true
 			};
 		},
 		mounted() {
 			this.getMounth()
 			this.getuserinfo()
+			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
+			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 		},
 		methods: {
+			getScreenWidth() {
+				this.screenWidth = window.innerWidth;
+				if (this.screenWidth <= 990) {
+					this.idstatus = false
+				} else {
+					this.idstatus = true
+				}
+			},
+			handleResize() {
+				const newScreenWidth = window.innerWidth;
+				if (newScreenWidth !== this.screenWidth) {
+					this.screenWidth = newScreenWidth;
+					console.log(newScreenWidth);
+					if (newScreenWidth <= 990) {
+						this.idstatus = false
+					} else {
+						this.idstatus = true
+					}
+				}
+			},
 			getMounth() {
 				const current = new Date()
 				const yearNew = current.getFullYear()
@@ -138,6 +161,12 @@
 								total
 							}
 						} = res
+						list.forEach(res=>{
+							res.timestr = res.timestr.substring(5,10)
+							var index = res.remark.indexOf("OPENID");
+							var result = res.remark.substring(0, index);
+							res.remark = result
+						})
 						_this.tableData = list
 						_this.counttotal = Number(total)
 						if(Number(total)>0){

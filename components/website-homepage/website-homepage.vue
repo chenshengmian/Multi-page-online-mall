@@ -1,39 +1,35 @@
 <template>
-	<view class="home" v-loading="loading">
+	<view class="home" v-loading="loading" style="width: 100%;">
 
 		<el-container>
-			<el-header>
-				<div class="header">
-					<div class="logo">
+			<!-- <el-header> -->
+				<!-- <div class="header"> -->
+					<!-- <div class="logo">
 						<img :src="logo" alt="" style="width: 100rpx;height: 100rpx;border-radius: 50%;">
-					</div>
-					<div class="sreach">
-						<el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
-							<!-- <el-select v-model="select" slot="prepend" placeholder="请选择">
-								<el-option label="一球" value="1"></el-option>
-								<el-option label="三球" value="2"></el-option>
-								<el-option label="七球" value="3"></el-option>
-							</el-select> -->
-							<el-button class="imgsreach" slot="append" icon="el-icon-search"></el-button>
+					</div> -->
+					<!-- <div class="sreach">
+						<el-input placeholder="请输入商品名称" v-model="productname">
+						    <template slot="prepend"><el-button icon="el-icon-search" @tap="handleSearch"></el-button></template>
 						</el-input>
-					</div>
+					</div> -->
 					<!-- <div>
 						<el-button type="primary" @tap="handlelogo">登陆</el-button>
 					</div> -->
-				</div>
+				<!-- </div> -->
 
-			</el-header>
-			<div  >
+			<!-- </el-header> -->
+			<!-- <div  > -->
 				<el-main>
 					<el-card>
-						<el-tabs @tab-click="handleSelect" v-model="activeIndex" :stretch='true'>
-							<block v-for="item in tabbleTap">
-								<el-tab-pane :label="item.name" :name="item.id"></el-tab-pane>
-							</block>
-						</el-tabs>
-						<div class="carousel-container">
-							<el-carousel :interval="3000" arrow="always">
-								<el-carousel-item v-for="item in carouselmap" style="width: 100%;height: 100%;">
+						<div class="sreach" style="display: flex;justify-content: space-between;">
+							<el-input placeholder="请输入商品名称" v-model="productname">
+								<i slot="prefix" class="el-input__icon el-icon-search"></i>
+								<el-button style="border-left: 0rpx;" slot="append"  @tap="handleSearch">搜索</el-button>
+							</el-input>
+						</div>
+						<div class="carousel-container" style="margin-top: 20rpx;">
+							<el-carousel :interval="3000"  arrow="never">
+								<el-carousel-item v-for="item in carouselmap" style="width: 100%;height: 100%;" >
 									<!-- <h3>{{ item }}</h3> -->
 									<img :src="item.thumb" alt="" class="carousel-image">
 								</el-carousel-item>
@@ -62,22 +58,31 @@
 								</div>
 							</vue-seamless-scroll>
 						</div>
-
+						
+						<el-tabs @tab-click="handleSelect" v-model="activeIndex" :stretch='true'>
+							<block v-for="item in tabbleTap">
+								<el-tab-pane :label="item.name" :name="item.id"></el-tab-pane>
+							</block>
+						</el-tabs>
 						<!-- <div style="margin: 20rpx 0rpx;"> -->
 						<!-- <span style="font-size: 40rpx;">猜你喜欢</span> -->
 						<!-- <el-tag type="danger">个性推荐</el-tag> -->
 						<!-- </div> -->
 						<el-empty :image-size="200"  v-show="prounddatastatus"></el-empty>
-						<el-row  v-show="!prounddatastatus">
+						<el-row :gutter="24"  v-show="!prounddatastatus">
 							<el-col :span="span" v-for="item in prounddata">
-								<el-card :body-style="{ padding: '20px' }" >
-									<img :src="item.thumb" class="image">
-									<div style="padding: 14px;">
-										<!-- <h6>内容：</h6> -->
-										<span>{{item.title}}</span>
-										<div class="bottom clearfix">
-											<time class="time">MYR {{ item.marketprice }}</time>
-											<el-button type="text" class="button"@click.native="handelDetail(item.id)">购买</el-button>
+								<el-card :body-style="{ padding: '20px' }"  shadow="never" @click.native="handelDetail(item.id)">
+									<div style="display: flex;justify-content: space-between;">
+										<img :src="item.thumb" class="image">
+										<div style="padding: 14px;margin-top: 60rpx;">
+											<!-- <h6>内容：</h6> -->
+											<span>{{item.title}}</span>
+											<div class="bottom clearfix">
+												<time class="time">MYR {{ item.marketprice }}</time>
+											</div>
+											<div style="margin-top: 15rpx;">
+												<button style="background-color: #fff; font-size: 24rpx;height: 60rpx;line-height: 60rpx; border: 1rpx solid #C83637;border-radius: 6rpx;color: #C83637;">购买</button>
+											</div>
 										</div>
 									</div>
 								</el-card>
@@ -90,7 +95,7 @@
 						</div>
 					</el-card>
 				</el-main>
-			</div>
+			<!-- </div> -->
 		</el-container>
 		<!-- <el-footer>
 			<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
@@ -104,6 +109,7 @@
 		name: "website-homepage",
 		data() {
 			return {
+				productname:'',
 				prounddatastatus:false,
 				dialogTableVisible: false,
 				input3: '',
@@ -170,6 +176,9 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleSearch(){
+				this.getproundlist()
+			},
 			handleSure() {
 				this.dialogTableVisible = false
 			},
@@ -324,7 +333,7 @@
 			getproundlist() {
 				let _this = this
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.goodslist&page=' + _this
-						.currentPage + '&pagesize=' + _this.pageSize + '&cate=' + _this.cate)
+						.currentPage + '&pagesize=' + _this.pageSize + '&cate=' + _this.cate+'&keywords='+_this.productname)
 					.then(res => {
 						console.log(res)
 						const {
@@ -381,6 +390,22 @@
 </script>
 
 <style scoped>
+
+	  /deep/ .el-carousel__indicator--horizontal .el-carousel__button {
+	    width: 25rpx;
+	    height: 25rpx;
+	    background: transparent;
+	    border: 1px solid #ffffff;
+	    border-radius: 50%;
+	    opacity: 0.5;
+	  }  
+	  /deep/ .el-carousel__indicator--horizontal.is-active .el-carousel__button{
+	    width: 25rpx;
+	    height: 25rpx;
+	    background: #ffffff;
+	    border-radius: 50%;
+	    opacity: 1;
+	  }
 	.time {
 		font-size: 13px;
 		color: #999;
@@ -509,7 +534,7 @@
 	}
 
 	.sreach {
-		width: 50%;
+		width: 100%;
 	}
 
 	.el-menu-demo {
@@ -612,7 +637,7 @@
 		}
 
 		.sreach {
-			width: 86% !important;
+			width: 100% !important;
 		}
 
 

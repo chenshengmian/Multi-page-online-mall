@@ -70,9 +70,7 @@
 			return {
 				mouth: '',
 				year: '',
-				mouthArr: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-					'October', 'November', 'December'
-				],
+				mouthArr: [1, 2, 3, 4, 5, 6, 7,8,9,10,11,12],
 				memberArr: ['会员的订单', '帮注册会员的订单'],
 				yearArr: [],
 				tableData: [],

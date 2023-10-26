@@ -86,6 +86,6 @@
         "router" : {
             "mode" : "history"
         },
-        "title" : "矩阵"
+        "title" : ""
     }
 }

@@ -12,8 +12,9 @@
 
 			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
 				 style="">
-				<image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image>
-				<image src="../../static/img/favicon.png" v-else class="userLogo"></image>
+				 <div class="userLo">{{name}}</div>
+				<!-- <image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image> -->
+								<!-- <image src="../../static/img/favicon.png" v-else class="userLogo"></image> -->
 				<el-menu-item index="1" @tap="handleperson">
 					<i class="el-icon-menu"></i>
 					<span slot="title">{{$t('menu.home')}}</span>
@@ -24,7 +25,6 @@
 						<span slot="title" v-if="disable">{{$t('menu.ewallets')}}</span>
 					</template>
 					<el-menu-item-group>
-						<!-- <span slot="title">{{$t('menu.ewallets')}}</span> -->
 						<el-menu-item index="2-1" @tap="handlepurchasehistory">{{$t('menu.ewallethistory')}}</el-menu-item>
 						<el-menu-item index="2-2" @tap="handlewithdraw">{{$t('menu.ewalletwithdrawals')}}</el-menu-item>
 						<el-menu-item index="2-3" @tap="handlewithdrawStatus">{{$t('menu.ewalletwithdrawalstatus')}}</el-menu-item>
@@ -32,33 +32,17 @@
 						<el-menu-item index="2-5" @tap="handlekycgo">KYC</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
-				<!-- <el-menu-item index="3">
-					<i class="el-icon-menu"></i>
-					<span slot="title">经销商注册</span>
-				</el-menu-item> -->
 				<el-submenu index="4">
 					<template slot="title">
 						<i class="el-icon-s-fold"></i>
 						<span slot="title" v-if="disable">{{$t('menu.shopping')}}</span>
 					</template>
 					<el-menu-item-group>
-						<!-- <span slot="title">{{$t('menu.shopping')}}</span> -->
 						<el-menu-item index="4-0" @tap="handleshopping">{{$t('menu.allCommodities')}}</el-menu-item>
 						<el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item>
 						<el-menu-item index="4-2" @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
-				<!-- <el-submenu index="5">
-					<template slot="title">
-						<i class="el-icon-s-fold"></i>
-						<span slot="title" v-if="disable">报告</span>
-					</template>
-					<el-menu-item-group>
-						<span slot="title">报告</span>
-						<el-menu-item index="5-1">小组销售报告</el-menu-item>
-						<el-menu-item index="5-2">Member Tree</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu> -->
 				<el-menu-item index="6" @tap="handlebinarytree">
 					<i class="el-icon-menu"></i>
 					<span slot="title">{{$t('menu.architecturediagram')}}</span>
@@ -74,14 +58,14 @@
 					<div class="headerTop" :style="{backgroundColor:topColor}">
 						<div style="display: flex;" :class="{'colorb':isblock}">
 							<i class="el-icon-s-grid changeStatu" @tap="changeStatus"></i>
-							<image src="../../static/img/favicon.png" class="changeStatus1 smalllogo"></image>
+							<!-- <image src="../../static/img/favicon.png" class="changeStatus1 smalllogo"></image> -->
 							<i class="el-icon-s-grid changeStatus1" @tap="showDrawer" style="margin-left: 36rpx;"></i>
 						</div>
 						<div style="display: flex;margin-top: 10rpx;">
-							<i class="el-icon-full-screen fullsc" @tap="toggleFullscreen"></i>
-							<el-dropdown trigger="click">
+							<!-- <div class="userLo">{{logoname}}</div> -->
+							<el-dropdown trigger="click" class="my-drawer">
 								<span class="el-dropdown-link">
-									<el-avatar :src="circleUrl" class=" el-icon--right"
+									<el-avatar :src="circleUrl" class=" el-icon--right"  
 										style="margin-top: 5rpx;"></el-avatar>
 								</span>
 								<el-dropdown-menu slot="dropdown" class="atvatr">
@@ -102,13 +86,6 @@
 											</el-dropdown-item>
 										</el-row>
 									</div>
-									<!-- <div @tap="hanldeKYC">
-										<el-row>
-											<el-dropdown-item>
-												<i class="el-icon-user-solid"></i>KYC
-											</el-dropdown-item>
-										</el-row>
-									</div> -->
 									<el-row>
 										<el-dropdown-item style="border-top: 2rpx solid #DCDFE6;">
 											<div @tap="logOff"><i class="el-icon-switch-button"></i><el-link href="#"
@@ -117,6 +94,8 @@
 									</el-row>
 								</el-dropdown-menu>
 							</el-dropdown>
+
+							
 							<el-row>
 								<i class="el-icon-setting setting" style="margin-right: 20rpx;"
 									@tap="showDrawerleft"></i>
@@ -128,66 +107,30 @@
 					title="Settings" :size="drawerSize">
 					<!-- 在这里放置抽屉中的内容 -->
 					<p style="text-align: center;"><b>Choose Layouts</b></p>
-					<el-row><el-switch v-model="option1" @change="handleOptionChange('option1')"></el-switch><span>Light
+					<!-- <el-row><el-switch v-model="option1" @change="handleOptionChange('option1')"></el-switch><span>Light
 							Mode</span><br /></el-row>
 					<el-row><el-switch v-model="option2" @change="handleOptionChange('option2')"></el-switch><span>Dark
-							Mode</span></el-row>
+							Mode</span></el-row> -->
+							 <el-radio-group v-model="radio"  @input="handleLangChange" >
+							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="en"><b>{{$t('locale.en')}}</b></el-radio></div>
+							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hans"><b>{{$t('locale.zhHans')}}</b></el-radio></div>
+							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hant"><b>{{$t('locale.zhHant')}}</b></el-radio></div>
+							</el-radio-group>
+							<!-- <el-row><el-switch v-model="lang1" @change="handleLangChange('en')"></el-switch><span></span><br /></el-row>
+							<el-row><el-switch v-model="lang2" @change="handleLangChange('zh-Hans')"></el-switch><span>
+									</span></el-row>
+							<el-row><el-switch v-model="lang3" @change="handleLangChange('zh-Hant')"></el-switch><span>
+									</span></el-row> -->
 				</el-drawer>
 				<div class="ableta">
-					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer"></my-drawer>
+					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
-					<!-- <div v-if="index=='1'" style="width: 100%;"> -->
 						<my-home @changeAd="getAdstatus"/>
-					<!-- </div> -->
-					<!-- <div v-else-if="index=='2-1'">
-						<wallet-records />
-					</div> -->
-					<!-- <div v-else-if="index=='2-2'">
-						<withdraw-money @changekyc="changekyc" @wmindex="wmindex" />
-					</div>
-					<div v-else-if="index=='2-3'">
-						<withdrawal-status />
-					</div>
-					<div v-else-if="index=='2-4'">
-						<bonus-description />
-					</div>
-					<div v-else-if="index=='3'">
-						<reseller-registration :nodeid='nodeid' @handlereg="handlereg" />
-					</div>
-					<div v-else-if="index=='4-1'">
-						<product-purchase @godatail="getdatail" />
-					</div>
-					<div v-else-if="index=='4-2'">
-						<purchase-history />
-					</div>
-					<div v-else-if="index=='4-3'">
-						<product-detail :todatail='todatail' @getresrt="newindex" />
-					</div>
-					<div v-else-if="index=='5-1'">
-						<performance-reports />
-					</div>
-					<div v-else-if="index=='5-2'">
-						<member-tree />
-					</div>
-					<div v-else-if="index=='6'">
-						<binary-tree @indexChange="getIndex" />
-					</div>
-					<div v-else-if="index=='7'">
-						<login-password />
-					</div>
-					<div v-else-if="index=='8'">
-						<wallet-password />
-					</div>
-					<div v-else-if="index=='2-5'">
-						<know-yourCustomer @kycindex="kycindex" />
-					</div>
-					<div v-else-if="index=='10'">
-						<announcement-table />
-					</div> -->
+					
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
-					<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
+					<div class="footer">{{footesr}}</div>
 				</el-footer>
 			</el-container>
 		</el-container>
@@ -197,45 +140,15 @@
 <script>
 	import MyDrawer from '@/components/my-drawer/my-drawer.vue';
 	import MyHome from '@/components/my-home/my-home.vue';
-	import WalletRecords from '@/components/wallet-records/wallet-records.vue';
-	import BinaryTree from '@/components/binary-tree/binary-tree.vue';
-	import WithdrawMoney from '@/components/withdraw-money/withdraw-money.vue';
-	import WithdrawalStatus from '@/components/withdrawal-status/withdrawal-status.vue';
-	import BonusDescription from '@/components/bonus-description/bonus-description.vue';
-	import ResellerRegistration from '@/components/reseller-registration/reseller-registration.vue';
-	import ProductPurchase from '@/components/product-purchase/product-purchase.vue';
-	import ProductDetail from '@/components/product-purchase/product-detail.vue';
-	import PurchaseHistory from '@/components/purchase-history/purchase-history.vue';
-	import PerformanceReports from '@/components/performance-reports/performance-reports.vue';
-	import MemberTree from '@/components/member-tree/member-tree.vue';
-	import LoginPassword from '@/components/login-password/login-password.vue';
-	import WalletPassword from '@/components/wallet-password/wallet-password.vue';
-	import knowYourCustomer from '@/components/know-yourCustomer/know-yourCustomer.vue';
-	import WebsiteHomepage from '@/components/website-homepage/website-homepage.vue'
-	import AnnouncementTable from '@/components/announcement-table/announcement-table.vue'
 	export default {
 		components: {
 			MyDrawer,
 			MyHome,
-			WalletRecords,
-			BinaryTree,
-			WithdrawMoney,
-			WithdrawalStatus,
-			BonusDescription,
-			ResellerRegistration,
-			ProductPurchase,
-			PurchaseHistory,
-			PerformanceReports,
-			MemberTree,
-			LoginPassword,
-			WalletPassword,
-			knowYourCustomer,
-			ProductDetail,
-			WebsiteHomepage,
-			AnnouncementTable
 		},
 		data() {
 			return {
+				footesr:uni.getStorageSync('footer'),
+				name:uni.getStorageSync('name'),
 				centerDialogVisible: false,
 				isCollapse: false,
 				disable: true,
@@ -261,6 +174,7 @@
 				width: '30%',
 				tanccontent: '<p>这是一段包含HTML标签的内容</p>',
 				type: 0,
+				radio:uni.getLocale()
 			}
 		},
 		mounted(param) {
@@ -270,15 +184,25 @@
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
 			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 		},
-		onShow() {
-			this.login()
-			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
-			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
-		},
+		// onShow() {
+		// 	this.login()
+		// 	this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
+		// 	window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
+		// },
 		beforeDestroy() {
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			
+			handleClose(param){
+				this.drawerVisible = param
+			},
+			handleLangChange(str){
+				// console.log(str)
+				uni.setLocale(str)
+				this.$i18n.locale = str
+				this.$router.go(0)
+			},
 			handleshopping(){
 				uni.navigateTo({
 					url:'/pages/shopping/shopping'
@@ -448,9 +372,11 @@
 							result: {
 								avatar,
 								nickname,
-								adstatus
+								adstatus,
+								mobile
 							}
 						} = res
+						uni.setStorageSync('mobile',mobile)
 						self.username = nickname
 						// console.log('登录状态',res)
 						if (adstatus == 0) {
@@ -464,7 +390,7 @@
 								center: true
 							});
 							uni.navigateTo({
-								url: '/pages/index/index'
+								url: '/pages/userLogin/userLogin'
 							})
 						} else {
 							// self.maindisable = true
@@ -545,7 +471,7 @@
 								center: true
 							});
 							uni.navigateTo({
-								url: '/pages/index/index'
+								url: '/pages/userLogin/userLogin'
 							})
 						} else {
 
@@ -564,20 +490,6 @@
 			showDrawer() {
 				// console.log(111)
 				this.drawerVisible = !this.drawerVisible;
-			},
-			toggleFullscreen() {
-				const element = document.documentElement; // 获取整个文档的根元素
-				// console.log(element)
-				if (element.requestFullscreen) {
-					// 兼容不同浏览器的API调用方式
-					element.requestFullscreen();
-				} else if (element.mozRequestFullScreen) { // Firefox
-					element.mozRequestFullScreen();
-				} else if (element.webkitRequestFullscreen) { // Chrome, Safari和Opera
-					element.webkitRequestFullscreen();
-				} else if (element.msRequestFullscreen) { // IE/Edge
-					element.msRequestFullscreen();
-				}
 			},
 			showDrawerleft() {
 				this.drawerVisibletwo = !this.drawerVisibletwo;
@@ -625,6 +537,8 @@
 	}
 </script>
 <style>
+	
+	
 	.content{
 		/* position: fixed; */
 		width: 100%;

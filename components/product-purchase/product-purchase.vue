@@ -78,8 +78,8 @@
 				labelPosition: 'right',
 				fromleft: '40rpx',
 				formLabelAlign:{
-					email:'',
-					phone:''
+					email:uni.getStorageSync('email'),
+					phone:uni.getStorageSync('mobile')
 				},
 				counttotal: 0,
 				tableData: [], // 表格数据源

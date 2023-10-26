@@ -4,15 +4,15 @@
 			"path" : "pages/userLogin/userLogin",
 			"style" :                                                                                    
 			{
-				"navigationBarTitleText": "登录",
-				"enablePullDownRefresh": false
+				"navigationBarTitleText": "TWJ",
+				"enablePullDownRefresh": true
 			}
 		}
 		,
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "FELEMENT|"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
@@ -159,10 +159,19 @@
             }
             
         }
+        ,{
+            "path" : "pages/recoverPassword/recoverPassword",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "TWJ",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		"enablePullDownRefresh": false,

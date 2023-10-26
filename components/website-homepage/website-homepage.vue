@@ -72,16 +72,18 @@
 						<el-row :gutter="24"  v-show="!prounddatastatus">
 							<el-col :span="span" v-for="item in prounddata">
 								<el-card :body-style="{ padding: '20px' }"  shadow="never" @click.native="handelDetail(item.id)">
-									<div style="display: flex;justify-content: space-between;">
+									<div style="display: flex;position: relative;">
 										<img :src="item.thumb" class="image">
-										<div style="padding: 14px;margin-top: 60rpx;">
+										<div style="margin-left: 30rpx;">
 											<!-- <h6>内容：</h6> -->
-											<span>{{item.title}}</span>
+											<span><b>{{item.title}}</b></span>
+											<div style="color: red;margin-top: 40rpx;font-size: 40rpx;"><span style="font-size: 24rpx;">￥</span>{{item.marketprice}}</div>
 											<div class="bottom clearfix">
-												<time class="time">MYR {{ item.marketprice }}</time>
+												<!-- <time class="time">库存： {{ item.marketprice }}</time> -->
+												<time class="time">库存： {{ item.sales }}</time>
 											</div>
-											<div style="margin-top: 15rpx;">
-												<button style="background-color: #fff; font-size: 24rpx;height: 60rpx;line-height: 60rpx; border: 1rpx solid #C83637;border-radius: 6rpx;color: #C83637;">购买</button>
+											<div style="margin-top: 15rpx;position: absolute;bottom: 0;right:0;">
+												<button style="width: 150rpx;background-color: #fff; font-size: 24rpx;height: 50rpx;line-height: 50rpx; border: 1rpx solid #C83637;border-radius: 20rpx;color: #C83637;">购买</button>
 											</div>
 										</div>
 									</div>

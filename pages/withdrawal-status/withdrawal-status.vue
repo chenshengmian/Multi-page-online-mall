@@ -4,8 +4,9 @@
 
 			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
 				@select="handleSelect" style="">
-				<image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image>
-				<image src="../../static/img/favicon.png" v-else class="userLogo"></image>
+				<div class="userLo">{{name}}</div>
+				<!-- <image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image> -->
+								<!-- <image src="../../static/img/favicon.png" v-else class="userLogo"></image> -->
 				<el-menu-item index="1" @tap="handleperson">
 					<i class="el-icon-menu"></i>
 					<span slot="title">{{$t('menu.home')}}</span>
@@ -66,11 +67,11 @@
 					<div class="headerTop" :style="{backgroundColor:topColor}">
 						<div style="display: flex;" :class="{'colorb':isblock}">
 							<i class="el-icon-s-grid changeStatu" @tap="changeStatus"></i>
-							<image src="../../static/img/favicon.png" class="changeStatus1 smalllogo"></image>
+							<!-- <image src="../../static/img/favicon.png" class="changeStatus1 smalllogo"></image> -->
 							<i class="el-icon-s-grid changeStatus1" @tap="showDrawer" style="margin-left: 36rpx;"></i>
 						</div>
 						<div style="display: flex;margin-top: 10rpx;">
-							<i class="el-icon-full-screen fullsc" @tap="toggleFullscreen"></i>
+							<!-- <div class="userLo">{{logoname}}</div> -->
 							<el-dropdown trigger="click">
 								<span class="el-dropdown-link">
 									<el-avatar :src="circleUrl" class=" el-icon--right"
@@ -120,13 +121,18 @@
 					title="Settings" :size="drawerSize">
 					<!-- 在这里放置抽屉中的内容 -->
 					<p style="text-align: center;"><b>Choose Layouts</b></p>
-					<el-row><el-switch v-model="option1" @change="handleOptionChange('option1')"></el-switch><span>Light
+					<!-- <el-row><el-switch v-model="option1" @change="handleOptionChange('option1')"></el-switch><span>Light
 							Mode</span><br /></el-row>
 					<el-row><el-switch v-model="option2" @change="handleOptionChange('option2')"></el-switch><span>Dark
-							Mode</span></el-row>
+							Mode</span></el-row> -->
+					<el-radio-group v-model="radio"  @input="handleLangChange" >
+					    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="en"><b>{{$t('locale.en')}}</b></el-radio></div>
+					    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hans"><b>{{$t('locale.zhHans')}}</b></el-radio></div>
+					    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hant"><b>{{$t('locale.zhHant')}}</b></el-radio></div>
+					</el-radio-group>
 				</el-drawer>
 				<div class="ableta">
-					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer"></my-drawer>
+					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
 					<!-- <div v-if="index=='1'" style="width: 100%;"> -->
@@ -179,7 +185,7 @@
 					</div> -->
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
-					<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
+					<div class="footer">{{footesr}}</div>
 				</el-footer>
 			</el-container>
 		</el-container>
@@ -194,6 +200,8 @@
 		},
 		data() {
 			return {
+				footesr:uni.getStorageSync('footer'),
+				name:uni.getStorageSync('name'),
 				isCollapse: false,
 				disable: true,
 				drawerVisible: false,
@@ -215,6 +223,7 @@
 				option1: true,
 				option2: false,
 				width: '30%',
+				radio:uni.getLocale()
 			}
 		},
 		mounted(param) {
@@ -224,15 +233,24 @@
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
 			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 		},
-		onShow() {
-			this.login()
-			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
-			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
-		},
+		// onShow() {
+		// 	this.login()
+		// 	this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
+		// 	window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
+		// },
 		beforeDestroy() {
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleClose(param){
+				this.drawerVisible = param
+			},
+			handleLangChange(str){
+				// console.log(str)
+				uni.setLocale(str)
+				this.$i18n.locale = str
+				this.$router.go(0)
+			},
 			handleshopping(){
 				uni.navigateTo({
 					url:'/pages/shopping/shopping'
@@ -323,7 +341,7 @@
 								center: true
 							});
 							uni.navigateTo({
-								url: '/pages/index/index'
+								url: '/pages/userLogin/userLogin'
 							})
 						} else {
 							// self.maindisable = true
@@ -380,7 +398,7 @@
 								center: true
 							});
 							uni.navigateTo({
-								url: '/pages/index/index'
+								url: '/pages/userLogin/userLogin'
 							})
 						} else {
 

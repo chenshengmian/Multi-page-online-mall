@@ -6,7 +6,7 @@
 			</div>
 		</div>
 		<el-footer>
-			<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
+			<div class="footer">{{footesr}}</div>
 		</el-footer>
 	</view>
 </template>
@@ -19,7 +19,8 @@
 		},
 		data() {
 			return {
-
+				footesr:uni.getStorageSync('footer'),
+				name:uni.getStorageSync('name')
 			}
 		},
 		mounted() {

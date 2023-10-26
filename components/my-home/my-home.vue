@@ -172,7 +172,7 @@
 									</div>
 								</el-select>
 							</div>
-							<div class="month">
+							<div class="month" >
 								<el-select v-model="mouth" slot="prepend" placeholder="请选择" size="mini"
 									@change="gettable">
 									<div v-for="o in 12" :key="o" class="text item">
@@ -304,6 +304,7 @@
 							}
 						} = res
 						if(status==1){
+							uni.setStorageSync('email',email)
 							_this.childrenordermoney = childrenordermoney
 							_this.commissionmoney = commissionmoney
 							_this.flevelchildrennum = flevelchildrennum

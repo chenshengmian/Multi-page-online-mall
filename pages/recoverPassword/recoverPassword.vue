@@ -1,8 +1,10 @@
 <template>
 	<view style="background-color: #F5F5F5;">
 		<div class="container">
-			<el-card class="box-card">
-				<div style="width: 100%;display: flex;justify-content: center;"><div>{{name}}</div></div>
+			<el-card class="box-card" style="width: 900rpx;">
+				<div style="width: 100%;display: flex;justify-content: center;">
+					<div>{{name}}</div>
+				</div>
 				<div style="margin-top: 50rpx;font-size: 26rpx;display: flex;justify-content: center;"><el-link :type="typeStatus1"
 						 @tap="change('en')"><b>{{$t('locale.en')}}</b></el-link> <el-divider
 						direction="vertical"></el-divider><el-link  :type="typeStatus2"
@@ -11,29 +13,33 @@
 						@tap="change('zh-Hant')"><b>{{$t('locale.zhHant')}}</b></el-link>
 					<!--| <a href="javascript:void(0);"><b>Melayu</b></a> | <a href="javascript:void(0);"><b>한국어</b></a> -->
 				</div>
-				<div>
-					<el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+				<div style="margin-top: 30rpx;">
+					<el-form :label-position="labelPosition" label-width="90px" :model="formLabelAlign">
+
+						<el-form-item label="新密码">
+							<el-input type="password" placeholder="新密码"
+								v-model="formLabelAlign.newuserpass"></el-input>
+						</el-form-item>
+						<el-form-item label="重复密码">
+							<el-input type="password" placeholder="重复密码" v-model="formLabelAlign.userpass"></el-input>
+						</el-form-item>
 						<el-form-item :label="$t('login.eamil')">
-							<el-input v-model="formLabelAlign.useraccount" :placeholder="$t('login.eamil')"></el-input>
+							<el-input v-model="formLabelAlign.eamils" :placeholder="$t('login.eamil')"></el-input>
+							<el-button style="float: right;" type="text"
+								@click="handleEamil"><b><i class="el-icon-thumb"></i> 验证邮箱</b></el-button>
 						</el-form-item>
-						<el-form-item :label="$t('login.password')">
-							<el-input type="password" :placeholder="$t('login.password')"
-								v-model="formLabelAlign.userpass"></el-input>
-						</el-form-item>
-						<div style="width: 100%;display: flex;justify-content: center;margin-bottom: 10rpx;"
-							@tap="newCaptcha" v-show="showCaptcha"><img :src="captcha" alt=""></div>
-						<div style="text-align: center;font-size: 26rpx;">{{$t('login.input')}}</div>
-						<el-form-item>
-							<el-input v-model="formLabelAlign.verifycode"></el-input>
+						<el-form-item label="邮箱验证码">
+							<el-input v-model="formLabelAlign.eamilVerifycode"></el-input>
 						</el-form-item>
 						<el-form-item style="display: flex;justify-content: end;">
-							<el-button type="primary"
-								@click="submitForm('ruleForm')">{{$t('login.debarkation')}}</el-button>
+							<el-button type="text" style="margin-right: 50rpx;"
+								@click="handleresrt"><b>{{$t('table.raturnhome')}}</b></el-button>
+							<el-button @click="submitForm('ruleForm')">修改密码</el-button>
 						</el-form-item>
-						<el-form-item>
-							<div @tap="handleRecover"><i class="el-icon-lock"></i> <span
+						<!-- <el-form-item>
+							<div><i class="el-icon-lock"></i> <span
 									style="margin-left: 10rpx;">{{$t('login.Forgot')}}</span></div>
-						</el-form-item>
+						</el-form-item> -->
 					</el-form>
 				</div>
 			</el-card>
@@ -54,20 +60,26 @@
 				typeStatus1:'info',
 				typeStatus2:'info',
 				typeStatus3:'info',
-				labelPosition: 'top',
+				labelPosition: 'right',
 				captcha: '',
 				showCaptcha: false,
-				name:'',
-				footer:'',
+				name: '',
+				footer: '',
 				formLabelAlign: {
-					useraccount: '',
-					userpass: '',
 					verifycode: '',
-					iv: '',
-					sign: ''
-				}
+					newuserpass:'',
+					userpass:'',
+					eamilVerifycode:'',
+					eamils:''
+				},
+				rogerThat:''
 			}
 		},
+		// computed:{
+		// 	typeStatus(){
+		// 		uni.getLocale('')
+		// 	}
+		// },
 		mounted() {
 			this.change(uni.getLocale())
 			this.getUserInfo()
@@ -82,18 +94,42 @@
 			// }
 		},
 		methods: {
-			handleRecover(){
-				console.log(11)
+			handleEamil(){
+				let _this = this
+				let array = {
+					'email' : _this.formLabelAlign.eamils
+				}
+				_this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.email.ts',array)
+					.then(res=>{
+						console.log(res)
+						const {status, result:{message} } = res
+						_this.rogerThat = message
+						if(status==1){
+							_this.$message({
+								message: '邮箱已发送，请不要重复发送!',
+								type: 'success'
+							})
+						}else{
+							_this.$message('请检查验证码是否正确！')
+						}
+					})
+					.catch(err=>{
+						console.log(err)
+					})
+			},
+			handleresrt(){
+				this.formLabelAlign = {}
 				uni.navigateTo({
-					url:'/pages/recoverPassword/recoverPassword'
+					url: '/pages/userLogin/userLogin'
 				})
 			},
-			handleshopping(){
+			handleshopping() {
 				uni.navigateTo({
-					url:'/pages/shopping/shopping'
+					url: '/pages/shopping/shopping'
 				})
 			},
 			change(lan) {
+				// console.log(lan)
 				if(lan=='en'){
 					this.typeStatus1 = 'primary'
 					this.typeStatus2 = 'info'
@@ -110,18 +146,25 @@
 				uni.setLocale(lan)
 				this.$i18n.locale = lan
 			},
-			names(){
+			names() {
 				let _this = this
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner')
-					.then(res=>{
+					.then(res => {
 						console.log(res)
-						const {result:{shopmes:{name,copyrighttext}}} = res
+						const {
+							result: {
+								shopmes: {
+									name,
+									copyrighttext
+								}
+							}
+						} = res
 						this.footer = copyrighttext
-						uni.setStorageSync('footer',copyrighttext)
-						uni.setStorageSync('name',name)
+						uni.setStorageSync('footer', copyrighttext)
+						uni.setStorageSync('name', name)
 						_this.name = name
 					})
-					.catch(err=>{
+					.catch(err => {
 						console.log(err)
 					})
 			},
@@ -140,7 +183,6 @@
 								}
 							}
 						} = res
-						// console.log(res)
 						self.captcha = verifycode_img
 						self.formLabelAlign.iv = iv
 						self.formLabelAlign.sign = md5(config.version + iv);
@@ -159,70 +201,20 @@
 				this.getUserInfo()
 			},
 			submitForm() {
-				let self = this
-				// const keys = CryptoJS.enc.Utf8.parse(config.key)
-				// const dataString = JSON.stringify(this.formLabelAlign)
-				// const encryptedData = CryptoJS.AES.encrypt(dataString, keys).toString();
-				// console.log(encryptedData)
-				// const transferData = {
-				// 	'data':encryptedData
-				// }
-				uni.request({
-					url: config.https +
-						'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.login',
-					method: 'post',
-					data: this.formLabelAlign,
-					success(res) {
-						// console.log(res)
-						const {
-							data: {
-								status
-							}
-						} = res
-						if (status == 1) {
-							const {
-								data: {
-									result: {
-										userinfo,
-										token: {
-											access_token,
-											refersh_token
-										}
-									}
-								}
-							} = res
-							uni.setStorageSync('userInfo', res.data)
-							//先更新一次token
-							const refid = {
-								'refershtoken': refersh_token,
-								'userinfo': userinfo,
-								'access_token': access_token
-							}
-							uni.setStorageSync('tokenArray', refid)
-							uni.setStorageSync('pageSize', 10)
-							self.formLabelAlign = {}
-							self.getUserInfo()
-							uni.navigateTo({
-								url: '/pages/personalPage/personalPage'
-							})
-						} else {
-							const {
-								data: {
-									result: {
-										message
-									}
-								}
-							} = res
-							self.$message({
-								message: message,
-								type: 'warning'
-							});
-						}
-					},
-					fail(err) {
-						console.log(err)
-					}
-				})
+				let _this = this
+				console.log(_this.rogerThat)
+				// uni.request({
+				// 	url: config.https +
+				// 		'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.login',
+				// 	method: 'post',
+				// 	data: this.formLabelAlign,
+				// 	success(res) {
+				// 		console.log(res)
+				// 	},
+				// 	fail(err) {
+				// 		console.log(err)
+				// 	}
+				// })
 			}
 		}
 	}

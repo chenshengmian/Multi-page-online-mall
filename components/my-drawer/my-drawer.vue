@@ -1,4 +1,6 @@
 <template>
+	<div>
+	<div class="overlay" @tap="close"></div>
 	<div class="my-drawer">
 		<el-menu default-active="1-5-1" class="el-menu-vertical-demo" 
 			:collapse="isCollapse">
@@ -57,6 +59,7 @@
 			</el-menu-item>
 		</el-menu>
 	</div>
+	</div>
 </template>
 
 <script>
@@ -67,6 +70,10 @@
 			};
 		},
 		methods: {
+			close(){
+				// console.log(11)
+				this.$emit('handleClose',false)
+			},
 			handleshopping(){
 				uni.navigateTo({
 					url:'/pages/shopping/shopping'
@@ -139,5 +146,30 @@
 		background-color: white;
 		width: 100%;
 		z-index: 9999;
+	}
+	.overlay {
+		position: fixed; /* 声明为固定定位 */
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+		z-index: 999; /* 设置层级关系，使其在其他元素上方 */
+	}
+	
+	.my-drawer {
+		position: relative; /* 声明为相对定位 */
+		z-index: 1000; /* 设置层级关系，使其在遮盖层上方 */
+	}
+	
+	.my-drawer::before {
+		content: ""; /* 使用伪元素来实现高亮效果 */
+		position: absolute; /* 声明为绝对定位 */
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(255, 255, 255, 0.5); /* 半透明白色背景 */
+		z-index: -1; /* 设置层级关系，使其在内容下方 */
 	}
 </style>

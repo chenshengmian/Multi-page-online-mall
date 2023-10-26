@@ -79,10 +79,10 @@
 						}
 					}
 					else{
-						self.$message({
-							message: '该节点的已注册！',
-							type: 'success'
-						});
+						// self.$message({
+						// 	message: '该节点的已注册！',
+						// 	type: 'success'
+						// });
 					}
 					
 					

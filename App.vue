@@ -26,4 +26,5 @@
 			opacity: 1 !important;
 		}
 	}
+	* { touch-action: pan-y; } 
 </style>

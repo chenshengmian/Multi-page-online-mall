@@ -64,8 +64,8 @@
 						<div style="font-size: 30rpx;margin-top: 15rpx;"><b>商品详情</b></div>
 						<div v-html="content" style="margin-top: 15rpx;" v-show="deatilStatus"></div>
 						<el-empty description="暂时数据为空"  v-show="!deatilStatus"></el-empty>
-						<el-button type="danger" size="mini"><b>立即购买</b></el-button>
 					</el-card>
+					<el-button style="position: fixed;bottom: 140rpx;" type="danger" size="mini"><b>立即购买</b></el-button>
 				</el-main>
 				<el-footer>
 					<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
@@ -243,7 +243,7 @@
 	  opacity: 1;
 	}
 	.el-button--danger{
-		width: 100%;
+		width: 86%;
 		margin-top: 10rpx;
 	}
 	.time {
@@ -460,6 +460,9 @@
 	}
 
 	@media screen and (max-width: 990px) {
+		.el-button--danger{
+			width: 90%;
+		}
 		.homep ,.el-footer{
 			width: 100% !important;
 		}

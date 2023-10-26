@@ -3,8 +3,8 @@ import App from './App'
 // #ifndef VUE3
 import Vue from 'vue'
 import './uni.promisify.adaptor'
-import FastClick from 'fastclick'
-FastClick.attach(document.body)
+// import FastClick from 'fastclick'
+// FastClick.attach(document.body)
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import ElementUI from 'element-ui'
@@ -20,7 +20,18 @@ const i18n = new VueI18n({
 	locale:uni.getLocale(),//获取设置语言
 	messages
 })
-Vue.use(ElementUI)
+
+import locale from 'element-ui/lib/locale/lang/en'
+import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+import llocale from 'element-ui/lib/locale/lang/zh-TW'
+if(uni.getLocale()=='en'){
+	Vue.use(ElementUI,{ locale })
+}else if(uni.getLocale()=='zh-Hans'){
+	Vue.use(ElementUI,{ zhLocale })
+}else if(uni.getLocale()=='zh-Hant'){
+	Vue.use(ElementUI,{ locale })
+}
+
 import vueSeamlessScroll from 'vue-seamless-scroll' 
 Vue.use(vueSeamlessScroll)
 Vue.use(print)

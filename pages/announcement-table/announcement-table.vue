@@ -3,8 +3,9 @@
 		<el-container>
 			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
 				@select="handleSelect" style="">
-				<image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image>
-				<image src="../../static/img/favicon.png" v-else class="userLogo"></image>
+				<!-- <image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image> -->
+								<!-- <image src="../../static/img/favicon.png" v-else class="userLogo"></image> -->
+				<div class="userLo">{{name}}</div>
 				<el-menu-item index="1" @tap="handleperson">
 					<i class="el-icon-menu"></i>
 					<span slot="title">{{$t('menu.home')}}</span>
@@ -65,11 +66,11 @@
 					<div class="headerTop" :style="{backgroundColor:topColor}">
 						<div style="display: flex;" :class="{'colorb':isblock}">
 							<i class="el-icon-s-grid changeStatu" @tap="changeStatus"></i>
-							<image src="../../static/img/favicon.png" class="changeStatus1 smalllogo"></image>
+							<!-- <image src="../../static/img/favicon.png" class="changeStatus1 smalllogo"></image> -->
 							<i class="el-icon-s-grid changeStatus1" @tap="showDrawer" style="margin-left: 36rpx;"></i>
 						</div>
 						<div style="display: flex;margin-top: 10rpx;">
-							<i class="el-icon-full-screen fullsc" @tap="toggleFullscreen"></i>
+							<!-- <div class="userLo">{{logoname}}</div> -->
 							<el-dropdown trigger="click">
 								<span class="el-dropdown-link">
 									<el-avatar :src="circleUrl" class=" el-icon--right"
@@ -125,7 +126,7 @@
 							Mode</span></el-row>
 				</el-drawer>
 				<div class="ableta">
-					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer"></my-drawer>
+					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
 					<!-- <div v-if="index=='1'" style="width: 100%;"> -->
@@ -178,7 +179,7 @@
 					</div> -->
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
-					<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
+					<div class="footer">{{footesr}}</div>
 				</el-footer>
 			</el-container>
 		</el-container>
@@ -193,6 +194,8 @@
 		},
 		data() {
 			return {
+				footesr:uni.getStorageSync('footer'),
+				name:uni.getStorageSync('name'),
 				isCollapse: false,
 				disable: true,
 				drawerVisible: false,
@@ -223,15 +226,18 @@
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
 			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 		},
-		onShow() {
-			this.login()
-			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
-			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
-		},
+		// onShow() {
+		// 	this.login()
+		// 	this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
+		// 	window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
+		// },
 		beforeDestroy() {
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleClose(param){
+				this.drawerVisible = param
+			},
 			handleshopping(){
 				uni.navigateTo({
 					url:'/pages/shopping/shopping'
@@ -322,7 +328,7 @@
 								center: true
 							});
 							uni.navigateTo({
-								url: '/pages/index/index'
+								url: '/pages/userLogin/userLogin'
 							})
 						} else {
 							// self.maindisable = true
@@ -379,7 +385,7 @@
 								center: true
 							});
 							uni.navigateTo({
-								url: '/pages/index/index'
+								url: '/pages/userLogin/userLogin'
 							})
 						} else {
 

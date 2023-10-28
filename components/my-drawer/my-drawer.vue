@@ -33,6 +33,7 @@
 				</template>
 				<el-menu-item-group>
 					<!-- <span slot="title">购物</span> -->
+					<el-menu-item index="4-3" @tap="handleshoppingAddress">{{$t('home.address')}}</el-menu-item>
 					<el-menu-item @tap="handleshopping">{{$t('menu.allCommodities')}}</el-menu-item>
 					<el-menu-item @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item>
 					<el-menu-item @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
@@ -70,6 +71,11 @@
 			};
 		},
 		methods: {
+			handleshoppingAddress(){
+				uni.navigateTo({
+					url:'/pages/shippingAddress/shippingAddress'
+				})
+			},
 			close(){
 				// console.log(11)
 				this.$emit('handleClose',false)

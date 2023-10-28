@@ -1,15 +1,6 @@
 <template>
 	<view class="content">
 		<el-container>
-			<el-dialog title="FELEMENT WHATSAPP & TELEGRAM 群主" :visible.sync="centerDialogVisible" :width="width" style="height: 100%;">
-				<div id="print" ref="print" style="" v-html="tanccontent"></div>
-				<span slot="footer" class="dialog-footer">
-					<i class="el-icon-printer" @click="handleCustomButton"
-						style="margin-right: 35rpx;margin-top: 20rpx;"></i>
-					<el-button type="primary" @click="changeads" size="mini">关闭弹窗不再显示</el-button>
-				</span>
-			</el-dialog>
-
 			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
 				 style="">
 				 <div class="userLo">{{name}}</div>
@@ -127,7 +118,8 @@
 					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
-						<my-home @changeAd="getAdstatus"/>
+						<!-- <my-home @changeAd="getAdstatus"/> -->
+						<shippingAddress/>
 					
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
@@ -140,11 +132,11 @@
 
 <script>
 	import MyDrawer from '@/components/my-drawer/my-drawer.vue';
-	import MyHome from '@/components/my-home/my-home.vue';
+	import ShoppingAdress from '@/components/shippingAddress/shippingAddress.vue'
 	export default {
 		components: {
 			MyDrawer,
-			MyHome,
+			ShoppingAdress,
 		},
 		data() {
 			return {
@@ -158,8 +150,8 @@
 				circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
 				drawerSize: '60%',
 				screenWidth: 0,
-				option1: true,
-				option2: false,
+				// option1: true,
+				// option2: false,
 				index: '1',
 				classp: true,
 				isblock: false,
@@ -197,6 +189,11 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleshoppingAddress(){
+				uni.navigateTo({
+					url:'/pages/shippingAddress/shippingAddress'
+				})
+			},
 			handleshoppingAddress(){
 				uni.navigateTo({
 					url:'/pages/shippingAddress/shippingAddress'
@@ -267,10 +264,6 @@
 					url:'/pages/announcement-table/announcement-table'
 				})
 			},
-			handleCustomButton() {
-				this.$print(this.$refs.print)
-			
-			},
 			handleProduct(){
 				uni.navigateTo({
 					url:'/pages/product-purchase/product-purchase'
@@ -281,97 +274,8 @@
 					url:'/pages/product-purchase/product-detail'
 				})
 			},
-			getAdstatus(param) {
-				// console.log(param)
-				const {
-					type,
-					ad
-				} = param
-				let self = this
-				this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.agr')
-					.then(res => {
-						// console.log('弹窗',type)
-						const {
-							result: {
-								agrcontent,
-								content
-							}
-						} = res
-						self.centerDialogVisible = true
-						if (type == 0) {
-							let str = self.htmlEntityDecode(agrcontent)
-							const styleToAdd =
-								'overflow-x: hidden !important; max-width: 100% !important; white-space: normal !important;';
-							str = str.replace(/(text-wrap: nowrap;)/g, `$1 ${styleToAdd}`);
-							self.tanccontent = str
-
-						} else {
-							let str = self.htmlEntityDecode(content)
-							const styleToAdd =
-								'overflow-x: hidden !important; max-width: 100% !important; white-space: normal !important;';
-							str = str.replace(/(text-wrap: nowrap;)/g, `$1 ${styleToAdd}`);
-							self.tanccontent = str
-						}
-
-					})
-					.catch(err => {
-						console.log(err)
-					})
-			},
-			htmlEntityDecode(str) {
-				const entityMap = {
-					'&amp;': '&',
-					'&lt;': '<',
-					'&gt;': '>',
-					'&quot;': '"',
-					'&#39;': "'",
-				};
-
-				// 替换HTML实体
-				return str.replace(/&amp;|&lt;|&gt;|&quot;|&#39;/g, (match) => entityMap[match]);
-			},
-			changeads() {
-				const {
-					userinfo
-				} = uni.getStorageSync('tokenArray')
-				let _this = this
-				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.newAdstauts&userid=' +
-						userinfo)
-					.then(res => {
-						console.log(res)
-						if (res.status == 1) {
-							_this.centerDialogVisible = false
-						}
-					})
-					.catch(err => {
-						console.log(err)
-					})
-			},
-			newindex(param) {
-				this.index = param
-				// console.log(param)
-			},
 			async login() {
 				let self = this
-				this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.agr')
-					.then(res => {
-						// console.log('弹窗',self.type)
-						const {
-							result: {
-								agrcontent,
-								content
-							}
-						} = res
-						// if(self.type==0){
-						// 	self.tanccontent = self.htmlEntityDecode(agrcontent)
-						// }else{
-						self.tanccontent = self.htmlEntityDecode(content)
-						// }
-
-					})
-					.catch(err => {
-						console.log(err)
-					})
 				await this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member')
 					.then(res => {
 						// console.log('登录状态',res)
@@ -409,46 +313,6 @@
 						console.log(err)
 					})
 
-				const {
-					userinfo
-				} = uni.getStorageSync('tokenArray')
-				let array = {
-					'userid': userinfo
-				}
-				self.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.selectTree',
-						array)
-					.then(res => {
-						const {
-							result
-						} = res
-						uni.setStorageSync('data', result)
-						console.log('更新',res)
-					})
-					.catch(err => {
-						console.log(err)
-					})
-			},
-			handlereg(param) {
-				this.index = param
-			},
-			getdatail(res) {
-				// const lastarr = res[res.length -1]
-				// // console.log(lastarr)
-				const {
-					id,
-					index
-				} = res
-				this.todatail = res
-				this.index = index
-			},
-			getIndex(data) {
-				// console.log(data)
-				const {
-					index,
-					nodeid
-				} = data
-				this.index = index
-				this.nodeid = nodeid
 			},
 			logOff() {
 				uni.clearStorageSync();
@@ -456,22 +320,21 @@
 					url: '/pages/userLogin/userLogin'
 				})
 			},
-			changeStatus() {
-				let self = this
-				self.isCollapse = !self.isCollapse
-				self.disable = !self.disable
-				self.classp = !self.classp
-			},
 			showDrawer() {
 				// console.log(111)
 				this.drawerVisible = !this.drawerVisible;
 			},
 			showDrawerleft() {
 				this.drawerVisibletwo = !this.drawerVisibletwo;
-				// this.isblock = true
 			},
 			handleDrawerClose() {
 				this.isblock = false
+			},
+			changeStatus() {
+				let self = this
+				self.isCollapse = !self.isCollapse
+				self.disable = !self.disable
+				self.classp = !self.classp
 			},
 			getScreenWidth() {
 				this.screenWidth = window.innerWidth;
@@ -496,17 +359,6 @@
 						this.width = '30%'
 					}
 				}
-			},
-			handleOptionChange(option) {
-				if (option === 'option1') {
-					this.option2 = !this.option1; // 关闭选项2并开启选项1
-				} else if (option === 'option2') {
-					this.option1 = !this.option2; // 关闭选项1并开启选项2
-				}
-				this.option1 == true ? (this.baColr = '#F2F2F2', this.hColr = '#fff', this.footbg = '#FAFAFA', this
-					.topColor = '#fff', this.drawbg = '#fff') : (this.baColr = '#1F2431', this.hColr = '#7A6FBE', this
-					.footbg = '#323A4E',
-					this.topColor = '#7A6FBE', this.drawbg = '#2A3142')
 			},
 		}
 	}

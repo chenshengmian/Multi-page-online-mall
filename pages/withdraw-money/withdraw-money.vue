@@ -36,6 +36,7 @@
 					</template>
 					<el-menu-item-group>
 						<!-- <span slot="title">{{$t('menu.shopping')}}</span> -->
+						<el-menu-item index="4-3" @tap="handleshoppingAddress">{{$t('home.address')}}</el-menu-item>
 						<el-menu-item  @tap="handleshopping">{{$t('menu.allCommodities')}}</el-menu-item>
 						<el-menu-item  @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item>
 						<el-menu-item  @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
@@ -228,6 +229,9 @@
 		},
 		mounted(param) {
 			// console.log(1111)
+			uni.setNavigationBarTitle({
+				title:uni.getStorageSync('name')
+			})
 			this.login()
 			// console.log(uni.getStorageSync('tokenArray'))
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
@@ -242,6 +246,11 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleshoppingAddress(){
+				uni.navigateTo({
+					url:'/pages/shippingAddress/shippingAddress'
+				})
+			},
 			handleClose(param){
 				this.drawerVisible = param
 			},
@@ -361,43 +370,10 @@
 				}
 			},
 			logOff() {
-				let self = this
-				const {
-					result: {
-						userinfo
-					}
-				} = uni.getStorageSync('userInfo')
-				const logof = {
-					'userid': userinfo
-				}
-				this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.logout', logof)
-					.then(res => {
-						// console.log(res)
-						const {
-							status
-						} = res
-						if (status == 1) {
-							uni.clearStorageSync();
-							const {
-								result: {
-									message
-								}
-							} = res
-
-							self.$message({
-								message: message,
-								center: true
-							});
-							uni.navigateTo({
-								url: '/pages/userLogin/userLogin'
-							})
-						} else {
-
-						}
-					})
-					.catch(err => {
-						console.log(err)
-					})
+				uni.clearStorageSync();
+				uni.navigateTo({
+					url: '/pages/userLogin/userLogin'
+				})
 			},
 			changeStatus() {
 				let self = this

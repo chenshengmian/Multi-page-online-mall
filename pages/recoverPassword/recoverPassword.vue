@@ -5,31 +5,39 @@
 				<div style="width: 100%;display: flex;justify-content: center;">
 					<div>{{name}}</div>
 				</div>
-				<div style="margin-top: 50rpx;font-size: 26rpx;display: flex;justify-content: center;"><el-link :type="typeStatus1"
-						 @tap="change('en')"><b>{{$t('locale.en')}}</b></el-link> <el-divider
-						direction="vertical"></el-divider><el-link  :type="typeStatus2"
+				<div style="margin-top: 50rpx;font-size: 26rpx;display: flex;justify-content: center;"><el-link
+						:type="typeStatus1" @tap="change('en')"><b>{{$t('locale.en')}}</b></el-link> <el-divider
+						direction="vertical"></el-divider><el-link :type="typeStatus2"
 						@tap="change('zh-Hans')"><b>{{$t('locale.zhHans')}}</b>
 					</el-link> <el-divider direction="vertical"></el-divider><el-link :type="typeStatus3"
 						@tap="change('zh-Hant')"><b>{{$t('locale.zhHant')}}</b></el-link>
 					<!--| <a href="javascript:void(0);"><b>Melayu</b></a> | <a href="javascript:void(0);"><b>한국어</b></a> -->
 				</div>
 				<div style="margin-top: 30rpx;">
-					<el-form :label-position="labelPosition" label-width="90px" :model="formLabelAlign">
+					<el-form :label-position="labelPosition" label-width="90px" :model="ruleForm" :rules="rules"
+						ref="ruleForm">
 
-						<el-form-item label="新密码">
-							<el-input type="password" placeholder="新密码"
-								v-model="formLabelAlign.newuserpass"></el-input>
+						<el-form-item label="新密码" prop="newuserpass">
+							<el-input type="password" placeholder="新密码" v-model="ruleForm.newuserpass"></el-input>
 						</el-form-item>
-						<el-form-item label="重复密码">
-							<el-input type="password" placeholder="重复密码" v-model="formLabelAlign.userpass"></el-input>
+						<el-form-item label="重复密码" prop="userpass">
+							<el-input type="password" placeholder="重复密码" v-model="ruleForm.userpass"></el-input>
 						</el-form-item>
-						<el-form-item :label="$t('login.eamil')">
-							<el-input v-model="formLabelAlign.eamils" :placeholder="$t('login.eamil')"></el-input>
-							<el-button style="float: right;" type="text"
-								@click="handleEamil"><b><i class="el-icon-thumb"></i> 验证邮箱</b></el-button>
+						<el-form-item :label="$t('login.eamil')" prop="eamils" :rules="[
+      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+    ]">
+							<el-input v-model="ruleForm.eamils" :placeholder="$t('login.eamil')"></el-input>
+							<!-- <el-button style="float: right;" type="text" @click="handleEamil"><b><i
+										class="el-icon-thumb"></i> 验证邮箱</b></el-button> -->
 						</el-form-item>
-						<el-form-item label="邮箱验证码">
-							<el-input v-model="formLabelAlign.eamilVerifycode"></el-input>
+						<el-form-item>
+							<!-- <el-input v-model="ruleForm.eamils" :placeholder="$t('login.eamil')"></el-input> -->
+							<el-button style="float: right;" type="text" @click="handleEamil"><b><i
+										class="el-icon-thumb"></i> 验证邮箱</b></el-button>
+						</el-form-item>
+						<el-form-item label="邮箱验证码" prop="eamilVerifycode">
+							<el-input v-model="ruleForm.eamilVerifycode"></el-input>
 						</el-form-item>
 						<el-form-item style="display: flex;justify-content: end;">
 							<el-button type="text" style="margin-right: 50rpx;"
@@ -56,23 +64,63 @@
 	// import axios from 'axios'
 	export default {
 		data() {
+			var validatePass = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('请输入密码'));
+				} else {
+					if (this.ruleForm.checkPass !== '') {
+						this.$refs.ruleForm.validateField('checkPass');
+					}
+					callback();
+				}
+			};
+			var validatePass2 = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('请再次输入密码'));
+				} else if (value !== this.ruleForm.newuserpass) {
+					callback(new Error('两次输入密码不一致!'));
+				} else {
+					callback();
+				}
+			};
+			var validateeamils = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('请输入邮箱验证码'));
+				} else {
+					callback();
+				}
+			};
 			return {
-				typeStatus1:'info',
-				typeStatus2:'info',
-				typeStatus3:'info',
+				typeStatus1: 'info',
+				typeStatus2: 'info',
+				typeStatus3: 'info',
 				labelPosition: 'right',
 				captcha: '',
 				showCaptcha: false,
 				name: '',
 				footer: '',
-				formLabelAlign: {
+				ruleForm: {
 					verifycode: '',
-					newuserpass:'',
-					userpass:'',
-					eamilVerifycode:'',
-					eamils:''
+					newuserpass: '',
+					userpass: '',
+					eamilVerifycode: '',
+					eamils: ''
 				},
-				rogerThat:''
+				rogerThat: '',
+				rules: {
+					newuserpass: [{
+						validator: validatePass,
+						trigger: 'blur'
+					}],
+					userpass: [{
+						validator: validatePass2,
+						trigger: 'blur'
+					}],
+					eamilVerifycode: [{
+						validator: validateeamils,
+						trigger: 'blur',
+					}]
+				}
 			}
 		},
 		// computed:{
@@ -82,7 +130,7 @@
 		// },
 		mounted() {
 			this.change(uni.getLocale())
-			this.getUserInfo()
+			// this.getUserInfo()
 			this.names()
 		},
 		onShow() {
@@ -94,31 +142,41 @@
 			// }
 		},
 		methods: {
-			handleEamil(){
+			handleshoppingAddress(){
+				uni.navigateTo({
+					url:'/pages/shippingAddress/shippingAddress'
+				})
+			},
+			handleEamil() {
 				let _this = this
 				let array = {
-					'email' : _this.formLabelAlign.eamils
+					'email': _this.ruleForm.eamils
 				}
-				_this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.email.ts',array)
-					.then(res=>{
+				_this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.verifyUserexists', array)
+					.then(res => {
 						console.log(res)
-						const {status, result:{message} } = res
+						const {
+							status,
+							result: {
+								message
+							}
+						} = res
 						_this.rogerThat = message
-						if(status==1){
+						if (status == 1) {
 							_this.$message({
 								message: '邮箱已发送，请不要重复发送!',
 								type: 'success'
 							})
-						}else{
-							_this.$message('请检查验证码是否正确！')
+						} else {
+							_this.$message(message)
 						}
 					})
-					.catch(err=>{
+					.catch(err => {
 						console.log(err)
 					})
 			},
-			handleresrt(){
-				this.formLabelAlign = {}
+			handleresrt() {
+				this.ruleForm = {}
 				uni.navigateTo({
 					url: '/pages/userLogin/userLogin'
 				})
@@ -130,15 +188,15 @@
 			},
 			change(lan) {
 				// console.log(lan)
-				if(lan=='en'){
+				if (lan == 'en') {
 					this.typeStatus1 = 'primary'
 					this.typeStatus2 = 'info'
 					this.typeStatus3 = 'info'
-				}else if(lan=='zh-Hans'){
+				} else if (lan == 'zh-Hans') {
 					this.typeStatus1 = 'info'
 					this.typeStatus2 = 'primary'
 					this.typeStatus3 = 'info'
-				}else{
+				} else {
 					this.typeStatus1 = 'info'
 					this.typeStatus2 = 'info'
 					this.typeStatus3 = 'primary'
@@ -159,6 +217,9 @@
 								}
 							}
 						} = res
+						uni.setNavigationBarTitle({
+							title: name
+						})
 						this.footer = copyrighttext
 						uni.setStorageSync('footer', copyrighttext)
 						uni.setStorageSync('name', name)
@@ -168,53 +229,52 @@
 						console.log(err)
 					})
 			},
-			getUserInfo() {
-				let self = this
-				uni.request({
-					url: config.https + '/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account',
-					method: 'post',
-					success(res) {
-						const {
-							data: {
-								result: {
-									verifycode_img,
-									iv,
-									smsimgcode
-								}
-							}
-						} = res
-						self.captcha = verifycode_img
-						self.formLabelAlign.iv = iv
-						self.formLabelAlign.sign = md5(config.version + iv);
-						if (smsimgcode == 1) {
-							self.showCaptcha = true
-						} else {
-							self.showCaptcha = false
-						}
-					},
-					fail(err) {
-						console.log(err)
-					}
-				})
-			},
-			newCaptcha() {
-				this.getUserInfo()
-			},
-			submitForm() {
+			submitForm(formName) {
 				let _this = this
-				console.log(_this.rogerThat)
-				// uni.request({
-				// 	url: config.https +
-				// 		'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.login',
-				// 	method: 'post',
-				// 	data: this.formLabelAlign,
-				// 	success(res) {
-				// 		console.log(res)
-				// 	},
-				// 	fail(err) {
-				// 		console.log(err)
-				// 	}
-				// })
+				_this.$refs[formName].validate((valid) => {
+					if (valid) {
+						console.log(_this.rogerThat)
+						uni.request({
+							url: config.https +
+								'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.handlenewPass',
+							method: 'post',
+							data: _this.ruleForm,
+							success(res) {
+								// console.log(res)
+								const {
+									data:{
+										status,
+										result: {
+											message
+										}
+									}
+								} = res
+								// console.log(message)
+								if (status == 1) {
+									_this.$message({
+										message: message,
+										type: 'success'
+									})
+									_this.ruleForm = {}
+									setTimeout(function(){
+										uni.navigateTo({
+											url: '/pages/userLogin/userLogin'
+										})
+									},1000);
+								} else {
+									_this.$message(message)
+								}
+							},
+							fail(err) {
+								console.log(err)
+							}
+						})
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				});
+				
 			}
 		}
 	}

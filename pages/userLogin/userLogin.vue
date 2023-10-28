@@ -120,6 +120,9 @@
 						uni.setStorageSync('footer',copyrighttext)
 						uni.setStorageSync('name',name)
 						_this.name = name
+						uni.setNavigationBarTitle({
+							title:name
+						})
 					})
 					.catch(err=>{
 						console.log(err)

@@ -37,6 +37,7 @@
 					</template>
 					<el-menu-item-group>
 						<!-- <span slot="title">{{$t('menu.shopping')}}</span> -->
+						<el-menu-item index="4-3" @tap="handleshoppingAddress">{{$t('home.address')}}</el-menu-item>
 						<el-menu-item index="4-0" @tap="handleshopping">{{$t('menu.allCommodities')}}</el-menu-item>
 						<el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item>
 						<el-menu-item index="4-2" @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
@@ -229,6 +230,9 @@
 		},
 		mounted(param) {
 			// console.log(1111)
+			uni.setNavigationBarTitle({
+				title:uni.getStorageSync('name')
+			})
 			this.login()
 			// console.log(uni.getStorageSync('tokenArray'))
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
@@ -243,6 +247,11 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleshoppingAddress(){
+				uni.navigateTo({
+					url:'/pages/shippingAddress/shippingAddress'
+				})
+			},
 			handleClose(param){
 				this.drawerVisible = param
 			},
@@ -336,6 +345,7 @@
 							}
 						} = res
 						self.username = nickname
+						uni.setStorageSync('username',nickname)
 						if (status == 100) {
 							self.$message({
 								message: '登录状态已过期！',
@@ -371,43 +381,10 @@
 				this.index = index
 			},
 			logOff() {
-				let self = this
-				const {
-					result: {
-						userinfo
-					}
-				} = uni.getStorageSync('userInfo')
-				const logof = {
-					'userid': userinfo
-				}
-				this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.logout', logof)
-					.then(res => {
-						// console.log(res)
-						const {
-							status
-						} = res
-						if (status == 1) {
-							uni.clearStorageSync();
-							const {
-								result: {
-									message
-								}
-							} = res
-
-							self.$message({
-								message: message,
-								center: true
-							});
-							uni.navigateTo({
-								url: '/pages/userLogin/userLogin'
-							})
-						} else {
-
-						}
-					})
-					.catch(err => {
-						console.log(err)
-					})
+				uni.clearStorageSync();
+				uni.navigateTo({
+					url: '/pages/userLogin/userLogin'
+				})
 			},
 			changeStatus() {
 				let self = this

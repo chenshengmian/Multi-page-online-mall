@@ -77,7 +77,7 @@
 										<div style="margin-left: 30rpx;">
 											<!-- <h6>内容：</h6> -->
 											<span><b>{{item.title}}</b></span>
-											<div style="color: red;margin-top: 40rpx;font-size: 40rpx;"><span style="font-size: 24rpx;">￥</span>{{item.marketprice}}</div>
+											<div style="color: red;margin-top: 40rpx;font-size: 40rpx;"><span style="font-size: 24rpx;">MYR</span>{{item.marketprice}}</div>
 											<div class="bottom clearfix">
 												<!-- <time class="time">库存： {{ item.marketprice }}</time> -->
 												<time class="time">库存： {{ item.sales }}</time>

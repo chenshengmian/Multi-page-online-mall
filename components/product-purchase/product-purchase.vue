@@ -18,7 +18,12 @@
 					<el-menu-item :index="item.id">{{item.name}}</el-menu-item>
 				</block>
 			</el-menu>
-			<el-table :data="tableData" style="width: 100%;margin-top: 20rpx;"@row-click="hanldedetail">
+			<!-- <el-table :data="tableData" style="width: 100%;margin-top: 20rpx;" @row-click="hanldedetail"> -->
+			<el-table :data="tableData" style="width: 100%;margin-top: 20rpx;"  @selection-change="handleSelectionChange">
+				<el-table-column
+				    type="selection"
+				    width="55">
+				</el-table-column>
 				<el-table-column prop="id" label="ID" align="center" width="150">
 				</el-table-column>
 				<!-- <el-table-column fixed>
@@ -45,25 +50,25 @@
 						MYR {{scope.row.minprice}}
 					</template>
 				</el-table-column>
-				<el-table-column label="操作" align="center" width="80">
+				<!-- <el-table-column label="操作" align="center" width="80">
 					<template slot-scope="scope">
 						<el-button size="mini" type="primary">详情</el-button>
 					</template>
-				</el-table-column>
+				</el-table-column> -->
 				<!-- <el-table-column prop="count" label="数量" align="center">
 					<template slot-scope="scope">
 						<el-input size="small" v-model="scope.row.count"></el-input>
 					</template>
 				</el-table-column> -->
 			</el-table>
-			<!-- <div class="sumbit">
+			<div class="sumbit">
 				<el-button size="small" type="primary" @tap="hanldedetail">提交</el-button>
-			</div> -->
-			<div v-show="paginations" class="pagination sumbit">
+			</div>
+			<!-- <div v-show="paginations" class="pagination sumbit">
 				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
 					:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"
 					layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
-			</div>
+			</div> -->
 		</el-card>
 	</view>
 </template>
@@ -81,13 +86,14 @@
 					email:uni.getStorageSync('email'),
 					phone:uni.getStorageSync('mobile')
 				},
-				counttotal: 0,
+				// counttotal: 0,
 				tableData: [], // 表格数据源
-				currentPage: 1, // 当前页码
-				pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
+				// currentPage: 1, // 当前页码
+				// pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
 				activeIndex: '',
 				tabbleTap: '',
-				paginations: false
+				// paginations: false,
+				ids:''
 			};
 		},
 		mounted() {
@@ -100,6 +106,13 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleSelectionChange(val){
+				let str = ''
+				val.forEach(res=>{
+					str += ',' + res.id
+				})
+				this.ids = str.slice(1)
+			},
 			handleSelect(param) {
 				// console.log(param)
 				let self = this
@@ -111,7 +124,7 @@
 				self.$axios.get(
 						'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.goodscates&pagesize=100')
 					.then(res => {
-						console.log(res)
+						// console.log(res)
 						const {
 							result: {
 								list
@@ -124,22 +137,21 @@
 					})
 			},
 			// 处理每页显示条数变化
-			handleSizeChange(val) {
-				// console.log('处理每页显示条数变化',this.pageSize)
-				uni.setStorageSync('pageSize', val)
-				this.pageSize = val;
-				this.getProduct();
-			},
-			// 处理当前页码变化
-			handleCurrentChange(val) {
-				// console.log('处理当前页码变化',val)
-				this.currentPage = val;
-				this.getProduct();
-			},
+			// handleSizeChange(val) {
+			// 	// console.log('处理每页显示条数变化',this.pageSize)
+			// 	uni.setStorageSync('pageSize', val)
+			// 	this.pageSize = val;
+			// 	this.getProduct();
+			// },
+			// // 处理当前页码变化
+			// handleCurrentChange(val) {
+			// 	// console.log('处理当前页码变化',val)
+			// 	this.currentPage = val;
+			// 	this.getProduct();
+			// },
 			getProduct() {
 				let self = this
-				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.getlist&page=' + self
-						.currentPage + '&pagesize=' + self.pageSize + '&cate=' + self.activeIndex)
+				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.getlist&cate='+self.activeIndex)
 					.then(res => {
 						// console.log(res)
 						const {
@@ -148,31 +160,24 @@
 								list
 							}
 						} = res
-						console.log(list)
-						if (total == undefined) {
-							self.counttotal = 0
-						} else {
-							self.counttotal = parseInt(total)
-							if (Number(total) > 0) {
-								self.paginations = true
-							}
-						}
+						// console.log(list) 
+						// if (total == undefined) {
+						// 	self.counttotal = 0
+						// } else {
+						// 	self.counttotal = parseInt(total)
+						// 	if (Number(total) > 0) {
+						// 		self.paginations = true
+						// 	}
+						// }
 						self.tableData = list
 					})
 					.catch(err => {
 						console.log(err);
 					})
 			},
-			hanldedetail(param){
-				// console.log('parm',param)
-				const { id } = param
-				const array = {
-					'id' : id,
-					'email':this.formLabelAlign.email,
-					'phone':this.formLabelAlign.phone
-				}
+			hanldedetail(){
 				uni.navigateTo({
-					url:'/pages/product-purchase/product-detail?id='+id
+					url:'/pages/product-purchase/product-detail?ids='+this.ids
 				})
 			},
 			// hanldedetail(param) {

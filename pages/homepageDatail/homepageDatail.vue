@@ -44,7 +44,8 @@
 					</template>
 					<el-menu-item-group>
 						<!-- <span slot="title">{{$t('menu.shopping')}}</span> -->
-						<el-menu-item index="4-0" @tap="handleshoppings">所有商品</el-menu-item>
+						<el-menu-item index="4-3" @tap="handleshoppingAddress">{{$t('home.address')}}</el-menu-item>
+						<el-menu-item index="4-0" @tap="handleshoppings">{{$t('menu.allCommodities')}}</el-menu-item>
 						<el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item>
 						<el-menu-item index="4-2" @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
 					</el-menu-item-group>
@@ -242,17 +243,18 @@
 			}
 		},
 		mounted(param) {
+			uni.setNavigationBarTitle({
+				title:uni.getStorageSync('name')
+			})
 			// console.log(1111)
-			this.login()
+			// this.login()
 			// console.log(uni.getStorageSync('tokenArray'))
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
 			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 		},
-		// onShow() {
-		// 	this.login()
-		// 	this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
-		// 	window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
-		// },
+		onShow() {
+			this.login()
+		},
 		onLoad(param) {
 			// console.log(param)
 			this.ids = param.id
@@ -261,6 +263,11 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleshoppingAddress(){
+				uni.navigateTo({
+					url:'/pages/shippingAddress/shippingAddress'
+				})
+			},
 			handleClose(param){
 				this.drawerVisible = param
 			},
@@ -344,8 +351,9 @@
 				this.index = param
 				// console.log(param)
 			},
-			async login() {
-				await this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member')
+			login() {
+				let self = this
+				this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member')
 					.then(res => {
 						// console.log('登录状态',res)
 						const {
@@ -356,25 +364,10 @@
 								adstatus
 							}
 						} = res
-						self.username = nickname
-						// console.log('登录状态',res)
-						if (adstatus == 0) {
-							self.centerDialogVisible = false
-						} else {
-							self.centerDialogVisible = true
-						}
-						if (status == 100) {
-							self.$message({
-								message: '登录状态已过期！',
-								center: true
-							});
-							uni.navigateTo({
-								url: '/pages/userLogin/userLogin'
-							})
-						} else {
-							// self.maindisable = true
-						}
-						self.circleUrl = avatar
+						self.$nextTick(function(){
+							self.username = nickname
+							self.circleUrl = avatar
+						})
 					})
 					.catch(err => {
 						console.log(err)
@@ -404,43 +397,10 @@
 				this.nodeid = nodeid
 			},
 			logOff() {
-				let self = this
-				const {
-					result: {
-						userinfo
-					}
-				} = uni.getStorageSync('userInfo')
-				const logof = {
-					'userid': userinfo
-				}
-				this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.logout', logof)
-					.then(res => {
-						// console.log(res)
-						const {
-							status
-						} = res
-						if (status == 1) {
-							uni.clearStorageSync();
-							const {
-								result: {
-									message
-								}
-							} = res
-
-							self.$message({
-								message: message,
-								center: true
-							});
-							uni.navigateTo({
-								url: '/pages/userLogin/userLogin'
-							})
-						} else {
-
-						}
-					})
-					.catch(err => {
-						console.log(err)
-					})
+				uni.clearStorageSync();
+				uni.navigateTo({
+					url: '/pages/userLogin/userLogin'
+				})
 			},
 			changeStatus() {
 				let self = this

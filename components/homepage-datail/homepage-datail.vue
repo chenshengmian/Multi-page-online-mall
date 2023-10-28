@@ -65,7 +65,7 @@
 						<div v-html="content" style="margin-top: 15rpx;" v-show="deatilStatus"></div>
 						<el-empty description="暂时数据为空"  v-show="!deatilStatus"></el-empty>
 					</el-card>
-					<el-button style="position: fixed;bottom: 140rpx;" type="danger" size="mini"><b>立即购买</b></el-button>
+					<el-button style="position: fixed;bottom: 140rpx;" type="danger" size="mini" @tap="buyNow"><b>立即购买</b></el-button>
 				</el-main>
 				<el-footer>
 					<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
@@ -111,11 +111,12 @@
 				price: '',
 				imgarr: [],
 				content:'',
-				deatilStatus:true
+				deatilStatus:true,
+				id:1
 			};
 		},
 		mounted() {
-			// this.login()
+			this.login()
 			this.getcateList()
 			this.handelDetail()
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
@@ -126,6 +127,36 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			buyNow(){
+				uni.navigateTo({
+					url:'/pages/product-purchase/product-detail?ids='+this.id
+				})
+			},
+			login() {
+				this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member')
+					.then(res => {
+						// console.log('登录状态',res)
+						const {
+							status,
+						} = res
+						if (status == 100) {
+							self.$message({
+								message: '登录状态已过期！',
+								center: true
+							});
+							uni.navigateTo({
+								url: '/pages/userLogin/userLogin'
+							})
+						} else {
+							// self.maindisable = true
+						}
+						
+					})
+					.catch(err => {
+						console.log(err)
+					})
+			
+			},
 			handleSure() {
 				this.dialogTableVisible = false
 			},
@@ -151,6 +182,7 @@
 						console.log(res)
 						const {
 							result: {
+								id,
 								title,
 								productprice,
 								total,
@@ -159,10 +191,10 @@
 								sales
 							}
 						} = res
-						// console.log(content)
 						if(content==''){
 							_this.deatilStatus = false
 						}
+						_this.id = id
 						_this.sales = sales
 						_this.title = title
 						_this.price = productprice
@@ -461,7 +493,7 @@
 
 	@media screen and (max-width: 990px) {
 		.el-button--danger{
-			width: 90%;
+			width: 89%;
 		}
 		.homep ,.el-footer{
 			width: 100% !important;

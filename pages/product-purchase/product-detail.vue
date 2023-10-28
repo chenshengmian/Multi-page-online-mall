@@ -36,6 +36,7 @@
 					</template>
 					<el-menu-item-group>
 						<!-- <span slot="title">{{$t('menu.shopping')}}</span> -->
+						<el-menu-item index="4-3" @tap="handleshoppingAddress">{{$t('home.address')}}</el-menu-item>
 						<el-menu-item index="4-0" @tap="handleshopping">{{$t('menu.allCommodities')}}</el-menu-item>
 						<el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item>
 						<el-menu-item index="4-2" @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
@@ -135,54 +136,7 @@
 					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
-					<!-- <div v-if="index=='1'" style="width: 100%;"> -->
-						<product-detail :todatail="todatail"/>
-					<!-- </div> -->
-					<!-- <div v-else-if="index=='2-1'">
-						<wallet-records />
-					</div> -->
-					<!-- <div v-else-if="index=='2-2'">
-						<withdraw-money @changekyc="changekyc" @wmindex="wmindex" />
-					</div>
-					<div v-else-if="index=='2-3'">
-						<withdrawal-status />
-					</div>
-					<div v-else-if="index=='2-4'">
-						<bonus-description />
-					</div>
-					<div v-else-if="index=='3'">
-						<reseller-registration :nodeid='nodeid' @handlereg="handlereg" />
-					</div>
-					<div v-else-if="index=='4-1'">
-						<product-purchase @godatail="getdatail" />
-					</div>
-					<div v-else-if="index=='4-2'">
-						<purchase-history />
-					</div>
-					<div v-else-if="index=='4-3'">
-						<product-detail :todatail='todatail' @getresrt="newindex" />
-					</div>
-					<div v-else-if="index=='5-1'">
-						<performance-reports />
-					</div>
-					<div v-else-if="index=='5-2'">
-						<member-tree />
-					</div>
-					<div v-else-if="index=='6'">
-						<binary-tree @indexChange="getIndex" />
-					</div>
-					<div v-else-if="index=='7'">
-						<login-password />
-					</div>
-					<div v-else-if="index=='8'">
-						<wallet-password />
-					</div>
-					<div v-else-if="index=='2-5'">
-						<know-yourCustomer @kycindex="kycindex" />
-					</div>
-					<div v-else-if="index=='10'">
-						<announcement-table />
-					</div> -->
+					<product-detail :todatail="todatail"/>
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
 					<div class="footer">{{footesr}}</div>
@@ -227,6 +181,10 @@
 			}
 		},
 		mounted(param) {
+			
+			uni.setNavigationBarTitle({
+				title:uni.getStorageSync('name')
+			})
 			// console.log(1111)
 			this.login()
 			// console.log(uni.getStorageSync('tokenArray'))
@@ -234,8 +192,8 @@
 			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 		},
 		onLoad(param) {
-			console.log(param)
-			this.todatail = param.id
+			// console.log(param)
+			this.todatail = param.ids
 		},
 		// onShow() {
 		// 	this.login()
@@ -246,6 +204,11 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleshoppingAddress(){
+				uni.navigateTo({
+					url:'/pages/shippingAddress/shippingAddress'
+				})
+			},
 			handleClose(param){
 				this.drawerVisible = param
 			},
@@ -374,43 +337,10 @@
 				this.index = index
 			},
 			logOff() {
-				let self = this
-				const {
-					result: {
-						userinfo
-					}
-				} = uni.getStorageSync('userInfo')
-				const logof = {
-					'userid': userinfo
-				}
-				this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.logout', logof)
-					.then(res => {
-						// console.log(res)
-						const {
-							status
-						} = res
-						if (status == 1) {
-							uni.clearStorageSync();
-							const {
-								result: {
-									message
-								}
-							} = res
-
-							self.$message({
-								message: message,
-								center: true
-							});
-							uni.navigateTo({
-								url: '/pages/userLogin/userLogin'
-							})
-						} else {
-
-						}
-					})
-					.catch(err => {
-						console.log(err)
-					})
+				uni.clearStorageSync();
+				uni.navigateTo({
+					url: '/pages/userLogin/userLogin'
+				})
 			},
 			changeStatus() {
 				let self = this

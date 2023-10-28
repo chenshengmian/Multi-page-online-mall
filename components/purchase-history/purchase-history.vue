@@ -43,6 +43,8 @@
 					</el-table-column>
 					<el-table-column prop="ordersn" label="订单单号" align="center">
 					</el-table-column>
+					<el-table-column prop="createtime" label="下单时间" align="center">
+					</el-table-column>
 				<!-- 	<el-table-column prop="into" label="税务发票编号" align="center">
 					</el-table-column> -->
 					<el-table-column prop="price" label="数额" align="center">

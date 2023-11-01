@@ -53,19 +53,19 @@
 						<!-- <div style="font-size: 25rpx;margin-top: 15rpx;color: orangered;display: flex;">商品价格：{{price}}</div> -->
 						<div style="display: flex;justify-content: space-between;margin-top: 40rpx;">
 							<div>
-								<span style="font-size: 28rpx;margin-top: 15rpx;color: #777070;">库存：{{total}}</span>
+								<span style="font-size: 28rpx;margin-top: 15rpx;color: #777070;">{{$t('shopping.inventory')}}：{{total}}</span>
 								<el-divider direction="vertical"></el-divider>
-								<span style="font-size: 28rpx;margin-top: 15rpx;color: #777070;">销量：{{sales}}</span>
+								<span style="font-size: 28rpx;margin-top: 15rpx;color: #777070;">{{$t('shopping.Sales')}}：{{sales}}</span>
 							</div>
 							<div style="color: red;">
-								<span style="font-size: 28rpx;">￥</span><b style="font-size: 45rpx;">{{price}}</b>
+								<span style="font-size: 28rpx;">MYR</span><b style="font-size: 45rpx;">{{price}}</b>
 							</div>
 						</div>
-						<div style="font-size: 30rpx;margin-top: 15rpx;"><b>商品详情</b></div>
+						<div style="font-size: 30rpx;margin-top: 15rpx;"><b>{{$t('shopping.Productdetails')}}</b></div>
 						<div v-html="content" style="margin-top: 15rpx;" v-show="deatilStatus"></div>
-						<el-empty description="暂时数据为空"  v-show="!deatilStatus"></el-empty>
+						<el-empty :description="$t('shopping.emptydata')"  v-show="!deatilStatus"></el-empty>
+						<el-button type="danger" size="mini" @tap="buyNow"><b>{{$t('shopping.Buynow')}}</b></el-button>
 					</el-card>
-					<el-button style="position: fixed;bottom: 140rpx;" type="danger" size="mini" @tap="buyNow"><b>立即购买</b></el-button>
 				</el-main>
 				<el-footer>
 					<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
@@ -274,9 +274,14 @@
 	  border-radius: 50%;
 	  opacity: 1;
 	}
+	/* .el-card{
+		position: relative;
+	} */
 	.el-button--danger{
-		width: 86%;
-		margin-top: 10rpx;
+		position: fixed;
+		bottom: 80px;
+		width: 84.5%;
+		/* margin-top: 10rpx; */
 	}
 	.time {
 		font-size: 13px;
@@ -493,7 +498,7 @@
 
 	@media screen and (max-width: 990px) {
 		.el-button--danger{
-			width: 89%;
+			width: 78% !important;
 		}
 		.homep ,.el-footer{
 			width: 100% !important;

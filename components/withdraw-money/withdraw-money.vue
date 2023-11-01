@@ -117,6 +117,7 @@
 		},
 		beforeDestroy() {
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
+			this.$router.go(0)
 		},
 		methods: {
 			handleChangebank(){
@@ -149,10 +150,10 @@
 						console.log(err)
 					})
 			},
-			async getkyc() {
+			getkyc() {
 				// console.log(new Date().getTime())
 				let _this = this
-				await _this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc')
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc')
 					.then(res => {
 						console.log(res)
 						const {
@@ -188,8 +189,8 @@
 							_this.$alert('是否前往认证KYC', '认证', {
 								confirmButtonText: '确定',
 								showClose: false,
+								closeOnHashChange:true,
 								callback: action => {
-									// _this.$emit('changekyc', '2-5')
 									uni.navigateTo({
 										url: '/pages/know-yourCustomer/know-yourCustomer'
 									})
@@ -295,6 +296,7 @@
 		display: inline-block;
 	}
 
+	
 	@media screen and (max-width: 990px) {
 		.el-row {
 			display: flex;

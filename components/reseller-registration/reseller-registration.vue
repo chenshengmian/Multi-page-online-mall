@@ -1,39 +1,48 @@
 <template>
 	<view>
 		<el-dialog
-		  title="经销商注册"
+		  :title="$t('enroll.DealerRegistration')"
 		  :visible.sync="dialogVisible"
 		  :width="width"
 		  :modal = 'modal'
 		  >
 		  <span>{{isresgistra}}</span>
 		  <span slot="footer" class="dialog-footer">
-		    <el-button @click="dialogVisible = false">取 消</el-button>
-		    <el-button type="primary" @click="goredistration">确 定</el-button>
+		    <el-button @click="dialogVisible = false">{{$t('enroll.Cancel')}}</el-button>
+		    <el-button type="primary" @click="goredistration">{{$t('address.Definitely')}}</el-button>
 		  </span>
 		</el-dialog>
 
 		<el-card class="box-card">
-			<div class="resgister">注册</div>
+			<div class="resgister"><b>{{$t('enroll.Registered')}}</b></div>
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm"  class="demo-ruleForm" :label-position="labelPosition" label-width="100px">
-				<el-form-item label="新经销商名称:" prop="name" :label-width="labelw">
+				<el-form-item :label="$t('enroll.Newdealername')+':'" prop="name" :label-width="labelw">
 					<div>
 						<el-input v-model="ruleForm.name" ></el-input>
 					</div>
 				</el-form-item>
-				<el-form-item label="Nickname/ Representative Name:" prop="nickname" :label-width="labelw">
+				<el-form-item :label="$t('enroll.NickName')+':'" prop="nickname" :label-width="labelw">
 				    <el-input v-model="ruleForm.nickname" ></el-input>
 				</el-form-item>
-				<el-form-item label="国籍:" prop="region" :label-width="labelw">
-					<el-select v-model="ruleForm.region" placeholder="请选择国籍">
-						<el-option label="CHINA" value="CHINA"></el-option>
-						<el-option label="MALAYSIA" value="MALAYSIA"></el-option>
+				<el-form-item :label="$t('enroll.nationality')+':'" prop="region" :label-width="labelw">
+					<el-select v-model="ruleForm.region" :placeholder="$t('enroll.selectnationality')">
+						<el-option :label="$t('enroll.CHINA')" :value="$t('enroll.CHINA')"></el-option>
+						<el-option :label="$t('enroll.MALAYSIA')" :value="$t('enroll.MALAYSIA')"></el-option>
+						<el-option :label="$t('enroll.AMERICAN')" :value="$t('enroll.AMERICAN')"></el-option>
+						<el-option :label="$t('enroll.JAPAN')" :value="$t('enroll.JAPAN')" ></el-option>
+						<el-option :label="$t('enroll.CANADA')" :value="$t('enroll.CANADA')" ></el-option>
+						<el-option :label="$t('enroll.ENGLAND')" :value="$t('enroll.ENGLAND')" ></el-option>
+						<el-option :label="$t('enroll.FRANCE')" :value="$t('enroll.FRANCE')" ></el-option>
+						<el-option :label="$t('enroll.GERMANY')" :value="$t('enroll.GERMANY')" ></el-option>
+						<el-option :label="$t('enroll.SINGAPORE')" :value="$t('enroll.SINGAPORE')"></el-option>
+						<el-option :label="$t('enroll.VIETNAM')" :value="$t('enroll.VIETNAM')" ></el-option>
+						<el-option :label="$t('enroll.THAILAND')" :value="$t('enroll.THAILAND')"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item label="性别:" prop="gender" :label-width="labelw">
+				<el-form-item :label="$t('enroll.gender')" prop="gender" :label-width="labelw">
 					<el-select v-model="ruleForm.gender">
-						<el-option label="男" value="0"></el-option>
-						<el-option label="女" value="1"></el-option>
+						<el-option :label="$t('enroll.man')" value="0"></el-option>
+						<el-option :label="$t('enroll.woman')" value="1"></el-option>
 					</el-select>
 				</el-form-item>
 				<!-- <el-form-item label="出生日期:" prop="time" :label-width="labelw">
@@ -44,28 +53,28 @@
 						</el-form-item>
 					</el-col>
 				</el-form-item> -->
-				<el-form-item label="身份证明文件:" prop="filetype" :label-width="labelw">
+				<el-form-item :label="$t('enroll.Proofidentity')+':'" prop="filetype" :label-width="labelw">
 					<el-select v-model="ruleForm.filetype">
 						<el-option label="-" value="-"></el-option>
-						<el-option label="公司注册号码" value="0"></el-option>
-						<el-option label="身份证号码" value="1"></el-option>
-						<el-option label="护照号码" value="2"></el-option>
+						<el-option :label="$t('enroll.Companynumber')" value="0"></el-option>
+						<el-option :label="$t('withdrawal.idCard')" value="1"></el-option>
+						<el-option :label="$t('enroll.Passportnumber')" value="2"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item label="公司注册号码/身份证号码/护照号码:" prop="number" :label-width="labelw">
+				<el-form-item :label="$t('enroll.Companypassportnumber')+':'" prop="number" :label-width="labelw">
 					<el-input v-model="ruleForm.number"></el-input>
 				</el-form-item>
-				<el-form-item label="电邮:" prop="email" :label-width="labelw">
+				<el-form-item :label="$t('login.eamil')+':'" prop="email" :label-width="labelw">
 					<div class="email" style="display: flex;">
 						<el-input v-model="ruleForm.email"></el-input>
-						<el-button  @tap="sendEamil">发送邮箱验证</el-button>
-						<el-input v-model="code" placeholder="请填写验证码"></el-input>
+						<el-button  @tap="sendEamil">{{$t('enroll.Sendverification')}}</el-button>
+						<el-input v-model="code" :placeholder="$t('enroll.verificationcode')"></el-input>
 					</div>
 				</el-form-item>
-				<el-form-item label="销售员id:" prop="superiorID" :label-width="labelw" >
-					<el-input v-model="ruleForm.superiorID" placeholder="选填若为空默认为推荐人ID"></el-input>
+				<el-form-item :label="$t('enroll.SalespersonID')+':'" prop="superiorID" :label-width="labelw" >
+					<el-input v-model="ruleForm.superiorID" :placeholder="$t('enroll.Ifoptional')"></el-input>
 				</el-form-item>
-				<el-form-item label="电话号码:" :label-width="labelw" prop="selectedPrefix">
+				<el-form-item :label="$t('enroll.telephonenumber')+':'" :label-width="labelw" prop="selectedPrefix">
 					 <el-row>
 					    <el-col :span="8">
 					      <el-select v-model="ruleForm.prefixes" @change="handlePrefixChange">
@@ -78,75 +87,40 @@
 					    </el-col>
 					  </el-row>
 				</el-form-item>
-				<el-form-item label="OTP:" prop="otp" :label-width="labelw">
-					<el-row>
-						<el-col :span="14">
-							<el-input v-model="ruleForm.otp"></el-input>
-						</el-col>
-						<el-col :span="1">
-							<el-button type="primary" >Send OTP</el-button>
-						</el-col>
-					</el-row>
-				</el-form-item>
-				<el-form-item label="地址:" prop="address" :label-width="labelw">
+				<el-form-item :label="$t('enroll.address')+':'" prop="address" :label-width="labelw">
 					<el-input v-model="ruleForm.address"></el-input>
 				</el-form-item>
-				<el-form-item label="城市:" prop="city" :label-width="labelw">
+				<el-form-item :label="$t('enroll.city')+':'" prop="city" :label-width="labelw">
 					<el-input v-model="ruleForm.city"></el-input>
 				</el-form-item>
-				<el-form-item label="州	:" prop="state" :label-width="labelw">
+				<el-form-item :label="$t('enroll.State')+':'" prop="state" :label-width="labelw">
 					<el-input v-model="ruleForm.state"></el-input>
 				</el-form-item>
-				<el-form-item label="邮政编码 :" prop="zipcode" :label-width="labelw">
+				<el-form-item :label="$t('enroll.Zipcode')+':'" prop="zipcode" :label-width="labelw">
 					<el-input v-model="ruleForm.zipcode"></el-input>
 				</el-form-item>
-				<el-form-item label="国家:" prop="country" :label-width="labelw">
-					<el-select v-model="ruleForm.country" placeholder="请选择国家">
-						<el-option label="CHINA" value="CHINA"></el-option>
-						<el-option label="MALAYSIA" value="MALAYSIA"></el-option>
+				<el-form-item :label="$t('enroll.country')+':'" prop="country" :label-width="labelw">
+					<el-select v-model="ruleForm.country" :placeholder="$t('enroll.selectcountry')">
+						<el-option :label="$t('enroll.CHINA')" :value="$t('enroll.CHINA')"></el-option>
+						<el-option :label="$t('enroll.MALAYSIA')" :value="$t('enroll.MALAYSIA')"></el-option>
+						<el-option :label="$t('enroll.AMERICAN')" :value="$t('enroll.AMERICAN')"></el-option>
+						<el-option :label="$t('enroll.JAPAN')" :value="$t('enroll.JAPAN')" ></el-option>
+						<el-option :label="$t('enroll.CANADA')" :value="$t('enroll.CANADA')" ></el-option>
+						<el-option :label="$t('enroll.ENGLAND')" :value="$t('enroll.ENGLAND')" ></el-option>
+						<el-option :label="$t('enroll.FRANCE')" :value="$t('enroll.FRANCE')" ></el-option>
+						<el-option :label="$t('enroll.GERMANY')" :value="$t('enroll.GERMANY')" ></el-option>
+						<el-option :label="$t('enroll.SINGAPORE')" :value="$t('enroll.SINGAPORE')"></el-option>
+						<el-option :label="$t('enroll.VIETNAM')" :value="$t('enroll.VIETNAM')" ></el-option>
+						<el-option :label="$t('enroll.THAILAND')" :value="$t('enroll.THAILAND')"></el-option>
 					</el-select>
 				</el-form-item>
-				<!-- <el-form-item label="Product Package Type:" prop="filetype" :label-width="labelw">
-					<el-select v-model="ruleForm.filetype">
-						<el-option label="-" value="-"></el-option>
-						<el-option label="双喜临门配套 | DOUBLE HAPPINESS PACKAGE" value="registerNum"></el-option>
-						<el-option label="五福临门配套 | FIVE FORTUNES PACKAGE" value="iduentityNum"></el-option>
-						<el-option label="双喜临门配套 x 2 | DOUBLE HAPPINESS PACKAGE x 2" value="postcordNum"></el-option>
-						<el-option label="六六大顺配套 | FANTASTIC SIX PACKAGE" value="postcordNum"></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="发货方式 :" prop="country" :label-width="labelw">
-					<el-radio-group v-model="ruleForm.country">
-						<el-radio label="Pick Up Office"></el-radio>
-						<el-radio label="邮寄"></el-radio>
-					</el-radio-group>
-				</el-form-item>
-				<el-form-item label="收据人名字	:" prop="Recipientofreceipt" :label-width="labelw">
-					<el-input v-model="ruleForm.Recipientofreceipt"></el-input>
-				</el-form-item>
-				<el-form-item label="Total Weight :" prop="totalWeight" :label-width="labelw">
-					0
-				</el-form-item>
-				<el-form-item label="Zone :" prop="zone	" :label-width="labelw">
-					<el-select v-model="ruleForm.zone">
-						<el-option label="西马 | WEST MALAYSIA" value="west"></el-option>
-						<el-option label="东马 | EAST MALAYSIA" value="east"></el-option>
-						<el-option label="新加坡 | SINGAPORE" value="news"></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="运费 :" prop="freight" :label-width="labelw">
-					0.00
-				</el-form-item>
-				<el-form-item label="总计 :" prop="total" :label-width="labelw">
-					0.00
-				</el-form-item> -->
-				<el-form-item label="TWG三赢模式 :" prop="paymentType" :label-width="labelw">
+				<el-form-item :label="$t('enroll.TWGmodel')+':'" prop="paymentType" :label-width="labelw">
 					<el-radio-group v-model="ruleForm.paymentType" >
-						<el-radio  :label="0" >参与</el-radio>
-						<el-radio  :label="1" >不参与</el-radio>
+						<el-radio  :label="0" >{{ $t('enroll.participate') }}</el-radio>
+						<el-radio  :label="1" >{{ $t('enroll.Notinvolved') }}</el-radio>
 					</el-radio-group>
 				</el-form-item>
-				<el-form-item label="会员等级:" prop="membershipGood" :label-width="labelw">
+				<el-form-item :label="$t('enroll.MembershipLevel')+':'" prop="membershipGood" :label-width="labelw">
 					<el-radio-group v-model="ruleForm.membershipGood" style="">
 						<block v-for="item in datas">
 							<el-radio  :label="item.gid" :key="item.gid">
@@ -156,7 +130,7 @@
 					</el-radio-group>
 				</el-form-item>
 				<el-form-item :label-width="labelw">
-					  <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+					  <el-button type="primary" @click="submitForm('ruleForm')">{{ $t('enroll.Createnow') }}</el-button>
 				</el-form-item>
 			</el-form>
 		</el-card>
@@ -184,8 +158,6 @@
 					name: '',
 					region: '',
 					nickname:'',
-					date1: '',
-					date2: '',
 					delivery: false,
 					type: [],
 					email:'',
@@ -196,12 +168,11 @@
 					filetype:'',
 					number:'',
 					selectedPrefix: '+86', // 默认选择的地区号码前缀
-					otp:'',
+					// otp:'',
 					address:'',
 					city:'',
 					state:'',
 					zipcode:'',
-					region:'',
 					filetype:'',
 					country:'',
 					Recipientofreceipt:'',
@@ -219,95 +190,62 @@
 				datas:'',
 				emailCode:'', 
 				code:'',
-				placeholder: '请输入电话号码', // 输入框的占位符
+				placeholder: this.$t('enroll.enteraphonenumber'), // 输入框的占位符
 				labelw:'540rpx',
 				rules: {
 					name: [{
 							required: true,
-							message: '一如在你的公司注册/身份证/护照。你未来不能改变这。',
+							message: this.$t('enroll.changefuture'),
 							trigger: 'blur'
 						},
 					],
 					email:[{
 						required: true,
-						message: '请输入邮箱地址',
+						message: this.$t('enroll.enteremailaddress'),
 						trigger: 'blur'
 					},{
 						type: 'email', 
-						message: '请输入正确的邮箱地址',
+						message: this.$t('enroll.validemailaddress'),
 						trigger: ['blur', 'change']
 					}],
 					region: [{
 						required: true,
-						message: '请选择活动区域',
+						message: this.$t('enroll.selectactivearea'),
 						trigger: 'change'
 					}],
 					country:[{
 						required: true,
-						message: '请选择地区',
+						message: this.$t('enroll.selectaregion'),
 						trigger: 'change'
 					}],
 					paymentType:[{
 						required: true,
-						message: '请勾选参与或不参与TWG三赢模式',
+						message: this.$t('enroll.TWGTripleWin'),
 						trigger: 'change'
 					}],
 					membershipGood:[{
 						required: true,
-						message: '请勾选会员等级',
+						message: this.$t('enroll.tickmembershiptier'),
 						trigger: 'change'
-					}],
-					date1: [{
-						type: 'date',
-						required: true,
-						message: '请选择日期',
-						trigger: 'change'
-					}],
-					date2: [{
-						type: 'date',
-						required: true,
-						message: '请选择时间',
-						trigger: 'change'
-					}],
-					type: [{
-						type: 'array',
-						required: true,
-						message: '请至少选择一个活动性质',
-						trigger: 'change'
-					}],
-					resource: [{
-						required: true,
-						message: '请选择活动资源',
-						trigger: 'change'
-					}],
-					desc: [{
-						required: true,
-						message: '请填写活动形式',
-						trigger: 'blur'
 					}],
 					gender:[{
 						required: true,
-						message: '请选择性别',
-						trigger: 'blur'
-					}],
-					time:[{
-						required: true,
-						message: '请选择出生日期',
+						message: this.$t('enroll.selectgender'),
 						trigger: 'blur'
 					}],
 					filetype:[{
 						required: true,
-						message: '请选择身份证明文件',
+						message: this.$t('enroll.selectidentification'),
 						trigger: 'blur'
 					}],
 					number:[{
 						required: true,
-						message: '一如在你的公司注册/身份证/护照。你未来不能改变这。*',
+						message: this.$t('enroll.changefutureS'),
 						trigger: 'blur'
 						}
 						,{
 							min: 7,
-							message: '长度最少为 7 个字符',
+							message: this.$t('enroll.lengthis7'),
 							trigger: 'blur'
 						}
 					]
@@ -324,7 +262,7 @@
 		},
 		methods: {
 			getballInfo(){
-				console.log('获取到nodeid',this.nodeid)
+				// console.log('获取到nodeid',this.nodeid)
 				let self = this
 				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.regstep&nodeid='+self.nodeid)
 					.then(res=>{
@@ -352,10 +290,10 @@
 						const { price,levelname,levelid } = ball
 						self.ruleForm.membershipLevel = levelid
 						if(parseFloat(price)>parseFloat(credit2)){
-							self.$message('余额不足！');
+							self.$message(this.$t('enroll.Insufficien'));
 						}else{
 							self.dialogVisible = true
-							self.isresgistra = '是否使用余额'+credit2+'购买'+levelname+'消费'+price+'元'
+							self.isresgistra = this.$t('enroll.usebalance')+credit2+this.$t('shopping.purchase')+levelname+this.$t('enroll.consume')+price+'MYR'
 						}
 					}else{
 						return false;
@@ -366,12 +304,12 @@
 			goredistration(){
 				let self = this
 				self.dialogVisible = false
-				// if(self.code == self.emailCode&&self.code != ''){
+				if(self.code == self.emailCode&&self.code != ''){
 					const { userinfo } = uni.getStorageSync('tokenArray')
 					if(self.ruleForm.superiorID == ''){
 						 self.ruleForm.superiorID = userinfo
 					}
-					console.log(self.ruleForm)
+					// console.log(self.ruleForm)
 					self.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.reg',self.ruleForm)
 						.then(res=>{
 							const  {status,result:{message}} = res
@@ -388,7 +326,10 @@
 										const { result } = res
 										uni.setStorageSync('data',result)
 										// console.log('更新',result)
-										self.$emit('handlereg','6')
+										// self.$emit('handlereg','6')
+										uni.navigateTo({
+											url:'/pages/binary-tree/binary-tree'
+										})
 									})
 									.catch(err=>{
 										console.log(err)
@@ -399,10 +340,10 @@
 						.catch(res=>{
 							console.log(res)
 						})
-			/* 	}
+				}
 				else{
 					self.$message('邮箱验证码错误！');
-				} */
+				}
 			},
 			handlePrefixChange() {
 			    // 处理地区号码前缀变化的逻辑
@@ -447,11 +388,11 @@
 						self.emailCode = message
 						if(status==1){
 							self.$message({
-								message: '邮箱已发送，请不要重复发送!',
+								message: this.$t('enroll.sentagain'),
 								type: 'success'
 							})
 						}else{
-							self.$message('请检查验证码是否正确！')
+							self.$message(this.$t('enroll.codeiscorrect'))
 						}
 					})
 					.catch(err=>{

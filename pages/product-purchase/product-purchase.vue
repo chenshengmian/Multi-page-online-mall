@@ -67,17 +67,17 @@
 			<el-container class="conent">
 				<el-header :style="{backgroundColor:hColr}">
 					<div class="headerTop" :style="{backgroundColor:topColor}">
-						<div style="display: flex;" :class="{'colorb':isblock}">
+						<div style="display: flex;align-items: center;" :class="{'colorb':isblock}">
 							<i class="el-icon-s-grid changeStatu" @tap="changeStatus"></i>
 							<!-- <image src="../../static/img/favicon.png" class="changeStatus1 smalllogo"></image> -->
-							<i class="el-icon-s-grid changeStatus1" @tap="showDrawer" style="margin-left: 36rpx;"></i>
+														<i class="el-icon-s-grid changeStatus1" @tap="showDrawer" ></i>
 						</div>
-						<div style="display: flex;margin-top: 10rpx;">
+						<div style="display: flex;align-items: center;">
 							<!-- <div class="userLo">{{logoname}}</div> -->
 							<el-dropdown trigger="click">
 								<span class="el-dropdown-link">
 									<el-avatar :src="circleUrl" class=" el-icon--right"
-										style="margin-top: 5rpx;"></el-avatar>
+										style="width: 65rpx;height: 65rpx;"></el-avatar>
 								</span>
 								<el-dropdown-menu slot="dropdown" class="atvatr">
 									<el-dropdown-item style="border-bottom: 2rpx solid #DCDFE6;">
@@ -113,16 +113,16 @@
 								</el-dropdown-menu>
 							</el-dropdown>
 							<el-row>
-								<i class="el-icon-setting setting" style="margin-right: 20rpx;"
+								<i class="el-icon-setting setting"
 									@tap="showDrawerleft"></i>
 							</el-row>
 						</div>
 					</div>
 				</el-header>
 				<el-drawer class="drawerright" :visible.sync="drawerVisibletwo" @close="handleDrawerClose"
-					title="Settings" :size="drawerSize">
+					:title="$t('home.Settings')" :size="drawerSize">
 					<!-- 在这里放置抽屉中的内容 -->
-					<p style="text-align: center;"><b>Choose Layouts</b></p>
+					<p style="text-align: center;"><b>{{$t('home.Selectlanguage')}}</b></p>
 					<!-- <el-row><el-switch v-model="option1" @change="handleOptionChange('option1')"></el-switch><span>Light
 							Mode</span><br /></el-row>
 					<el-row><el-switch v-model="option2" @change="handleOptionChange('option2')"></el-switch><span>Dark
@@ -137,54 +137,7 @@
 					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
-					<!-- <div v-if="index=='1'" style="width: 100%;"> -->
 						<product-purchase @godatail="getdatail" />
-					<!-- </div> -->
-					<!-- <div v-else-if="index=='2-1'">
-						<wallet-records />
-					</div> -->
-					<!-- <div v-else-if="index=='2-2'">
-						<withdraw-money @changekyc="changekyc" @wmindex="wmindex" />
-					</div>
-					<div v-else-if="index=='2-3'">
-						<withdrawal-status />
-					</div>
-					<div v-else-if="index=='2-4'">
-						<bonus-description />
-					</div>
-					<div v-else-if="index=='3'">
-						<reseller-registration :nodeid='nodeid' @handlereg="handlereg" />
-					</div>
-					<div v-else-if="index=='4-1'">
-						<product-purchase @godatail="getdatail" />
-					</div>
-					<div v-else-if="index=='4-2'">
-						<purchase-history />
-					</div>
-					<div v-else-if="index=='4-3'">
-						<product-detail :todatail='todatail' @getresrt="newindex" />
-					</div>
-					<div v-else-if="index=='5-1'">
-						<performance-reports />
-					</div>
-					<div v-else-if="index=='5-2'">
-						<member-tree />
-					</div>
-					<div v-else-if="index=='6'">
-						<binary-tree @indexChange="getIndex" />
-					</div>
-					<div v-else-if="index=='7'">
-						<login-password />
-					</div>
-					<div v-else-if="index=='8'">
-						<wallet-password />
-					</div>
-					<div v-else-if="index=='2-5'">
-						<know-yourCustomer @kycindex="kycindex" />
-					</div>
-					<div v-else-if="index=='10'">
-						<announcement-table />
-					</div> -->
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
 					<div class="footer">{{footesr}}</div>
@@ -348,7 +301,7 @@
 						uni.setStorageSync('username',nickname)
 						if (status == 100) {
 							self.$message({
-								message: '登录状态已过期！',
+								message: this.$t('home.loginstatus'),
 								center: true
 							});
 							uni.navigateTo({
@@ -381,6 +334,10 @@
 				this.index = index
 			},
 			logOff() {
+				this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.logout')
+					.then(res=>{
+						
+					})
 				uni.clearStorageSync();
 				uni.navigateTo({
 					url: '/pages/userLogin/userLogin'
@@ -502,9 +459,9 @@
 	.fullsc,
 	.setting {
 		font-size: 50rpx;
-		margin-right: 20rpx;
+		/* margin-right: 20rpx; */
 		color: #000;
-		margin-top: 20rpx;
+		/* margin-top: 20rpx; */
 	}
 
 	.el-dropdown-link {
@@ -565,7 +522,7 @@
 	.changeStatu,
 	.changeStatuw {
 		font-size: 45rpx;
-		margin-top: 30rpx;
+		/* margin-top: 30rpx; */
 		cursor: pointer;
 	}
 
@@ -616,7 +573,7 @@
 		.changeStatus1 {
 			display: block !important;
 			font-size: 50rpx;
-			margin-top: 30rpx;
+			/* margin-top: 30rpx; */
 			cursor: pointer;
 			width: 100%;
 		}

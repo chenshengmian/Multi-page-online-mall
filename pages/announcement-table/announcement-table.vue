@@ -65,17 +65,17 @@
 			<el-container class="conent">
 				<el-header :style="{backgroundColor:hColr}">
 					<div class="headerTop" :style="{backgroundColor:topColor}">
-						<div style="display: flex;" :class="{'colorb':isblock}">
+						<div style="display: flex;align-items: center;" :class="{'colorb':isblock}">
 							<i class="el-icon-s-grid changeStatu" @tap="changeStatus"></i>
 							<!-- <image src="../../static/img/favicon.png" class="changeStatus1 smalllogo"></image> -->
-							<i class="el-icon-s-grid changeStatus1" @tap="showDrawer" style="margin-left: 36rpx;"></i>
+														<i class="el-icon-s-grid changeStatus1" @tap="showDrawer" ></i>
 						</div>
-						<div style="display: flex;margin-top: 10rpx;">
+						<div style="display: flex;align-items: center;">
 							<!-- <div class="userLo">{{logoname}}</div> -->
 							<el-dropdown trigger="click">
 								<span class="el-dropdown-link">
 									<el-avatar :src="circleUrl" class=" el-icon--right"
-										style="margin-top: 5rpx;"></el-avatar>
+										style="width: 65rpx;height: 65rpx;"></el-avatar>
 								</span>
 								<el-dropdown-menu slot="dropdown" class="atvatr">
 									<el-dropdown-item style="border-bottom: 2rpx solid #DCDFE6;">
@@ -111,20 +111,25 @@
 								</el-dropdown-menu>
 							</el-dropdown>
 							<el-row>
-								<i class="el-icon-setting setting" style="margin-right: 20rpx;"
+								<i class="el-icon-setting setting"
 									@tap="showDrawerleft"></i>
 							</el-row>
 						</div>
 					</div>
 				</el-header>
 				<el-drawer class="drawerright" :visible.sync="drawerVisibletwo" @close="handleDrawerClose"
-					title="Settings" :size="drawerSize">
+					:title="$t('home.Settings')" :size="drawerSize">
 					<!-- 在这里放置抽屉中的内容 -->
-					<p style="text-align: center;"><b>Choose Layouts</b></p>
-					<el-row><el-switch v-model="option1" @change="handleOptionChange('option1')"></el-switch><span>Light
+					<p style="text-align: center;"><b>{{$t('home.Selectlanguage')}}</b></p>
+					<!-- <el-row><el-switch v-model="option1" @change="handleOptionChange('option1')"></el-switch><span>Light
 							Mode</span><br /></el-row>
 					<el-row><el-switch v-model="option2" @change="handleOptionChange('option2')"></el-switch><span>Dark
-							Mode</span></el-row>
+							Mode</span></el-row> -->
+							<el-radio-group v-model="radio"  @input="handleLangChange" >
+							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="en"><b>{{$t('locale.en')}}</b></el-radio></div>
+							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hans"><b>{{$t('locale.zhHans')}}</b></el-radio></div>
+							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hant"><b>{{$t('locale.zhHant')}}</b></el-radio></div>
+							</el-radio-group>
 				</el-drawer>
 				<div class="ableta">
 					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
@@ -218,6 +223,7 @@
 				todatail: {},
 				username: '',
 				width: '30%',
+				radio:uni.getLocale()
 			}
 		},
 		mounted(param) {
@@ -239,6 +245,12 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleLangChange(str){
+				// console.log(str)
+				uni.setLocale(str)
+				this.$i18n.locale = str
+				this.$router.go(0)
+			},
 			handleshoppingAddress(){
 				uni.navigateTo({
 					url:'/pages/shippingAddress/shippingAddress'
@@ -333,7 +345,7 @@
 						self.username = nickname
 						if (status == 100) {
 							self.$message({
-								message: '登录状态已过期！',
+								message: this.$t('home.loginstatus'),
 								center: true
 							});
 							uni.navigateTo({
@@ -366,6 +378,10 @@
 				this.index = index
 			},
 			logOff() {
+				this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.logout')
+					.then(res=>{
+						
+					})
 				uni.clearStorageSync();
 				uni.navigateTo({
 					url: '/pages/userLogin/userLogin'
@@ -481,9 +497,9 @@
 	.fullsc,
 	.setting {
 		font-size: 50rpx;
-		margin-right: 20rpx;
+		/* margin-right: 20rpx; */
 		color: #000;
-		margin-top: 20rpx;
+		/* margin-top: 20rpx; */
 	}
 
 	.el-dropdown-link {
@@ -544,7 +560,7 @@
 	.changeStatu,
 	.changeStatuw {
 		font-size: 45rpx;
-		margin-top: 30rpx;
+		/* margin-top: 30rpx; */
 		cursor: pointer;
 	}
 
@@ -595,7 +611,7 @@
 		.changeStatus1 {
 			display: block !important;
 			font-size: 50rpx;
-			margin-top: 30rpx;
+			/* margin-top: 30rpx; */
 			cursor: pointer;
 			width: 100%;
 		}

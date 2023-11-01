@@ -4,21 +4,21 @@
 			<el-card class="box-card">
 				<template #header>
 					<div class="card-header">
-						<span>电子钱包取款状况</span>
+						<span>{{$t('menu.ewalletwithdrawalstatus')}}</span>
 						<!-- <el-button class="button" text>Operation button</el-button> -->
 					</div>
 				</template>
 				<div class="yearmonth">
 					<div style="display: flex;">
 						<div class="month">
-							<el-select v-model="mouth" slot="prepend" placeholder="请选择" size="medium" >
+							<el-select v-model="mouth" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium" >
 								<div v-for="(item,index) in mouthArr">
 									<el-option :label="item" :value="item"></el-option>
 								</div>
 							</el-select>
 						</div>
 						<div class="year">
-							<el-select v-model="year" slot="prepend" placeholder="请选择" size="medium" >
+							<el-select v-model="year" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium" >
 								<div v-for="(item,index) in yearArr">
 									<el-option :label="item" :value="item"></el-option>
 								</div>
@@ -26,58 +26,87 @@
 						</div>
 					</div>
 					<div class="sumbit">
-						<el-button type="primary" size="medium" @tap="handlechanginfo">提款状况查询</el-button>
+						<el-button type="primary" size="medium" @tap="handlechanginfo">{{$t('purse.WithdrawalStatus')}}</el-button>
 					</div>
 				</div>
 				 <el-table
 				    :data="tableData"
 					class="custom-table"
+					border
+					v-if="idStatus"
 				   >
-				   <el-table-column label="ID" width="40">
-				   	<template slot-scope="scope">
-				   		{{ (scope.$index+1)+(currentPage-1)*pageSize }}
-				   	</template>
-				   </el-table-column>
+				   <block v-if="idStatus">
+					   <el-table-column label="ID" width="40">
+					   	<template slot-scope="scope">
+					   		{{ (scope.$index+1)+(currentPage-1)*pageSize }}
+					   	</template>
+					   </el-table-column>
+				   </block>
+				   
 				   <el-table-column
 				     prop="title"
-				     label="标题"
+				     :label="$t('home.title')"
 					 align="center" 
 				     >
 				   </el-table-column>
 				    <el-table-column
 				      prop="timestr"
-				      label="申请日期"
+				      :label="$t('purse.Dateapplication')"
 					  align="center" 
 				      s>
 				    </el-table-column>
 				    <el-table-column
 				      prop="logmes.bank_name"
 					  align="center" 
-				      label="银行名称">
+				      :label="$t('withdrawal.bankName')">
 				    </el-table-column>
 					<el-table-column
 					  prop="realname"
-					  label="银行户口持有者"
+					  :label="$t('withdrawal.accountHolder')"
 					  align="center" 
 					  >
 					</el-table-column>
 					<el-table-column
 					  prop="logmes.bank_account_number"
+					  v-if="idStatus"
 					  align="center" 
-					  label="银行账户号码">
+					  :label="$t('withdrawal.bankAccountNumber')">
 					</el-table-column>
 					<el-table-column
 					  prop="money"
 					  align="center" 
-					  label="转账金额">
+					  :label="$t('withdrawal.transferAmount')">
 					</el-table-column>
 					<el-table-column
 					  prop="statusstr"
 					  align="center" 
-					  label="状况">
+					  :label="$t('purse.state')">
 					</el-table-column>
 				  </el-table>
-				  <div v-show="paginations" class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;">
+				  <div  v-else>
+				  	<el-card shadow="never" class="text item">
+				  		<div><b>{{$t('home.title')}}</b></div>
+				  		<div><b>{{$t('purse.Dateapplication')}}</b></div>
+				  		<div><b>{{$t('withdrawal.bankName')}}</b></div>
+				  		<div><b>{{$t('withdrawal.accountHolder')}}</b></div>
+						<div><b>{{$t('withdrawal.bankAccountNumber')}}</b></div>
+						<div><b>{{$t('withdrawal.transferAmount')}}</b></div>
+						<div><b>{{$t('purse.state')}}</b></div>
+				  	</el-card>
+				  	<block v-for="data in tableData">
+				  		<el-card shadow="never" class="text item">
+				  			<div>{{data.title}}</div>
+				  			<div>{{data.timestr}}</div>
+				  			<div>{{data.logmes.bank_name}}</div>
+				  			<div>{{data.realname}}</div>
+				  			<div>{{data.logmes.bank_account_number}}</div>
+				  			<div>{{data.money}}</div>
+							<div>{{data.statusstr}}</div>
+				  		</el-card>
+				  	</block>
+				  </div>
+				  
+				  <div  v-show="paginations" class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;">
 				  	<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
 				  		:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"
 				  		layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
@@ -100,14 +129,40 @@
 				tableData: [], // 表格数据源
 				currentPage: 1, // 当前页码
 				pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
-				paginations:false
+				paginations:false,
+				idStatus:true
 			};
+		},
+		beforeDestroy() {
+			window.removeEventListener('resize', this.handleResize); 
 		},
 		mounted() {
 			this.getMounth()			
 			this.getuserinfo()
+			this.getScreenWidth();
+			window.addEventListener('resize', this.handleResize); 
 		},
 		methods:{
+			getScreenWidth() {
+				this.screenWidth = window.innerWidth;
+				if (this.screenWidth <= 990) {
+					this.idStatus = false
+				} else {
+					this.idStatus = true
+				}
+			},
+			handleResize() {
+				const newScreenWidth = window.innerWidth;
+				if (newScreenWidth !== this.screenWidth) {
+					this.screenWidth = newScreenWidth;
+					console.log(newScreenWidth);
+					if (newScreenWidth <= 990) {
+						this.idStatus = false
+					} else {
+						this.idStatus = true
+					}
+				}
+			},
 			getMounth(){
 				const current = new Date()
 				const yearNew = current.getFullYear()
@@ -154,6 +209,13 @@
 </script>
 
 <style>
+	.text {
+		font-size: 14px;
+	}
+	
+	.item {
+		margin-bottom: 18px;
+	}
 	.month,.year{
 		margin-right: 20rpx;
 	}

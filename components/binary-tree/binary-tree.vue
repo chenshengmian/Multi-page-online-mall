@@ -2,7 +2,7 @@
 	<view>
 		<el-card class="box-card">
 			<l-echart ref="chart" style="height: 78vh;" v-if="treeStatus"></l-echart>
-			<el-empty description="普通会员没有购买球" v-else></el-empty>
+			<el-empty :description="$t('tree.notpurchaseballs')" v-else></el-empty>
 		</el-card>
 	</view>
 </template>
@@ -40,7 +40,7 @@
 						bottom: '50%',
 						right: '2%',
 						symbolSize: [30, 30],
-						symbol: 'emptyCircle', 
+						symbol: 'circle', 
 						edgeShape: 'polyline',
 						lineStyle: {
 							curveness: 0 // 设置连接线为直线

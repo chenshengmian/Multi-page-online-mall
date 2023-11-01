@@ -1,5 +1,4 @@
 <script>
-	
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
@@ -20,6 +19,7 @@
 </script>
 
 <style>
+
 	/*每个页面公共css */
 	.el-scrollbar {
 		.el-scrollbar__bar {
@@ -27,4 +27,10 @@
 		}
 	}
 	* { touch-action: pan-y; } 
+	@media screen and (max-width: 990px) {
+		.el-message-box{
+			width: 700rpx !important;
+		}
+	}
+	
 </style>

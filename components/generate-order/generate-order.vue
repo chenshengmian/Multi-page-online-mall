@@ -1,9 +1,11 @@
 <template>
 	<view>
 		<el-card style="padding: 0;">
-			<div style="background-color: #e1dfdb;height: 200rpx;color: #473e3e;">
-				<div style="display: flex;justify-content: center;font-size: 30rpx;padding-top: 30rpx;"><b>银行卡号：{{sysbankcard}}</b></div>
-				<div style="display: flex;justify-content: center;font-size: 30rpx;padding-top: 30rpx;"><b>开户行：{{sysbankname}}</b></div>
+			<el-skeleton :rows="25" v-show="showSataus"/>
+			<div v-show="!showSataus">
+			<div class="sys" style="background-color: #e1dfdb;color: #473e3e;padding: 20rpx;">
+				<div class="sysbank" style="display: flex;justify-content: center;font-size: 30rpx;padding-top: 10rpx;"><b>{{$t('product.Bankcardnumber')}}：{{sysbankcard}}</b></div>
+				<div class="sysbank" style="display: flex;justify-content: center;font-size: 30rpx;padding-top: 20rpx;"><b>{{$t('product.Bank')}}：{{sysbankname}}</b></div>
 				
 				<!-- <div style="display: flex;justify-content: center;margin-top: 10rpx;">订单金额：{{oldprice}} MYR</div> -->
 			</div>
@@ -27,8 +29,8 @@
 					<div style="margin-left: 30rpx;width: 100%;">
 						<!-- <h6>内容：</h6> -->
 						<div style="display: flex;justify-content: space-between;">
-							<div><b>{{item.goodstitle}}</b></div>
-							<div style="color: red;font-size: 40rpx;"><span style="font-size: 24rpx;">MYR</span>{{item.price}}</div>
+							<div class="title"><b>{{item.goodstitle}}</b></div>
+							<div class="price" style="color: red;font-size: 40rpx;"><span style="font-size: 24rpx;">MYR</span>{{item.price}}</div>
 						</div>
 						<div style="display: flex;justify-content: end;">
 							<!-- <time class="time">库存： {{ item.marketprice }}</time> -->
@@ -40,37 +42,30 @@
 			</el-card>
 			<el-card :body-style="{ padding: '20px' }" style="margin-top: 30rpx;" shadow="never">
 				<div class="four">
-					<div class="fourleft">商品小计</div>
+					<div class="fourleft">{{$t('product.Commoditysubtotal')}}</div>
 					<div class="fourright">MYR {{oldprice}}</div>
 				</div>
-				<!-- <div class="four">
-					<div class="fourleft">运费</div>
-					<div class="fourright">MYR0.00</div>
-				</div> -->
 				<div class="four">
-					<div class="fourleft">实付费(含运费)</div>
-					<div class="fourright" style="font-size: 35rpx;color: red;">MYR {{oldprice}}</div>
+					<div class="fourleft">{{$t('product.Actualpayment')}}</div>
+					<div class="fourrights" style="font-size: 35rpx;color: red;">MYR {{oldprice}}</div>
 				</div>
 			</el-card>
 			
 			<el-card :body-style="{ padding: '20px' }" style="margin-top: 30rpx;" shadow="never">
-				<div class="wu">
-					<div class="wuleft">订单编号</div>
-					<div class="wuright">{{ordersn}}</div>
+				<div style="display: flex;">
+					<div class="wu">
+						<div class="wuleft">{{$t('product.Ordernumber')}}</div>
+						<div class="wuleft">{{$t('product.Creationtime')}}</div>
+						<div class="wuleft">{{$t('product.Paymentstatus')}}</div>
+					</div>
+					<div class="wu">
+						<div class="wuright">{{ordersn}}</div>
+						<div class="wuright">{{timestr}}</div>
+						<div class="wuright">{{statusstr}}</div>
+					</div>
 				</div>
-				<div class="wu">
-					<div class="wuleft">创建时间</div>
-					<div class="wuright">{{timestr}}</div>
-				</div>
-				<div class="wu">
-					<div class="wuleft">支付状态</div>
-					<div class="wuright">{{statusstr}}</div>
-				</div>
-				<!-- <div class="wu">
-					<div class="wuleft">支付时间</div>
-					<div class="wuright">2023-10-26 17:28:34</div>
-				</div> -->
 			</el-card>
+			</div>
 		</el-card>
 	</view>
 </template>
@@ -96,7 +91,8 @@
 				mobile:'',
 				sysbankcard:'',
 				sysbankname:'',
-				erPhoto:''
+				erPhoto:'',
+				showSataus:true
 			};
 		},
 		mounted() {
@@ -115,7 +111,7 @@
 						} = res
 						if (status == 100) {
 							self.$message({
-								message: '登录状态已过期！',
+								message: this.$t('home.loginstatus'),
 								center: true
 							});
 							uni.navigateTo({
@@ -148,6 +144,7 @@
 							}
 							_this.mobile = addressmes.mobile
 							_this.address = addressmes.address
+							_this.showSataus = false
 						})
 					})
 					.catch(err => {
@@ -177,29 +174,61 @@
 	    display: block;
 	}
 	.four{
-		margin-top: 20rpx;
 		display: flex;
 		justify-content: space-between;
 	}
 	.fourleft{
+		margin-top: 15rpx;
 		color: #666666;
 	}
 	.fourright{
 		font-size: 28rpx;
 	}
-	.wu{
+	.wuleft{
 		margin-top: 20rpx;
+		color: #1a1a1a;
+	}
+	.wu{
 		font-size: 28rpx;
 		color: #9F9CA5;
-		display: flex;
 	}
 	.wuright{
-		margin-left: 20rpx;
+		margin-left: 25rpx;
+		margin-top: 20rpx;
 	}
 	@media screen and (max-width: 990px) {
 		.erPhoto{
 			width: 400rpx !important;
 			height: 400rpx !important;
 		}
+		.image{
+			width: 100rpx;
+			height: 100rpx;
+		}
+		.wuleft,.wuright{
+			margin-top: 10rpx;
+			font-size: 22rpx;
+		}
+		.four,.fourright{
+			margin-top: 5rpx;
+			font-size: 22rpx;
+		}
+		.fourrights{
+			font-size: 25rpx !important;
+		}
+		.title{
+			font-size: 25rpx !important;
+		}
+		.price{
+			font-size: 30rpx !important;
+		}
+		.time{
+			font-size: 20rpx;
+		}
+		.sysbank{
+			font-size: 25rpx !important;
+			padding-top: 8rpx !important;
+		}
+	
 	}
 </style>

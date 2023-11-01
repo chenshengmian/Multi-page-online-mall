@@ -2,27 +2,36 @@
 	<view>
 		<el-card class="box-card">
 			<div slot="header" class="clearfix">
-				<span style="font-size: 32rpx;color: #79666B;"><b>Product Purchase</b></span>
+				<span style="font-size: 32rpx;color: #79666B;"><b>{{$t('menu.productshopping')}}</b></span>
 			</div>
 			<el-form :label-position="labelPosition" label-width="140px" :style="{marginLeft: fromleft}"
 				:model="formLabelAlign">
-				<el-form-item label="电子邮件	:">
+				<el-form-item :label="$t('product.email')+' :'">
 					<el-input v-model="formLabelAlign.email" :style="{width: inputwith}" size="small"></el-input>
 				</el-form-item>
-				<el-form-item label="联系电话	:">
+				<el-form-item :label="$t('address.Contactnumber')+' :'">
 					<el-input v-model="formLabelAlign.phone" :style="{width: inputwith}" size="small"></el-input>
 				</el-form-item>
 			</el-form>
-			<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+			<!-- <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
 				<block v-for="item in tabbleTap">
 					<el-menu-item :index="item.id">{{item.name}}</el-menu-item>
 				</block>
-			</el-menu>
+			</el-menu> -->
+			<el-tabs v-model="activeIndex" @tab-click="handleSelect" :stretch='true'>
+				<block v-for="item in tabbleTap">
+					<el-tab-pane :label="item.name" :name="item.id"></el-tab-pane>
+				</block>
+			</el-tabs>
+			<!-- <el-tabs @tab-click="handleSelects" v-model="activeIndex" >
+				<block v-for="item in tabbleTap">
+					<el-tab-pane :label="item.name" :name="item.id"></el-tab-pane>
+				</block>
+			</el-tabs> -->
 			<!-- <el-table :data="tableData" style="width: 100%;margin-top: 20rpx;" @row-click="hanldedetail"> -->
-			<el-table :data="tableData" style="width: 100%;margin-top: 20rpx;"  @selection-change="handleSelectionChange">
-				<el-table-column
-				    type="selection"
-				    width="55">
+			<el-table :data="tableData" style="width: 100%;margin-top: 20rpx;" @selection-change="handleSelectionChange"
+				v-if="idStatus">
+				<el-table-column type="selection" width="55">
 				</el-table-column>
 				<el-table-column prop="id" label="ID" align="center" width="150">
 				</el-table-column>
@@ -31,38 +40,57 @@
 						<img :src="scope.row.thumb" width="50" height="50" />
 					</template>
 				</el-table-column> -->
-				<el-table-column prop="title" label="配套名字" align="center">
+				<el-table-column prop="title" :label="$t('product.Matchingname')" align="center">
 				</el-table-column>
-				<el-table-column prop="total" label="FV" align="center">
+				<el-table-column prop="total" :label="$t('shopping.inventory')" align="center">
 				</el-table-column>
-				<el-table-column prop="marketprice" label="价格 MYR" align="center">
+				<el-table-column prop="marketprice" :label="$t('product.Price')+'  MYR'" align="center">
 					<template slot-scope="scope">
-						MYR {{scope.row.marketprice}}
+						{{scope.row.marketprice}}
 					</template>
 				</el-table-column>
-				<el-table-column prop="minprice" label="最低价 MYR" align="center">
+				<el-table-column prop="minprice" :label="$t('product.lowestprice')+'  MYR'" align="center">
 					<template slot-scope="scope">
-						MYR {{scope.row.minprice}}
+						{{scope.row.minprice}}
 					</template>
 				</el-table-column>
-				<el-table-column label="最低价 MYR" align="center">
+				<el-table-column :label="$t('product.Highestprice')+'  MYR'" align="center">
 					<template slot-scope="scope">
-						MYR {{scope.row.minprice}}
+						{{scope.row.maxprice}}
 					</template>
 				</el-table-column>
-				<!-- <el-table-column label="操作" align="center" width="80">
+				<el-table-column :label="$t('shopping.Sales')" align="center">
 					<template slot-scope="scope">
-						<el-button size="mini" type="primary">详情</el-button>
+						{{scope.row.sales}}
 					</template>
-				</el-table-column> -->
-				<!-- <el-table-column prop="count" label="数量" align="center">
-					<template slot-scope="scope">
-						<el-input size="small" v-model="scope.row.count"></el-input>
-					</template>
-				</el-table-column> -->
+				</el-table-column>
 			</el-table>
+			<div v-else>
+				<el-card shadow="never" class="text item">
+					<div><b>{{$t('product.Matchingname')}}</b></div>
+					<div><b>{{$t('shopping.inventory')}}</b></div>
+					<div><b>{{$t('product.Price')}}</b></div>
+					<div><b>{{$t('product.lowestprice')}}</b></div>
+					<div><b>{{$t('product.Highestprice')}}</b></div>
+					<div><b>{{$t('shopping.Sales')}}</b></div>
+				</el-card>
+				<block v-for="data in tableData">
+					<el-card shadow="never" class="text item">
+						<div>
+							<el-checkbox v-model="data.virtual"></el-checkbox>
+							<div>{{data.title}}</div>
+							<div>{{data.total}}</div>
+							<div>{{data.marketprice}}</div>
+							<div>{{data.minprice}}</div>
+							<div>{{data.maxprice}}</div>
+							<div>{{data.sales}}</div>
+						</div>
+					</el-card>
+				</block>
+			</div>
 			<div class="sumbit">
-				<el-button size="small" type="primary" @tap="hanldedetail">提交</el-button>
+				<el-button size="small" type="primary" @tap="hanldedetail" v-if="idStatus">{{$t('purse.submit')}}</el-button>
+				<el-button size="small" type="primary" @tap="hanldedetaila" v-else>{{$t('purse.submit')}}</el-button>
 			</div>
 			<!-- <div v-show="paginations" class="pagination sumbit">
 				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
@@ -82,9 +110,9 @@
 				currentPage1: 5,
 				labelPosition: 'right',
 				fromleft: '40rpx',
-				formLabelAlign:{
-					email:uni.getStorageSync('email'),
-					phone:uni.getStorageSync('mobile')
+				formLabelAlign: {
+					email: uni.getStorageSync('email'),
+					phone: uni.getStorageSync('mobile')
 				},
 				// counttotal: 0,
 				tableData: [], // 表格数据源
@@ -93,7 +121,8 @@
 				activeIndex: '',
 				tabbleTap: '',
 				// paginations: false,
-				ids:''
+				ids: '',
+				idStatus: true,
 			};
 		},
 		mounted() {
@@ -106,18 +135,18 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			handleSelectionChange(val){
+			handleSelectionChange(val) {
 				let str = ''
-				val.forEach(res=>{
+				val.forEach(res => {
 					str += ',' + res.id
 				})
 				this.ids = str.slice(1)
 			},
 			handleSelect(param) {
-				// console.log(param)
-				let self = this
-				self.activeIndex = param
-				self.getProduct()
+				// console.log(this.activeIndex)
+				// let self = this
+				// self.activeIndex = param
+				this.getProduct()
 			},
 			getcatelist() {
 				let self = this
@@ -151,54 +180,55 @@
 			// },
 			getProduct() {
 				let self = this
-				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.getlist&cate='+self.activeIndex)
+				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.getlist&cate=' + self
+						.activeIndex)
 					.then(res => {
-						// console.log(res)
+						console.log(res)
 						const {
 							result: {
 								total,
 								list
 							}
 						} = res
-						// console.log(list) 
-						// if (total == undefined) {
-						// 	self.counttotal = 0
-						// } else {
-						// 	self.counttotal = parseInt(total)
-						// 	if (Number(total) > 0) {
-						// 		self.paginations = true
-						// 	}
-						// }
 						self.tableData = list
 					})
 					.catch(err => {
 						console.log(err);
 					})
 			},
-			hanldedetail(){
-				uni.navigateTo({
-					url:'/pages/product-purchase/product-detail?ids='+this.ids
+			hanldedetaila(){
+				// console.log(this.tableData)
+				let ids = ''
+				let newdata = this.tableData.filter(item=>{
+					return item.virtual == true
 				})
+				newdata.forEach(res=>{
+					ids += ','+res.id
+				})
+				let str = ids.slice(1)
+				if (str == '') {
+					this.$message({
+						message: this.$t('product.select'),
+						type: 'warning'
+					});
+				} else {
+					uni.navigateTo({
+						url: '/pages/product-purchase/product-detail?ids=' + str
+					})
+				}
 			},
-			// hanldedetail(param) {
-			// 	console.log(this.tableData)
-			// 	let newdata = [];
-			// 	let alldata = this.tableData
-			// 	for(let i=0;i<alldata.length;i++){
-			// 		if(alldata[i].hasOwnProperty('count')){
-			// 			newdata.push(alldata[i])
-			// 		}
-			// 	}
-			// 	if(newdata==''){
-			// 		this.$message({
-			// 			showClose: true,
-			// 			message: '请填写需要购买产品的数量',
-			// 			type: 'warning'
-			// 		});
-			// 	}else{
-			// 		console.log('newdata', newdata)
-			// 	}
-			// },
+			hanldedetail() {
+				if (this.ids == '') {
+					this.$message({
+						message: this.$t('product.select'),
+						type: 'warning'
+					});
+				} else {
+					uni.navigateTo({
+						url: '/pages/product-purchase/product-detail?ids=' + this.ids
+					})
+				}
+			},
 			getScreenWidth() {
 				this.screenWidth = window.innerWidth;
 				if (this.screenWidth <= 990) {
@@ -206,10 +236,12 @@
 					this.labelPosition = 'top'
 					this.inputwith = '100%'
 					this.fromleft = '0rpx'
+					this.idStatus = false
 				} else {
 					this.labelPosition = 'right'
 					this.inputwith = '65%'
 					this.fromleft = '40rpx'
+					this.idStatus = true
 				}
 			},
 			handleResize() {
@@ -221,10 +253,12 @@
 						this.fromleft = '0rpx'
 						this.labelPosition = 'top'
 						this.inputwith = '100%'
+						this.idStatus = false
 					} else {
 						this.fromleft = '40rpx'
 						this.labelPosition = 'right'
 						this.inputwith = '65%'
+						this.idStatus = true
 					}
 				}
 			},
@@ -233,6 +267,14 @@
 </script>
 
 <style>
+	.text {
+		font-size: 14px;
+	}
+
+	.item {
+		margin-bottom: 18px;
+	}
+
 	.equal-width-column {
 		width: 100%;
 	}

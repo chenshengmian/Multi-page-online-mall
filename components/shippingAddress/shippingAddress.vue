@@ -2,57 +2,65 @@
 	<view>
 		<el-card>
 			<div slot="header" class="clearfix">
-				<span style="font-size: 32rpx;color: #79666B;"><b>收货地址</b></span>
+				<span style="font-size: 32rpx;color: #79666B;"><b>{{$t('home.address')}}</b></span>
 			</div>
-			<el-skeleton :rows="10" animated v-show="loading"/>
+			<el-skeleton :rows="10" animated v-show="loading" />
 			<div v-show="!loading">
-				<el-empty v-show="addressStatus" :image-size="200" description="暂无收货地址"></el-empty>
+				<el-empty v-show="addressStatus" :image-size="200" :description="$t('address.nodeliveryaddress')"></el-empty>
 				<!-- 添加或者修改收货地址 -->
-				<el-dialog :title="title" :visible.sync="dialogFormVisible" :modal="false" :width="width" @close="handleClose">
-					<el-form :model="ruleForm" :label-position="labelPosition" :rules="rules" ref="ruleForm">
-						<el-form-item label="联系电话" prop="mobile" :label-width="formLabelWidth">
+				<el-dialog :title="title" :visible.sync="dialogFormVisible" :modal="false" :width="width"
+					@close="handleClose">
+					<el-form :model="ruleForm" :label-position="labelPosition" :rules="rules" ref="ruleForm" >
+						<el-form-item :label="$t('address.Contactnumber')" prop="mobile" :label-width="formLabelWidth">
 							<el-input v-model="ruleForm.mobile" autocomplete="off"></el-input>
 						</el-form-item>
-						<el-form-item label="联系信息" prop="realname" :label-width="formLabelWidth">
+						<el-form-item :label="$t('address.ContactInformation')" prop="realname" :label-width="formLabelWidth">
 							<el-input v-model="ruleForm.realname" autocomplete="off"></el-input>
 						</el-form-item>
-						<el-form-item label="是否默认地址" prop="defaults" :label-width="formLabelWidth">
+						<el-form-item :label="$t('address.defaultaddress')" prop="defaults" :label-width="formLabelWidth">
 							<el-switch v-model="ruleForm.defaults"></el-switch>
 						</el-form-item>
-						<el-form-item label="联系地址" prop="address" :label-width="formLabelWidth">
+						<el-form-item :label="$t('address.Contactaddress')" prop="address" :label-width="formLabelWidth">
 							<el-input type="textarea" v-model="ruleForm.address"></el-input>
 						</el-form-item>
 					</el-form>
 					<div slot="footer" class="dialog-footer">
-						<el-button type="primary" size="mini" @tap="submitForm('ruleForm')">确 定</el-button>
+						<el-button type="primary" size="mini" @tap="submitForm('ruleForm')">{{$t('address.Definitely')}}</el-button>
 					</div>
 				</el-dialog>
-				
+
 				<block v-for="item in addressList" v-show="!addressStatus">
-					<el-descriptions :title="item.realname" direction="vertical" :column="4" border style="margin-top: 20rpx;">
+					<el-descriptions :title="item.realname" direction="vertical" :column="4" border
+						style="margin-top: 20rpx;">
 						<template slot="extra">
-							<el-button size="small" @tap="handleRevise(item.id)">修改</el-button>
+							<el-button size="small" @tap="handleRevise(item.id)">{{$t('withdrawal.revise')}}</el-button>
+							<el-button size="small"  @tap="handledel(item.id)">{{$t('address.Delete')}}</el-button>
 						</template>
-						<el-descriptions-item label="联系信息"  :labelStyle='labelStyle'>{{item.realname}}</el-descriptions-item>
-						<el-descriptions-item label="联系电话" :labelStyle='labelStyle'>{{item.mobile}}</el-descriptions-item>
-						<el-descriptions-item label="是否默认地址" :labelStyle='labelStyle'>
-							<el-tag size="small" type="danger" v-if="item.isdefault==1">是</el-tag>
-							<el-tag size="small" type="info" v-else>否</el-tag>
-						</el-descriptions-item >
-						<el-descriptions-item label="联系地址" :labelStyle='labelStyle'>{{item.address}}</el-descriptions-item>
+						<el-descriptions-item :label="$t('address.ContactInformation')"
+							:labelStyle='labelStyle'>{{item.realname}}</el-descriptions-item>
+						<el-descriptions-item :label="$t('address.Contactnumber')"
+							:labelStyle='labelStyle'>{{item.mobile}}</el-descriptions-item>
+						<el-descriptions-item :label="$t('address.defaultaddress')" :labelStyle='labelStyle'>
+							<el-tag size="small" type="danger" v-if="item.isdefault==1">{{$t('address.is')}}</el-tag>
+							<el-tag size="small" type="info" v-else>{{$t('address.off')}}</el-tag>
+						</el-descriptions-item>
+						<el-descriptions-item :label="$t('address.Contactaddress')"
+							:labelStyle='labelStyle'>{{item.address}}</el-descriptions-item>
+						<!-- <el-descriptions-item label="操作" :labelStyle='labelStyle'></el-descriptions-item> -->
 					</el-descriptions>
 				</block>
-				<div v-show="paginations" class="pagination sumbit" style="margin-top: 20rpx;display: flex;justify-content: center;">
+				<div v-show="paginations" class="pagination sumbit"
+					style="margin-top: 20rpx;display: flex;justify-content: center;">
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
 						:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"
 						layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
-				</div> 
-				
+				</div>
+
 				<div style="margin-top: 30rpx;display: flex;justify-content: center;">
-					<el-button size="mini" @tap="handleAdd">添加地址</el-button>
+					<el-button size="mini" @tap="handleAdd">{{$t('address.Addaddress')}}</el-button>
 				</div>
 			</div>
-			
+
 		</el-card>
 	</view>
 </template>
@@ -61,47 +69,57 @@
 	export default {
 		data() {
 			return {
-				loading:true,
+				loading: true,
 				dialogTableVisible: false,
 				dialogFormVisible: false,
-				addressList:[],
-				 //label样式
-				labelStyle: { 'width': '200px' },
-				paginations:false,
+				addressList: [],
+				//label样式
+				labelStyle: {
+					'width': '200px'
+				},
+				paginations: false,
 				counttotal: 0,
 				currentPage: 1, // 当前页码
 				pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
 				ruleForm: {
 					mobile: '',
 					realname: '',
-					isdefault:0,
+					isdefault: 0,
 					defaults: false,
 					address: '',
-					id:''
+					id: ''
 				},
-				addressStatus:true,
-				title:'',
+				addressStatus: true,
+				title: '',
 				rules: {
 					mobile: [{
 						required: true,
-						message: '请输入联系电话',
+						message: this.$t('address.enternumber'),
 						trigger: 'blur'
 					}],
 					realname: [{
 						required: true,
-						message: '请输入联系信息',
+						message: this.$t('address.enterinformation'),
 						trigger: 'blur'
 					}],
 					address: [{
 						required: true,
-						message: '请输入联系地址',
+						message: this.$t('address.enteraddress'),
 						trigger: 'blur'
 					}],
 				},
-				formLabelWidth: '120px',
 				width: '40%',
 				labelPosition: 'right'
 			};
+		},
+		computed:{
+			formLabelWidth(){
+				if(uni.getLocale()=='en'){
+					return '160px'
+				}else{
+					return '100px'
+				}
+			}
 		},
 		mounted() {
 			this.getAdresslist()
@@ -112,6 +130,30 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handledel(id) {
+				// console.log(id)
+				let _this = this
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.address.deladdress&id='+id)
+					.then(res=>{
+						// console.log(res)
+						const { status,result:{message}} = res
+						let type
+						if(status==1){
+							type = 'success'
+							_this.getAdresslist()
+						}else{
+							type = 'error'
+						}
+						_this.$message({
+						    showClose: true,
+						    message: message,
+						    type: type
+						});
+					})
+					.catch(err=>{
+						console.log(err)
+					})
+			},
 			// 处理每页显示条数变化
 			handleSizeChange(val) {
 				// console.log('处理每页显示条数变化',this.pageSize)
@@ -125,7 +167,7 @@
 				this.currentPage = val;
 				this.getAdresslist();
 			},
-			handleClose(){
+			handleClose() {
 				this.ruleForm = {}
 			},
 			submitForm(formName) {
@@ -133,30 +175,34 @@
 				_this.$refs[formName].validate((valid) => {
 					if (valid) {
 						// alert('submit!');
-						if(!_this.ruleForm.defaults){
+						if (!_this.ruleForm.defaults) {
 							_this.ruleForm.isdefault = 0
-						}else{
+						} else {
 							_this.ruleForm.isdefault = 1
 						}
-						_this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.address.post',_this.ruleForm)
-							.then(res=>{
+						_this.$axios.post(
+								'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.address.post',
+								_this.ruleForm)
+							.then(res => {
 								console.log(res)
-								const { status } = res
-								if(status==1){
+								const {
+									status
+								} = res
+								if (status == 1) {
 									_this.getAdresslist()
 									_this.dialogFormVisible = false;
-									let messages = _this.ruleForm.id == '' ? '地址添加成功!' : '地址修改成功!'
+									let messages = _this.ruleForm.id == '' ? _this.$t('address.addsucceed') : _this.$t('address.resucceed')
 									_this.$message({
-									    message: messages,
-									    type: 'success'
+										message: messages,
+										type: 'success'
 									});
-								}else{
+								} else {
 									_this.dialogFormVisible = false;
-									let message = _this.ruleForm.id == '' ? '地址添加失败!' : '地址修改失败!'
+									let message = _this.ruleForm.id == '' ? _this.$t('address.addfail') : _this.$t('address.refail')
 									_this.$message.error(message);
 								}
 							})
-							.catch(err=>{
+							.catch(err => {
 								console.log(err)
 							})
 					} else {
@@ -168,14 +214,14 @@
 			handleAdd() {
 				let _this = this
 				_this.dialogFormVisible = true
-				_this.title = '添加收货地址'
+				_this.title = this.$t('address.Addaddress')
 				// _this.$axios.post()
 			},
 			handleRevise(id) {
-				this.title = '修改收货地址'
+				this.title = this.$t('address.Modifyaddress')
 				this.ruleForm.id = id
 				this.dialogFormVisible = true
-				let newruleForm =  this.addressList.filter(item=>{
+				let newruleForm = this.addressList.filter(item => {
 					return item.id == id
 				})
 				this.ruleForm = newruleForm[0]
@@ -187,18 +233,26 @@
 			},
 			getAdresslist() {
 				let _this = this
-				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.address&page='+_this.currentPage+'&pagesize='+_this.pageSize)
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.address&page=' + _this
+						.currentPage + '&pagesize=' + _this.pageSize)
 					.then(res => {
-						console.log(res)
-						const { status,result:{list,totalpage,total} } = res
+						// console.log(res)
+						const {
+							status,
+							result: {
+								list,
+								totalpage,
+								total
+							}
+						} = res
 						_this.addressList = list
-						if(status==1){
+						if (status == 1) {
 							_this.loading = false
 						}
-						if(Number(total)>0){
+						if (Number(total) > 0) {
 							_this.addressStatus = false
 						}
-						if(totalpage>1){
+						if (totalpage > 1) {
 							_this.paginations = true
 							_this.counttotal = Number(total)
 						}

@@ -17,15 +17,15 @@
 					<el-form :label-position="labelPosition" label-width="90px" :model="ruleForm" :rules="rules"
 						ref="ruleForm">
 
-						<el-form-item label="新密码" prop="newuserpass">
-							<el-input type="password" placeholder="新密码" v-model="ruleForm.newuserpass"></el-input>
+						<el-form-item :label="$t('home.Newpasswords')" prop="newuserpass">
+							<el-input type="password" :placeholder="$t('home.Newpasswords')" v-model="ruleForm.newuserpass"></el-input>
 						</el-form-item>
-						<el-form-item label="重复密码" prop="userpass">
-							<el-input type="password" placeholder="重复密码" v-model="ruleForm.userpass"></el-input>
+						<el-form-item :label="$t('home.Repeatthepassword')" prop="userpass">
+							<el-input type="password" :placeholder="$t('home.Repeatthepassword')" v-model="ruleForm.userpass"></el-input>
 						</el-form-item>
 						<el-form-item :label="$t('login.eamil')" prop="eamils" :rules="[
-      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+      { required: true, message: $t('enroll.enteremailaddress'), trigger: 'blur' },
+      { type: 'email', message: $t('enroll.validemailaddress'), trigger: ['blur', 'change'] }
     ]">
 							<el-input v-model="ruleForm.eamils" :placeholder="$t('login.eamil')"></el-input>
 							<!-- <el-button style="float: right;" type="text" @click="handleEamil"><b><i
@@ -34,15 +34,15 @@
 						<el-form-item>
 							<!-- <el-input v-model="ruleForm.eamils" :placeholder="$t('login.eamil')"></el-input> -->
 							<el-button style="float: right;" type="text" @click="handleEamil"><b><i
-										class="el-icon-thumb"></i> 验证邮箱</b></el-button>
+										class="el-icon-thumb"></i> {{$t('home.Verifymailbox')}}</b></el-button>
 						</el-form-item>
-						<el-form-item label="邮箱验证码" prop="eamilVerifycode">
+						<el-form-item :label="$t('home.Emailcode')" prop="eamilVerifycode">
 							<el-input v-model="ruleForm.eamilVerifycode"></el-input>
 						</el-form-item>
 						<el-form-item style="display: flex;justify-content: end;">
 							<el-button type="text" style="margin-right: 50rpx;"
 								@click="handleresrt"><b>{{$t('table.raturnhome')}}</b></el-button>
-							<el-button @click="submitForm('ruleForm')">修改密码</el-button>
+							<el-button @click="submitForm('ruleForm')">{{$t('home.Changepassword')}}</el-button>
 						</el-form-item>
 						<!-- <el-form-item>
 							<div><i class="el-icon-lock"></i> <span
@@ -59,14 +59,11 @@
 
 <script>
 	import config from '@/utils/config.json'
-	import md5 from 'blueimp-md5';
-	import CryptoJS from 'crypto-js';
-	// import axios from 'axios'
 	export default {
 		data() {
 			var validatePass = (rule, value, callback) => {
 				if (value === '') {
-					callback(new Error('请输入密码'));
+					callback(new Error(this.$t('pass.enteryourpassword')));
 				} else {
 					if (this.ruleForm.checkPass !== '') {
 						this.$refs.ruleForm.validateField('checkPass');
@@ -76,16 +73,16 @@
 			};
 			var validatePass2 = (rule, value, callback) => {
 				if (value === '') {
-					callback(new Error('请再次输入密码'));
+					callback(new Error(this.$t('pass.enteragain')));
 				} else if (value !== this.ruleForm.newuserpass) {
-					callback(new Error('两次输入密码不一致!'));
+					callback(new Error(this.$t('pass.passwordtwice')));
 				} else {
 					callback();
 				}
 			};
 			var validateeamils = (rule, value, callback) => {
 				if (value === '') {
-					callback(new Error('请输入邮箱验证码'));
+					callback(new Error(this.$t('pass.emailverificationcode')));
 				} else {
 					callback();
 				}
@@ -94,7 +91,7 @@
 				typeStatus1: 'info',
 				typeStatus2: 'info',
 				typeStatus3: 'info',
-				labelPosition: 'right',
+				// labelPosition: 'right',
 				captcha: '',
 				showCaptcha: false,
 				name: '',
@@ -123,11 +120,15 @@
 				}
 			}
 		},
-		// computed:{
-		// 	typeStatus(){
-		// 		uni.getLocale('')
-		// 	}
-		// },
+		computed:{
+			labelPosition(){
+				if(uni.getLocale()=='en'){
+					return 'top'
+				}else{
+					return 'right'
+				}
+			}
+		},
 		mounted() {
 			this.change(uni.getLocale())
 			// this.getUserInfo()
@@ -164,7 +165,7 @@
 						_this.rogerThat = message
 						if (status == 1) {
 							_this.$message({
-								message: '邮箱已发送，请不要重复发送!',
+								message: this.$t('enroll.sentagain'),
 								type: 'success'
 							})
 						} else {
@@ -203,6 +204,7 @@
 				}
 				uni.setLocale(lan)
 				this.$i18n.locale = lan
+				// this.$router.go(0)
 			},
 			names() {
 				let _this = this
@@ -301,7 +303,7 @@
 
 	.footer {
 		position: absolute;
-		bottom: 240rpx;
+		bottom: 220rpx;
 		font-size: 24rpx;
 		text-align: center;
 		width: 100%;

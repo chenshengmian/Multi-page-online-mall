@@ -4,36 +4,36 @@
 			<el-card class="box-card">
 				<template #header>
 					<div class="card-header">
-						<span>奖金说明</span>
+						<span>{{$t('menu.bonuseshelp')}}</span>
 						<!-- <el-button class="button" text>Operation button</el-button> -->
 					</div>
 				</template>
 				<div class="yearmonth">
-					<div style="font-size: 26rpx;margin-top: 20rpx;">年-月：</div>
-					<div style="display: flex;">
+					<div style="font-size: 26rpx;margin-top: 20rpx;display: flex;justify-content: start;width: 260rpx;">{{$t('home.yearmonth')}}：</div>
+					<div class="searchs" style="display: flex;margin-left: 100rpx;">
 						<div class="year">
-							<el-select v-model="fyear" slot="prepend" placeholder="请选择" size="medium">
+							<el-select v-model="fyear" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium">
 								<div v-for="(item,index) in yearArr">
 									<el-option :label="item" :value="item"></el-option>
 								</div>
 							</el-select>
 						</div>
 						<div class="month">
-							<el-select v-model="fmouth" slot="prepend" placeholder="请选择" size="medium">
+							<el-select v-model="fmouth" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium">
 								<div v-for="o in 12" :key="o" class="text item">
 									<el-option :label="o" :value="o"></el-option>
 								</div>
 							</el-select>
 						</div>
 						<div class="year">
-							<el-select v-model="lyear" slot="prepend" placeholder="请选择" size="medium">
+							<el-select v-model="lyear" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium">
 								<div v-for="(item,index) in yearArr">
 									<el-option :label="item" :value="item"></el-option>
 								</div>
 							</el-select>
 						</div>
 						<div class="month">
-							<el-select v-model="lmouth" slot="prepend" placeholder="请选择" size="medium">
+							<el-select v-model="lmouth" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium">
 								<div v-for="o in 12" :key="o" class="text item">
 									<el-option :label="o" :value="o"></el-option>
 								</div>
@@ -41,20 +41,20 @@
 						</div>
 					</div>
 					<div class="sumbit">
-						<el-button type="primary" size="medium" @tap="handleSelect">提款状况查询</el-button>
+						<el-button type="primary" size="medium" @tap="handleSelect">{{$t('purse.WithdrawalStatus')}}</el-button>
 					</div>
 				</div>
 				<div v-show="bonusStatus">
 				<div ref="print">
 				<div class="bonuscontent">
 					<div class="text item bonusleft" >
-						<div>经销商编号 : <span style="margin-left: 10rpx; display: inline-block;"> {{account}}</span>
+						<div>{{$t('purse.Dealernumber')}} : <span style="margin-left: 10rpx; display: inline-block;"> {{account}}</span>
 						</div>
-						<div>经销商名字 : <span style="margin-left: 10rpx; display: inline-block;"> {{nickname}}</span></div>
-						<div><span style="margin-left: 24rpx; display: inline-block;">加入日期 : </span><span
+						<div>{{$t('purse.Dealername')}} : <span style="margin-left: 10rpx; display: inline-block;"> {{nickname}}</span></div>
+						<div><span style="margin-left: 24rpx; display: inline-block;">{{$t('home.joiningDate')}} : </span><span
 								style="margin-left: 10rpx; display: inline-block;"> {{datatime}}</span></div>
-						<div>经销商配套 : <span style="margin-left: 10rpx; display: inline-block;"> {{level}}</span></div>
-						<div><span style="margin-left: 78rpx; display: inline-block;">级别 : </span><span
+						<div>{{$t('purse.DealerPackage')}} : <span style="margin-left: 10rpx; display: inline-block;"> {{level}}</span></div>
+						<div><span style="margin-left: 78rpx; display: inline-block;">{{$t('purse.level')}} : </span><span
 								style="margin-left: 10rpx; display: inline-block;"> {{levelname}}</span></div>
 					</div>
 					<!-- <div class="bonusAll" style="margin-top: 20rpx;">
@@ -73,23 +73,41 @@
 					</div> -->
 				</div>
 				<!-- <div class="tabletitle">Retail Bonus (Personal)</div> -->
-				<el-table :data="tableData" >
+				<el-table :data="tableData"  v-if="idStatus">
 					<el-table-column label="ID" width="50">
 						<template slot-scope="scope">
 							{{ (scope.$index+1)+(currentPage-1)*pageSize }}
 						</template>
 					</el-table-column>
-					<el-table-column prop="createtimestr" label="日期" align="center">
+					<el-table-column prop="createtimestr" :label="$t('purse.date')" align="center">
 					</el-table-column>
-					<el-table-column prop="remark" label="备注" align="center">
+					<el-table-column prop="remark" :label="$t('purse.remark')" align="center">
 					</el-table-column>
-					<el-table-column prop="paystatusstr" label="支付状态" align="center">
+					<el-table-column prop="paystatusstr" :label="$t('purse.Paymentstatus')" align="center">
 					</el-table-column>
-					<el-table-column prop="btypestr" label="奖励类型" align="center">
+					<el-table-column prop="btypestr" :label="$t('purse.Rewardtype')" align="center">
 					</el-table-column>
-					<el-table-column prop="price" label="奖金" align="center">
+					<el-table-column prop="price" :label="$t('purse.bonus')" align="center">
 					</el-table-column>
 				</el-table>
+				<div  v-else>
+					<el-card shadow="never" class="text item">
+						<div><b>{{$t('purse.date')}}</b></div>
+						<div><b>{{$t('purse.remark')}}</b></div>
+						<div><b>{{$t('purse.Paymentstatus')}}</b></div>
+						<div><b>{{$t('purse.Rewardtype')}}</b></div>
+						<div><b>{{$t('purse.bonus')}}</b></div>
+					</el-card>
+					<block v-for="data in tableData">
+						<el-card shadow="never" class="text item">
+							<div>{{data.createtimestr}}</div>
+							<div>{{data.remark}}</div>
+							<div>{{data.paystatusstr}}</div>
+							<div>{{data.btypestr}}</div>
+							<div>{{data.price}}</div>
+						</el-card>
+					</block>
+				</div>
 				</div>
 				<div v-show="paginations" class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;" >
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
@@ -115,6 +133,7 @@
 		name: "withdrawal-status",
 		data() {
 			return {
+				idStatus:true,
 				fmouth: '',
 				fyear: '',
 				lmouth: '',
@@ -137,8 +156,33 @@
 		mounted() {
 			this.getMounth()
 			this.getbonusInfo()
+			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
+			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
+		},
+		beforeDestroy() {
+			window.removeEventListener('resize', this.handleResize); 
 		},
 		methods: {
+			getScreenWidth() {
+				this.screenWidth = window.innerWidth;
+				if (this.screenWidth <= 990) {
+					this.idStatus = false
+				} else {
+					this.idStatus = true
+				}
+			},
+			handleResize() {
+				const newScreenWidth = window.innerWidth;
+				if (newScreenWidth !== this.screenWidth) {
+					this.screenWidth = newScreenWidth;
+					console.log(newScreenWidth);
+					if (newScreenWidth <= 990) {
+						this.idStatus = false
+					} else {
+						this.idStatus = true
+					}
+				}
+			},
 			getMounth() {
 				const current = new Date()
 				const yearNew = current.getFullYear()
@@ -203,6 +247,13 @@
 </script>
 
 <style>
+	.text {
+		font-size: 14px;
+	}
+	
+	.item {
+		margin-bottom: 18px;
+	}
 	/deep/table{
 		width: auto !important;
 	}
@@ -256,6 +307,9 @@
 	}
 
 	@media screen and (max-width: 990px) {
+		.searchs{
+			margin-left: 0rpx !important;
+		}
 		.prints{
 			display: none !important;
 		}

@@ -81,51 +81,51 @@
 				rules: {
 					idcard_pre: [{
 						required: true,
-						message: '请输入身份证',
+						message: this.$t('withdrawal.enteryourID'),
 						trigger: 'blur'
 					}],
 					account_holder: [{
 						required: true,
-						message: '请输入持卡者姓名',
+						message: this.$t('withdrawal.entercardholder'),
 						trigger: 'blur'
 					}],
 					bank_name: [{
 						required: true,
-						message: '请输入银行名字',
+						message: this.$t('withdrawal.enterthename'),
 						trigger: 'blur'
 					}],
 					bank_branch: [{
 						required: true,
-						message: '请输入银行分行',
+						message: this.$t('withdrawal.enterbankbranch'),
 						trigger: 'blur'
 					}],
 					bank_account_number: [{
 						required: true,
-						message: '请输入银行分行',
+						message: this.$t('withdrawal.enteryourbank'),
 						trigger: 'blur'
 					}],
 					swift_code: [{
 						required: true,
-						message: '请输入Swift code',
+						message: this.$t('withdrawal.enterSwiftcode'),
 						trigger: 'blur'
 					}],
 					supporting_document: [{
 						required: true,
-						message: '请上传支持文件',
+						message: this.$t('withdrawal.uploadsupportingdocuments'),
 						trigger: 'change'
 					}],
 					id_number: [{
 						required: true,
-						message: '请填写身份证号码',
+						message: this.$t('withdrawal.fillIDnumber'),
 						trigger: 'blur'
 					}],
 					email: [{
 						required: true,
-						message: '请填写Email',
+						message: this.$t('withdrawal.fillemail'),
 						trigger: 'blur'
 					}, {
 						type: 'email',
-						message: '请输入正确的邮箱地址',
+						message: this.$t('withdrawal.entervalidemailaddress'),
 						trigger: ['blur', 'change']
 					}]
 				}
@@ -176,7 +176,7 @@
 						self.username = nickname
 						if (status == 100) {
 							self.$message({
-								message: '登录状态已过期！',
+								message: this.$t('home.loginstatus'),
 								center: true
 							});
 							uni.navigateTo({
@@ -217,10 +217,10 @@
 					}
 				} = res
 				if (status == 0) {
-					this.$message.error('上传失败');
+					this.$message.error(this.$t('withdrawal.Uploadfailed'));
 				} else {
 					this.$message({
-						message: '上传成功',
+						message: this.$t('withdrawal.uploadsuccessful'),
 						type: 'success'
 					});
 				}
@@ -236,10 +236,10 @@
 					}
 				} = response
 				if (status == 0) {
-					this.$message.error('上传失败');
+					this.$message.error(this.$t('withdrawal.Uploadfailed'));
 				} else {
 					this.$message({
-						message: '上传成功',
+						message: this.$t('withdrawal.uploadsuccessful'),
 						type: 'success'
 					});
 				}

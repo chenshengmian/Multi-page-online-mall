@@ -69,21 +69,29 @@
 			}
 		},
 		mounted() {
+			this.check()
 			this.change(uni.getLocale())
 			this.getUserInfo()
 			this.names()
 		},
-		onShow() {
-			// console.log( uni.getStorageSync('tokenArray'))
-			// if(uni.getStorageSync('tokenArray')){
-			// 	uni.navigateTo({
-			// 		url:'/pages/personalPage/personalPage'
-			// 	})
-			// }
-		},
 		methods: {
+			check(){
+				this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member')
+					.then(res => {
+						const { status } = res
+						if (status == 100) {
+							// uni.navigateTo({
+							// 	url: '/pages/userLogin/userLogin'
+							// })
+						} else {
+							uni.navigateTo({
+								url: '/pages/personalPage/personalPage'
+							})
+						}
+					})
+			},
 			handleRecover(){
-				console.log(11)
+				// console.log(11)
 				uni.navigateTo({
 					url:'/pages/recoverPassword/recoverPassword'
 				})
@@ -109,6 +117,7 @@
 				}
 				uni.setLocale(lan)
 				this.$i18n.locale = lan
+				// this.$router.go(0)
 			},
 			names(){
 				let _this = this

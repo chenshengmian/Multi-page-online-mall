@@ -4,27 +4,27 @@
 			<el-card class="box-card">
 				<template #header>
 					<div class="card-header">
-						<span>电子钱包历史记录</span>
+						<span>{{$t('menu.ewallethistory')}}</span>
 						<!-- <el-button class="button" text>Operation button</el-button> -->
 					</div>
 				</template>
 				<div>
 					<div class="mony">
-						<div style="font-size: 30rpx;">钱包</div>
+						<div style="font-size: 30rpx;">{{$t('purse.purse')}}</div>
 						<div>
-							<el-select v-model="select" slot="prepend" placeholder="请选择" size="medium"
+							<el-select v-model="select" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium"
 								style="width: 1820rpx">
-								<el-option label="现金积分 (CP)" value="1"></el-option>
-								<el-option label="旅游积分 (TP)" value="2"></el-option>
-								<el-option label="产品点 (PP)" value="3"></el-option>
+								<el-option :label="$t('purse.Cashcredits')" value="1"></el-option>
+								<el-option :label="$t('purse.Travelcredits')" value="2"></el-option>
+								<el-option :label="$t('purse.ProductPoints')" value="3"></el-option>
 							</el-select>
 						</div>
 					</div>
 					<div class="datamonth">
-						<div style="font-size: 30rpx;">年-月</div>
+						<div style="font-size: 30rpx;">{{$t('home.yearmonth')}}</div>
 						<div>
 							<div class="block" style="display: inline-block;">
-								<el-select v-model="mouth" slot="prepend" placeholder="请选择" size="medium"
+								<el-select v-model="mouth" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium"
 									style="width: 900rpx;margin-right: 20rpx;">
 									<div v-for="(item,index) in mouthArr">
 										<el-option :label="item" :value="item"></el-option>
@@ -32,7 +32,7 @@
 								</el-select>
 							</div>
 							<div class="block" style="display: inline-block;">
-								<el-select v-model="year" slot="prepend" placeholder="请选择" size="medium"
+								<el-select v-model="year" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium"
 									style="width: 900rpx;">
 									<div v-for="(item,index) in yearArr">
 										<el-option :label="item" :value="item"></el-option>
@@ -42,31 +42,49 @@
 						</div>
 					</div>
 					<div class="sumbit" style="display: flex;justify-content: end;">
-						<el-button type="primary" size="medium" @tap="handlechanginfo">提交</el-button>
+						<el-button type="primary" size="medium" @tap="handlechanginfo">{{$t('purse.submit')}}</el-button>
 					</div>
 				</div>
-				<el-table :data="tableData" class="custom-table">
+				<el-table :data="tableData" class="custom-table" border v-if="idstatus">
 					<div v-if="idstatus">
-					<el-table-column label="ID" width="40" >
-						<template slot-scope="scope">
-							{{ (scope.$index+1)+(currentPage-1)*pageSize }}
-						</template>
-					</el-table-column>
+						<el-table-column label="ID" width="40">
+							<template slot-scope="scope">
+								{{ (scope.$index+1)+(currentPage-1)*pageSize }}
+							</template>
+						</el-table-column>
 					</div>
-					<el-table-column prop="timestr" label="日期" align="center">
+					<el-table-column prop="timestr" :label="$t('purse.date')" align="center">
 					</el-table-column>
-					<el-table-column prop="remark" label="交易说明" align="center">
+					<el-table-column prop="remark" :label="$t('purse.TransactionDescription')" align="center">
 					</el-table-column>
-					<el-table-column prop="num" label="进账(-)为出账" align="center">
+					<el-table-column prop="num" :label="$t('purse.Incoming')" align="center">
 					</el-table-column>
-					<el-table-column prop="credittype" label="类型" align="center">
+					<el-table-column prop="credittype" :label="$t('purse.type')" align="center">
 						<template slot-scope="scope">
-							<div v-if="scope.row.credittype=='credit1'">现金积分 (CP)</div>
-							<div v-else-if="scope.row.credittype=='credit2'">旅游积分 (TP)</div>
-							<div v-else>产品点 (PP)</div>
+							<div v-if="scope.row.credittype=='credit1'">{{$t('purse.Cashcredits')}}</div>
+							<div v-else-if="scope.row.credittype=='credit2'">{{$t('purse.Travelcredits')}}</div>
+							<div v-else>{{$t('purse.ProductPoints')}}</div>
 						</template>
 					</el-table-column>
 				</el-table>
+				<div  v-else> 
+					<el-card shadow="never" class="text item">
+						<div><b>{{$t('purse.date')}}</b></div>
+						<div><b>{{$t('purse.TransactionDescription')}}</b></div>
+						<div><b>{{$t('purse.Incoming')}}</b></div>
+						<div><b>{{$t('purse.type')}}</b></div>
+					</el-card>
+					<block v-for="data in tableData">
+						<el-card shadow="never" class="text item">
+							<div>{{data.timestr}}</div>
+							<div>{{data.remark}}</div>
+							<div>{{data.num}}</div>
+							<div v-if="data.credittype=='credit1'">{{$t('purse.Cashcredits')}}</div>
+							<div v-else-if="data.credittype=='credit2'">{{$t('purse.Travelcredits')}}</div>
+							<div v-else>{{$t('purse.ProductPoints')}}</div>
+						</el-card>
+					</block>
+				</div>
 				<div v-show="paginations" class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;">
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
 						:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"

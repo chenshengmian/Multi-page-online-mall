@@ -92,45 +92,11 @@
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
 					{{$t('home.Bonustype')}}
 				</div>
-				<!-- <div class="container">
-					<div class="box">
-						<div class="boxtwo">0.00</div>
-						<div class="fivetwo">Retail Bonus</div>
-					</div>
-					<div class="box">
-						<div class="boxtwo">0.00</div>
-						<div class="fivetwo">Network Bonus</div>
-					</div>
-					<div class="box">
-						<div class="boxtwo">0.00</div>
-						<div class="fivetwo">Matching Bonus</div>
-					</div>
-					<div class="box">
-						<div class="boxtwo">0.00</div>
-						<div class="fivetwo">Travel Bonus</div>
-					</div>
-					<div class="box">
-						<div class="boxtwo">0.00</div>
-						<div class="fivetwo">Gold Millionaire Pool</div>
-					</div>
-					<div class="box">
-						<div class="boxtwo">0.00</div>
-						<div class="fivetwo">Platinm Millionaire Pool</div>
-					</div>
-					<div class="box">
-						<div class="boxtwo">0.00</div>
-						<div class="fivetwo">Diamond Millionaire Pool</div>
-					</div>
-				</div>
-				<div style="margin-top: 400rpx;color: #ADB5BD;"> -->
-				<!-- <div style="display: flex;justify-content: center;font-size: 40rpx;font-weight: 800;">Retail Bonus
-					</div>
-					<div style="display: flex;justify-content: center;font-size: 40rpx;">{{RetailBonus}}</div>
-				</div> -->
+				
 				<div v-for="item in typesArray" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
 					<div class="bonustype">
-						<!-- <div v-show="">{{item.levelname_en}}:</div> -->
-						<div>{{item.levelname}}:</div>
+						<div v-show="levelName">{{item.levelname_en}}:</div>
+						<div v-show="!levelName">{{item.levelname}}:</div>
 						<div>{{item.bonus}}</div>
 					</div>
 				</div>
@@ -246,6 +212,15 @@
 			this.getMounth()
 			this.getinfo()
 		},
+		computed:{
+			levelName(){
+				if(uni.getLocale()=='en'){
+					return true
+				}else{
+					return false
+				}
+			}
+		},
 		methods: {
 			handleAdstatus(type) {
 				// console.log(type)
@@ -265,6 +240,24 @@
 			},
 			async getinfo() {
 				let _this = this
+				const {
+					userinfo
+				} = uni.getStorageSync('tokenArray')
+				let array = {
+					'userid': userinfo
+				}
+				_this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.selectTree',
+						array)
+					.then(res => {
+						const {
+							result
+						} = res
+						uni.setStorageSync('data', result)
+						console.log('更新',res)
+					})
+					.catch(err => {
+						console.log(err)
+					})
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner')
 					.then(res=>{
 						// console.log(res)

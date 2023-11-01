@@ -2,24 +2,24 @@
 	<view>
 		<el-card>
 			<div class="wallect">
-				<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
+				<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" :label-width="labelwidth"
 					class="demo-ruleForm" :label-position="labelPosition" size="small">
 					<div class="title">{{title}}</div>
-					<el-form-item label="身份证后6位:" prop="postcard">
-						<el-input  v-model="ruleForm.postcard" autocomplete="off" size="small"></el-input>
+					<el-form-item :label="$t('pass.IDcard')+':'" prop="postcard">
+						<el-input clearable v-model="ruleForm.postcard" autocomplete="off" size="small"style="width:600rpx;"></el-input>
 					</el-form-item>
-					<el-form-item label="当前密码:" prop="newpass">
-						<el-input type="password" v-model="ruleForm.newpass" size="small"></el-input>
+					<el-form-item :label="$t('pass.Currentpassword')+':'" prop="newpass">
+						<el-input clearable type="password" v-model="ruleForm.newpass" size="small"></el-input>
 					</el-form-item>
-					<el-form-item label="新密码:" prop="pass">
-						<el-input type="password" v-model="ruleForm.pass" autocomplete="off" size="small"></el-input>
+					<el-form-item :label="$t('home.Newpasswords')+':'" prop="pass">
+						<el-input clearable type="password" v-model="ruleForm.pass" autocomplete="off" size="small"></el-input>
 					</el-form-item>
-					<el-form-item label="确认新密码:" prop="checkPass">
-						<el-input type="password" v-model="ruleForm.checkPass" autocomplete="off" size="small"></el-input>
+					<el-form-item :label="$t('home.Repeatthepassword')+':'" prop="checkPass">
+						<el-input clearable type="password" v-model="ruleForm.checkPass" autocomplete="off" size="small"></el-input>
 					</el-form-item>
 					<el-form-item>
-						<el-button @click="submitForm" size="small">修改密码</el-button>
-						<el-button @click="resetForm('ruleForm')"  size="small">Retrieve EWallet Password</el-button>
+						<el-button @click="submitForm" size="small">{{$t('home.Changepassword')}}</el-button>
+						<!-- <el-button @click="resetForm('ruleForm')"  size="small">Retrieve EWallet Password</el-button> -->
 					</el-form-item>
 				</el-form>
 			</div>
@@ -33,12 +33,12 @@
 		data() {
 			var validatePassnew = (rule, value, callback) => {
 				if (!value) {
-					return callback(new Error('请输入当前使用密码'));
+					return callback(new Error(this.$t('pass.enterpassword')));
 				}
 			};
 			var validatePass = (rule, value, callback) => {
 				if (value === '') {
-					callback(new Error('请输入密码'));
+					callback(new Error(this.$t('pass.enteryourpassword')));
 				} else {
 					if (this.ruleForm.checkPass !== '') {
 						this.$refs.ruleForm.validateField('checkPass');
@@ -48,22 +48,22 @@
 			};
 			var validatePass2 = (rule, value, callback) => {
 				if (value === '') {
-					callback(new Error('请再次输入密码'));
+					callback(new Error(this.$t('pass.enteragain')));
 				} else if (value !== this.ruleForm.pass) {
-					callback(new Error('两次输入密码不一致!'));
+					callback(new Error(this.$t('pass.passwordtwice')));
 				} else {
 					callback();
 				}
 			};
 			var validatepasscard = (rule, value, callback) => {
 				if (value === '') {
-					callback(new Error('请输入身份证后6位'));
+					callback(new Error(this.$t('pass.lastdigits')));
 				} else {
 					callback();
 				}
 			};
 			return {
-				title:'修改电子钱包密码',
+				title: this.$t('pass.Changepasswords'),
 				ruleForm: {
 					pass: '',
 					checkPass: '',
@@ -91,11 +91,20 @@
 					},{
 						min: 6,
 						max: 6,
-						message: '长度为 6 个字符',
+						message: this.$t('pass.is6characters'),
 						trigger: 'blur'
 					}]
 				}
 			};
+		},
+		computed:{
+			labelwidth(){
+				if(uni.getLocale()=='en'){
+					return '450rpx'
+				}else{
+					return '200rpx'
+				}
+			}
 		},
 		mounted() {
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
@@ -131,7 +140,7 @@
 				if (this.screenWidth <= 990) {
 					this.labelPosition = 'top'
 				} else {
-					this.labelPosition = 'left'
+					this.labelPosition = 'right'
 				}
 			},
 			handleResize() {
@@ -142,14 +151,14 @@
 					if (newScreenWidth <= 990) {
 						this.labelPosition = 'top'
 					} else {
-						this.labelPosition = 'left'
+						this.labelPosition = 'right'
 					}
 				}
 			},
-			resetForm(formName) {
-				this.$refs[formName].resetFields();
-				this.title = '修改电子钱包密码 - Retrieve EWallet Password Successful Send'
-			}
+			// resetForm(formName) {
+			// 	this.$refs[formName].resetFields();
+			// 	this.title = '修改电子钱包密码 - Retrieve EWallet Password Successful Send'
+			// }
 		}
 	}
 </script>

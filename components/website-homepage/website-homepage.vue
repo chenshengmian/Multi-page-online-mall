@@ -3,100 +3,104 @@
 
 		<el-container>
 			<!-- <el-header> -->
-				<!-- <div class="header"> -->
-					<!-- <div class="logo">
+			<!-- <div class="header"> -->
+			<!-- <div class="logo">
 						<img :src="logo" alt="" style="width: 100rpx;height: 100rpx;border-radius: 50%;">
 					</div> -->
-					<!-- <div class="sreach">
+			<!-- <div class="sreach">
 						<el-input placeholder="请输入商品名称" v-model="productname">
 						    <template slot="prepend"><el-button icon="el-icon-search" @tap="handleSearch"></el-button></template>
 						</el-input>
 					</div> -->
-					<!-- <div>
+			<!-- <div>
 						<el-button type="primary" @tap="handlelogo">登陆</el-button>
 					</div> -->
-				<!-- </div> -->
+			<!-- </div> -->
 
 			<!-- </el-header> -->
 			<!-- <div  > -->
-				<el-main>
-					<el-card>
-						<div class="sreach" style="display: flex;justify-content: space-between;">
-							<el-input placeholder="请输入商品名称" v-model="productname">
-								<i slot="prefix" class="el-input__icon el-icon-search"></i>
-								<el-button style="border-left: 0rpx;" slot="append"  @tap="handleSearch">搜索</el-button>
-							</el-input>
-						</div>
-						<div class="carousel-container" style="margin-top: 20rpx;">
-							<el-carousel :interval="3000"  arrow="never">
-								<el-carousel-item v-for="item in carouselmap" style="width: 100%;height: 100%;" >
-									<!-- <h3>{{ item }}</h3> -->
-									<img :src="item.thumb" alt="" class="carousel-image">
-								</el-carousel-item>
-							</el-carousel>
-						</div>
+			<el-main>
+				<el-card>
+					<div class="sreach" style="display: flex;justify-content: space-between;">
+						<el-input :placeholder="$t('shopping.enterenter')" v-model="productname">
+							<i slot="prefix" class="el-input__icon el-icon-search"></i>
+							<el-button style="border-left: 0rpx;" slot="append"
+								@tap="handleSearch">{{$t('shopping.Search')}}</el-button>
+						</el-input>
+					</div>
+					<div class="carousel-container" style="margin-top: 20rpx;">
+						<el-carousel :interval="3000" arrow="never">
+							<el-carousel-item v-for="item in carouselmap" style="width: 100%;height: 100%;">
+								<!-- <h3>{{ item }}</h3> -->
+								<img :src="item.thumb" alt="" class="carousel-image">
+							</el-carousel-item>
+						</el-carousel>
+					</div>
 
-						<!-- 公告详情 -->
-						<el-dialog :title="adtitle" :visible.sync="dialogTableVisible" :modal='false' :width="diawidth">
-							<!-- <el-card > -->
-								<img :src="adimage" class="images" v-show="have">
-								<div style="padding: 14px;">
-									<span v-html="adcontont"></span>
-									<div class="bottom clearfix">
-										<time class="time">{{ currentDate }}</time>
-										<el-button type="text" class="button" @tap="handleSure">确定</el-button>
-									</div>
-								</div>
-							<!-- </el-card> -->
-						</el-dialog>
-
-						<div class="scrolling-container"
-							style="background-color: #E8F3FE;margin:20rpx 0rpx;height: 80rpx;">
-							<vue-seamless-scroll :data="subtitles" class="scroll" :class-option="defaultOption">
-								<div v-for="item in subtitles" class="item" style="cursor:pointer;line-height: 80rpx;">
-									<div @tap="handeladDetail(item.id)">{{ item.title }}</div>
-								</div>
-							</vue-seamless-scroll>
+					<!-- 公告详情 -->
+					<el-dialog :title="adtitle" :visible.sync="dialogTableVisible" :modal='false' :width="diawidth">
+						<!-- <el-card > -->
+						<img :src="adimage" class="images" v-show="have">
+						<div style="padding: 14px;">
+							<span v-html="adcontont"></span>
+							<div class="bottom clearfix">
+								<time class="time">{{ currentDate }}</time>
+								<el-button type="text" class="button"
+									@tap="handleSure">{{$t('address.Definitely')}}</el-button>
+							</div>
 						</div>
-						
-						<el-tabs @tab-click="handleSelect" v-model="activeIndex" :stretch='true'>
-							<block v-for="item in tabbleTap">
-								<el-tab-pane :label="item.name" :name="item.id"></el-tab-pane>
-							</block>
-						</el-tabs>
-						<!-- <div style="margin: 20rpx 0rpx;"> -->
-						<!-- <span style="font-size: 40rpx;">猜你喜欢</span> -->
-						<!-- <el-tag type="danger">个性推荐</el-tag> -->
-						<!-- </div> -->
-						<el-empty :image-size="200"  v-show="prounddatastatus"></el-empty>
-						<el-row :gutter="24"  v-show="!prounddatastatus">
-							<el-col :span="span" v-for="item in prounddata">
-								<el-card :body-style="{ padding: '20px' }"  shadow="never" @click.native="handelDetail(item.id)">
-									<div style="display: flex;position: relative;">
-										<img :src="item.thumb" class="image">
-										<div style="margin-left: 30rpx;">
-											<!-- <h6>内容：</h6> -->
-											<span><b>{{item.title}}</b></span>
-											<div style="color: red;margin-top: 40rpx;font-size: 40rpx;"><span style="font-size: 24rpx;">MYR</span>{{item.marketprice}}</div>
-											<div class="bottom clearfix">
-												<!-- <time class="time">库存： {{ item.marketprice }}</time> -->
-												<time class="time">库存： {{ item.sales }}</time>
-											</div>
-											<div style="margin-top: 15rpx;position: absolute;bottom: 0;right:0;">
-												<button style="width: 150rpx;background-color: #fff; font-size: 24rpx;height: 50rpx;line-height: 50rpx; border: 1rpx solid #C83637;border-radius: 20rpx;color: #C83637;">购买</button>
-											</div>
+						<!-- </el-card> -->
+					</el-dialog>
+
+					<div class="scrolling-container" style="background-color: #E8F3FE;margin:20rpx 0rpx;height: 80rpx;">
+						<vue-seamless-scroll :data="subtitles" class="scroll" :class-option="defaultOption">
+							<div v-for="item in subtitles" class="item" style="cursor:pointer;line-height: 80rpx;">
+								<div @tap="handeladDetail(item.id)">{{ item.title }}</div>
+							</div>
+						</vue-seamless-scroll>
+					</div>
+
+					<el-tabs @tab-click="handleSelect" v-model="activeIndex" :stretch='true'>
+						<block v-for="item in tabbleTap">
+							<el-tab-pane :label="item.name" :name="item.id"></el-tab-pane>
+						</block>
+					</el-tabs>
+					<!-- <div style="margin: 20rpx 0rpx;"> -->
+					<!-- <span style="font-size: 40rpx;">猜你喜欢</span> -->
+					<!-- <el-tag type="danger">个性推荐</el-tag> -->
+					<!-- </div> -->
+					<el-empty :image-size="200" v-show="prounddatastatus"></el-empty>
+					<el-row :gutter="24" v-show="!prounddatastatus" style="width: 100%;">
+						<el-col :span="span" v-for="item in prounddata">
+							<el-card :body-style="{ padding: '20px' }" shadow="never"
+								@click.native="handelDetail(item.id)">
+								<div style="display: flex;position: relative;">
+									<img :src="item.thumb" class="image">
+									<div style="margin-left: 30rpx;">
+										<!-- <h6>内容：</h6> -->
+										<span><b>{{item.title}}</b></span>
+										<div style="color: red;margin-top: 40rpx;font-size: 40rpx;"><span
+												style="font-size: 24rpx;">MYR</span>{{item.marketprice}}</div>
+										<div class="bottom clearfix">
+											<!-- <time class="time">库存： {{ item.marketprice }}</time> -->
+											<time class="time">{{$t('shopping.inventory')}}： {{ item.sales }}</time>
+										</div>
+										<div style="margin-top: 15rpx;position: absolute;bottom: 0;right:0;">
+											<button :style="[lineHeight]"
+												style="width: 150rpx;background-color: #fff; font-size: 24rpx;height: 50rpx; border: 1rpx solid #C83637;border-radius: 20rpx;color: #C83637;text-align: center;">{{$t('shopping.purchase')}}</button>
 										</div>
 									</div>
-								</el-card>
-							</el-col>
-						</el-row>
-						<div class="pagination" v-show="!prounddatastatus">
-							<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-								:current-page="currentPage" :page-sizes="[3, 6, 9, 12]" :page-size="pageSize"
-								layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
-						</div>
-					</el-card>
-				</el-main>
+								</div>
+							</el-card>
+						</el-col>
+					</el-row>
+					<div class="pagination" v-show="!prounddatastatus">
+						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+							:current-page="currentPage" :page-sizes="[6, 9, 12, 24]" :page-size="pageSize"
+							layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
+					</div>
+				</el-card>
+			</el-main>
 			<!-- </div> -->
 		</el-container>
 		<!-- <el-footer>
@@ -111,8 +115,8 @@
 		name: "website-homepage",
 		data() {
 			return {
-				productname:'',
-				prounddatastatus:false,
+				productname: '',
+				prounddatastatus: false,
 				dialogTableVisible: false,
 				input3: '',
 				// select: '',
@@ -122,7 +126,7 @@
 				logo: '',
 				span: 8,
 				currentPage: 1, // 当前页码
-				pageSize: 3, // 每页显示的条数
+				pageSize: 12, // 每页显示的条数
 				cate: '',
 				counttotal: 0,
 				prounddata: '',
@@ -150,7 +154,7 @@
 				have: true,
 				diawidth: '30%',
 				loading: true,
-				content:''
+				content: ''
 			};
 		},
 		computed: {
@@ -165,6 +169,20 @@
 					singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
 					waitTime: 1500 // 单步运动停止的时间(默认值1000ms)
 				}
+			},
+			lineHeight(){
+				if(uni.getLocale()=='en'){
+					let obj = {
+						'line-height': ""
+					}
+					return obj;
+				}else{
+					let obj = {
+						'line-height': "50rpx"
+					}
+					console.log('obj',obj)
+					return obj;
+				}
 			}
 		},
 		mounted() {
@@ -178,7 +196,7 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			handleSearch(){
+			handleSearch() {
 				this.getproundlist()
 			},
 			handleSure() {
@@ -190,7 +208,7 @@
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.noticedetail&id=' + i)
 					.then(res => {
 						// console.log(res)
-						const {   
+						const {
 							status,
 							result: {
 								detail,
@@ -247,7 +265,7 @@
 			},
 			handelDetail(id) {
 				uni.navigateTo({
-					url:'/pages/homepageDatail/homepageDatail?id='+id
+					url: '/pages/homepageDatail/homepageDatail?id=' + id
 				})
 			},
 			getcateList() {
@@ -335,7 +353,8 @@
 			getproundlist() {
 				let _this = this
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.goodslist&page=' + _this
-						.currentPage + '&pagesize=' + _this.pageSize + '&cate=' + _this.cate+'&keywords='+_this.productname)
+						.currentPage + '&pagesize=' + _this.pageSize + '&cate=' + _this.cate + '&keywords=' + _this
+						.productname)
 					.then(res => {
 						console.log(res)
 						const {
@@ -348,9 +367,9 @@
 						// if(status==1){
 						_this.prounddata = list
 						_this.counttotal = Number(total)
-						if(Number(total)==0){
+						if (Number(total) == 0) {
 							_this.prounddatastatus = true
-						}else{
+						} else {
 							_this.prounddatastatus = false
 						}
 						// }else{
@@ -392,22 +411,23 @@
 </script>
 
 <style scoped>
+	/deep/ .el-carousel__indicator--horizontal .el-carousel__button {
+		width: 25rpx;
+		height: 25rpx;
+		background: transparent;
+		border: 1px solid #ffffff;
+		border-radius: 50%;
+		opacity: 0.5;
+	}
 
-	  /deep/ .el-carousel__indicator--horizontal .el-carousel__button {
-	    width: 25rpx;
-	    height: 25rpx;
-	    background: transparent;
-	    border: 1px solid #ffffff;
-	    border-radius: 50%;
-	    opacity: 0.5;
-	  }  
-	  /deep/ .el-carousel__indicator--horizontal.is-active .el-carousel__button{
-	    width: 25rpx;
-	    height: 25rpx;
-	    background: #ffffff;
-	    border-radius: 50%;
-	    opacity: 1;
-	  }
+	/deep/ .el-carousel__indicator--horizontal.is-active .el-carousel__button {
+		width: 25rpx;
+		height: 25rpx;
+		background: #ffffff;
+		border-radius: 50%;
+		opacity: 1;
+	}
+
 	.time {
 		font-size: 13px;
 		color: #999;
@@ -499,7 +519,7 @@
 		/* 鼠标悬停时放大图片 */
 	}
 
-	
+
 
 	.time {
 		font-size: 13px;
@@ -517,7 +537,8 @@
 	}
 
 	.image {
-		width: 40%;
+		width: 400rpx;
+		height: 400rpx;
 		display: block;
 	}
 
@@ -629,23 +650,16 @@
 		.el-carousel {
 			height: 300rpx;
 		}
-		
-		/* .el-main{
-			height: 100vh;
-		} */
+
+		.image {
+			width: 40%;
+			height: 200rpx;
+			display: block;
+		}
 
 		.logo img {
 			width: 50rpx;
 		}
-
-		.sreach {
-			width: 100% !important;
-		}
-
-
-		/* .logo {
-			width: 25% !important;
-		} */
 
 		.el-select {
 			width: 170rpx;

@@ -24,8 +24,10 @@
 	"menu.logoff":"退出",
 	"home.reviewagreement":"查看協議",
 	"home.Checkthepopupwindow":"查看彈窗",
-	"home.news":"新聞/公告",
+	"home.news":"公告",
 	"home.yearmonth":"年-月",
+	"home.year":"年",
+	"home.month":"月",
 	"home.title":"標題",
 	"home.updatetime":"更新時間",
 	"home.operate":"操作",
@@ -236,5 +238,8 @@
 	"enroll.participate":"參與",
 	"enroll.Notinvolved":"不參與",
 	"enroll.validemailaddress":"請輸入正確的郵箱地址",
-	"pass.emailverificationcode":"請輸入郵箱驗證碼"
+	"pass.emailverificationcode":"請輸入郵箱驗證碼",
+	"home.agreement":"協議",
+	"home.Information":"信息",
+	"Record.information":"記錄信息"
 }

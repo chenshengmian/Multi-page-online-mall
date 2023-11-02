@@ -7,11 +7,11 @@
 			<div style="font-size: 26rpx;text-decoration: underline;">{{$t('withdrawal.accountSummary')}}</div>
 			<el-row>
 				<el-col :span="elleft">{{$t('withdrawal.cashPointsBalance')}}</el-col>
-				<el-col :span="elright">：{{credit2}}</el-col>
+				<el-col :span="elright">{{credit2}}</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">{{$t('withdrawal.transferableBalance')}}</el-col>
-				<el-col :span="elright">：{{credit5}}</el-col>
+				<el-col :span="elright">{{credit5}}</el-col>
 			</el-row>
 			<!-- <el-row>
 				<el-col :span="elleft">类型</el-col>
@@ -27,44 +27,44 @@
 			</el-row> -->
 			<el-row>
 				<el-col :span="elleft">{{$t('withdrawal.identityCard')}}</el-col>
-				<el-col :span="elright">：{{Identitycard}}</el-col>
+				<el-col :span="elright">{{Identitycard}}</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">{{$t('withdrawal.accountHolder')}}</el-col>
-				<el-col :span="elright">：{{AccountHolder}}</el-col>
+				<el-col :span="elright">{{AccountHolder}}</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">{{$t('withdrawal.bankName')}}</el-col>
-				<el-col :span="elright">：{{BankName}}</el-col>
+				<el-col :span="elright">{{BankName}}</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">{{$t('withdrawal.bankBranch')}}</el-col>
-				<el-col :span="elright">：{{BankBranch}}</el-col>
+				<el-col :span="elright">{{BankBranch}}</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">{{$t('withdrawal.bankAccountNumber')}}</el-col>
-				<el-col :span="elright">：{{BankAccountNumber}}</el-col>
+				<el-col :span="elright">{{BankAccountNumber}}</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">Swift code</el-col>
-				<el-col :span="elright">：{{Swiftcode}}</el-col>
+				<el-col :span="elright">{{Swiftcode}}</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">{{$t('withdrawal.supportingDocument')}}</el-col>
-				<el-col :span="elright">：<el-link :href="SupportingDocument" type="primary"
+				<el-col :span="elright"><el-link :href="SupportingDocument" type="primary"
 						target="_blank">{{$t('withdrawal.supportingDocument')}}</el-link></el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">{{$t('withdrawal.idCard')}}</el-col>
-				<el-col :span="elright">：{{idNumber}}</el-col>
+				<el-col :span="elright">{{idNumber}}</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">{{$t('login.eamil')}}</el-col>
-				<el-col :span="elright">：{{eamil}}</el-col>
+				<el-col :span="elright">{{eamil}}</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">{{$t('withdrawal.transferAmount')}}</el-col>
-				<el-col :span="elright"><span>：</span><el-input v-model="mony" size="mini"></el-input></el-col>
+				<el-col :span="elright"><el-input v-model="mony" size="mini"></el-input></el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft"></el-col>

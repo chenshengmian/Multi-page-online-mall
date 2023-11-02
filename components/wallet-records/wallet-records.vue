@@ -85,9 +85,9 @@
 						</el-card>
 					</block>
 				</div>
-				<div v-show="paginations" class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;">
-					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-						:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"
+				<div class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;">
+					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :hide-on-single-page="paginations"
+						:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"  
 						layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
 				</div>
 			</el-card>
@@ -111,8 +111,11 @@
 				tableData: [], // 表格数据源
 				currentPage: 1, // 当前页码
 				pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
-				paginations:false,
-				idstatus:true
+				paginations:true,
+				idstatus:true,
+				// pagercounts:8,
+				// smalls:false,
+				
 			};
 		},
 		mounted() {
@@ -126,8 +129,10 @@
 				this.screenWidth = window.innerWidth;
 				if (this.screenWidth <= 990) {
 					this.idstatus = false
+					// this.pagercounts= 2
 				} else {
 					this.idstatus = true
+					// this.pagercounts= 8
 				}
 			},
 			handleResize() {
@@ -137,8 +142,10 @@
 					console.log(newScreenWidth);
 					if (newScreenWidth <= 990) {
 						this.idstatus = false
+						// this.pagercounts= 2
 					} else {
 						this.idstatus = true
+						// this.pagercounts= 8
 					}
 				}
 			},
@@ -187,9 +194,9 @@
 						})
 						_this.tableData = list
 						_this.counttotal = Number(total)
-						if(Number(total)>0){
-							_this.paginations = true
-						}
+						// if(Number(total)>0){
+						// 	_this.paginations = true
+						// }
 					})
 					.catch(err => {
 						console.log(err)

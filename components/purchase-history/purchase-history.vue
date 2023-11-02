@@ -9,7 +9,7 @@
 					</div>
 				</template>
 				<div class="yearmonth">
-					<div style="line-height: 72rpx;font-size: 26rpx;margin-right: 20rpx;">{{$t('home.yearmonth')}}: </div>
+					<!-- <div style="line-height: 72rpx;font-size: 26rpx;margin-right: 20rpx;">{{$t('home.yearmonth')}}: </div> -->
 					<div class="online">
 						<div class="month">
 							<el-select v-model="mouth" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium">
@@ -64,31 +64,36 @@
 				</el-table>
 				<div  v-else>
 					<el-card shadow="never" class="text item">
-						<div><b>{{$t('product.Gradename')}}</b></div>
+						<div><b>{{$t('Record.information')}}</b></div>
+						<!-- <div><b>{{$t('product.Gradename')}}</b></div>
 						<div><b>{{$t('product.Ordernumber')}}</b></div>
 						<div><b>{{$t('product.Timeorder')}}</b></div>
 						<div><b>{{$t('product.Amount')}}</b></div>
-						<div><b>{{$t('product.Paymentstatus')}}</b></div>
+						<div><b>{{$t('product.Paymentstatus')}}</b></div> -->
 					</el-card>
 					<block v-for="data in tableData" >
 						<el-card shadow="never" class="text item">
 							<div @click="hanldeDeatils(data)">
 								<div>{{data.goodtype.name}}</div>
-								<div>{{data.ordersn}}</div>
-								<div>{{data.price}}</div>
-								<div>{{data.createtime}}</div>
-								<div v-if="data.status==0"><el-link type="danger">{{data.statusstr}}</el-link></div>
-								<div v-else-if="data.status==1"><el-link type="success">{{data.statusstr}}</el-link></div> 
-								<div v-else-if="data.status==2"><el-link type="warning">{{data.statusstr}}</el-link></div>
-								<div v-else-if="data.status==3"><el-link type="info">{{data.statusstr}}</el-link></div>
-								<div v-else style="color: blueviolet;"><el-link>{{data.statusstr}}</el-link></div>
+								<div><b>{{data.ordersn}}</b></div>
+								<div style="font-size: 25rpx;color: #afafaf;">{{data.createtime}}</div>
+								<div style="display: flex;justify-content: space-between;">
+									<div style="color: red;"><span style="font-size: 25rpx;">MYR</span> {{data.price}}</div>
+									<div>
+										<div v-if="data.status==0"><el-link type="danger">{{data.statusstr}}</el-link></div>
+										<div v-else-if="data.status==1"><el-link type="success">{{data.statusstr}}</el-link></div> 
+										<div v-else-if="data.status==2"><el-link type="warning">{{data.statusstr}}</el-link></div>
+										<div v-else-if="data.status==3"><el-link type="info">{{data.statusstr}}</el-link></div>
+										<div v-else style="color: blueviolet;"><el-link>{{data.statusstr}}</el-link></div>
+									</div>
+								</div>
 							</div>
 						</el-card>
 					</block>
 				</div>
-				<div v-show="paginations" class="pagination">
+				<div  class="pagination">
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-						:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" 
+						:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"  :hide-on-single-page="hidepage"
 						layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
 				</div>
 			</el-card>
@@ -112,7 +117,7 @@
 				counttotal: 0,
 				currentPage: 1, // 当前页码
 				pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
-				paginations:false
+				hidepage:true
 			};
 		},
 		mounted() {
@@ -180,9 +185,9 @@
 						// console.log(res)
 						self.tableData = list
 						self.counttotal = Number(total)
-						if(Number(total)>0){
-							self.paginations = true
-						}
+						// if(Number(total)>0){
+						// 	self.paginations = true
+						// }
 					})
 					.catch(err => {
 						console.log(err)
@@ -239,7 +244,7 @@
 		}
 
 		.online div {
-			margin-top: 20rpx;
+			margin-top: 15rpx;
 		}
 	}
 </style>

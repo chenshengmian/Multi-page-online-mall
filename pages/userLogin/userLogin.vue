@@ -124,9 +124,10 @@
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner')
 					.then(res=>{
 						console.log(res)
-						const {result:{shopmes:{name,copyrighttext}}} = res
+						const {result:{shopmes:{name,copyrighttext,logo}}} = res
 						this.footer = copyrighttext
 						uni.setStorageSync('footer',copyrighttext)
+						uni.setStorageSync('logo',logo)
 						uni.setStorageSync('name',name)
 						_this.name = name
 						uni.setNavigationBarTitle({

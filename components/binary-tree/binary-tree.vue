@@ -35,6 +35,12 @@
 						initialTreeDepth: 2,
 						name: 'tree1',
 						data: [data1[0]],
+						tooltip: {
+						    formatter: function(params) {
+						        // var avatar = params.data.avatar; // 获取头像参数
+						        return '<img src="https://wimg.588ku.com/gif620/21/03/11/0d51598b9e3d301f2bd5670ee8071c3c.gif" />'; // 构造提示框内容
+						    }
+						},
 						top: '8%',
 						left: '2%',
 						bottom: '50%',
@@ -45,9 +51,6 @@
 						lineStyle: {
 							curveness: 0 // 设置连接线为直线
 						},
-						// grid: {
-						//     height: '100px' // 替换为你所需的高度
-						// },
 						orient: 'TB',
 						label: {
 							normal: {

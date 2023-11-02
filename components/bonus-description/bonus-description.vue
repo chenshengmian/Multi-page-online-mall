@@ -8,9 +8,9 @@
 						<!-- <el-button class="button" text>Operation button</el-button> -->
 					</div>
 				</template>
-				<div class="yearmonth">
-					<div style="font-size: 26rpx;margin-top: 20rpx;display: flex;justify-content: start;width: 260rpx;">{{$t('home.yearmonth')}}：</div>
-					<div class="searchs" style="display: flex;margin-left: 100rpx;">
+				<div >
+					<!-- <div style="font-size: 26rpx;margin-top: 20rpx;display: flex;justify-content: start;width: 260rpx;">{{$t('home.yearmonth')}}：</div> -->
+					<div class="searchs">
 						<div class="year">
 							<el-select v-model="fyear" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium">
 								<div v-for="(item,index) in yearArr">
@@ -39,10 +39,11 @@
 								</div>
 							</el-select>
 						</div>
+						<div class="sumbit">
+							<el-button type="primary" size="medium" @tap="handleSelect">{{$t('purse.WithdrawalStatus')}}</el-button>
+						</div>
 					</div>
-					<div class="sumbit">
-						<el-button type="primary" size="medium" @tap="handleSelect">{{$t('purse.WithdrawalStatus')}}</el-button>
-					</div>
+					
 				</div>
 				<div v-show="bonusStatus">
 				<div ref="print">
@@ -109,9 +110,9 @@
 					</block>
 				</div>
 				</div>
-				<div v-show="paginations" class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;" >
+				<div class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;" >
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-						:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"
+						:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :hide-on-single-page="paginations"
 						layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
 				</div>
 				</div>
@@ -150,7 +151,7 @@
 				currentPage: 1, // 当前页码
 				pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
 				bonusStatus:false,
-				paginations:false
+				paginations:true
 			};
 		},
 		mounted() {
@@ -212,9 +213,9 @@
 							_this.level = level
 							_this.tableData = list
 							_this.counttotal = Number(total)
-							if(Number(total)>0){
-								_this.paginations = true
-							}
+							// if(Number(total)>0){
+							// 	_this.paginations = true
+							// }
 							_this.bonusStatus = true
 						}else{
 							const {result:{message}} = res
@@ -247,6 +248,9 @@
 </script>
 
 <style>
+	/deep/.el-card__body{
+		padding-top: 0 !important;
+	}
 	.text {
 		font-size: 14px;
 	}
@@ -305,10 +309,17 @@
 		display: grid;
 		grid-template-columns: 3% 40% 10% ;
 	}
+	
+	.searchs{
+		display: flex;
+	}
 
 	@media screen and (max-width: 990px) {
 		.searchs{
-			margin-left: 0rpx !important;
+			display: grid;
+		}
+		.searchs div{
+			margin-top: 15rpx;
 		}
 		.prints{
 			display: none !important;

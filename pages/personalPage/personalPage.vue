@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<el-container>
-			<el-dialog title="FELEMENT WHATSAPP & TELEGRAM 群主" :visible.sync="centerDialogVisible" :width="width" style="height: 100%;">
+			<el-dialog :title="titlet" :visible.sync="centerDialogVisible" :width="width" style="height: 100%;">
 				<div id="print" ref="print" style="" v-html="tanccontent"></div>
 				<span slot="footer" class="dialog-footer">
 					<i class="el-icon-printer" @click="handleCustomButton"
@@ -175,7 +175,8 @@
 				width: '30%',
 				tanccontent: '<p>这是一段包含HTML标签的内容</p>',
 				type: 0,
-				radio:uni.getLocale()
+				radio:uni.getLocale(),
+				titlet:''
 			}
 		},
 		mounted(param) {
@@ -278,7 +279,7 @@
 			},
 			handlepurchase(){
 				uni.navigateTo({
-					url:'/pages/product-purchase/product-detail'
+					url:'/pages/purchase-history/purchase-history'
 				})
 			},
 			getAdstatus(param) {
@@ -304,6 +305,7 @@
 								'overflow-x: hidden !important; max-width: 100% !important; white-space: normal !important;';
 							str = str.replace(/(text-wrap: nowrap;)/g, `$1 ${styleToAdd}`);
 							self.tanccontent = str
+							self.titlet = self.$t('home.agreement')
 
 						} else {
 							let str = self.htmlEntityDecode(content)
@@ -311,6 +313,7 @@
 								'overflow-x: hidden !important; max-width: 100% !important; white-space: normal !important;';
 							str = str.replace(/(text-wrap: nowrap;)/g, `$1 ${styleToAdd}`);
 							self.tanccontent = str
+							self.titlet = self.$t('home.Information')
 						}
 
 					})

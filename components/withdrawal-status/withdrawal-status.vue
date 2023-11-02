@@ -106,9 +106,9 @@
 				  	</block>
 				  </div>
 				  
-				  <div  v-show="paginations" class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;">
+				  <div   class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;">
 				  	<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-				  		:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"
+				  		:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"  :hide-on-single-page="paginations"
 				  		layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
 				  </div>
 			</el-card>
@@ -129,7 +129,7 @@
 				tableData: [], // 表格数据源
 				currentPage: 1, // 当前页码
 				pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
-				paginations:false,
+				paginations:true,
 				idStatus:true
 			};
 		},
@@ -196,9 +196,6 @@
 						const { result:{list,total} } = res
 						_this.tableData = list
 						_this.counttotal = Number(total)
-						if(Number(total)>0){
-							_this.paginations = true
-						}
 					})
 					.catch(err=>{
 						console.log(err)

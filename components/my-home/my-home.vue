@@ -7,7 +7,7 @@
 			<el-card class="box-card frist">
 				<div class="fristcard">
 					<el-avatar class="atvatone" :src="avatarUrl"
-						style="width: 300rpx;height: 300rpx;background-color: #EBBD6A;" />
+						style="width: 300rpx;height: 300rpx;background-color: #d9ecff;" />
 					<div>
 						<span class="spanone"
 							style="font-size: 48rpx;color: #5B626B;margin-top: 70rpx;display:inline-block "><b>{{nickname}}</b></span><br />
@@ -32,43 +32,9 @@
 					<div class="fristcardbottomtwo">MYR {{credit2}}</div>
 				</div>
 				<div style="margin-top: 20rpx;">
-					<el-tag @tap="handleAdstatus(0)">{{$t('home.reviewagreement')}}</el-tag>
-					<el-tag @tap="handleAdstatus(1)" style="margin-left: 20rpx;">{{$t('home.Checkthepopupwindow')}}</el-tag>
+					<el-tag @tap="handleAdstatus(0)" style="margin-right: 20rpx;">{{$t('home.reviewagreement')}}</el-tag>
+					<div><el-tag @tap="handleAdstatus(1)" style="margin-top: 20rpx;">{{$t('home.Checkthepopupwindow')}}</el-tag></div>
 				</div>
-				<!-- <div>
-					<div class="fristcardbottom">Product Point (PP)</div> 
-					<div class="fristcardbottomtwo">MYR 0.00</div>
-				</div>
-				<div>
-					<div class="fristcardbottom">Current Month Floating Bonus</div>
-					<div class="fristcardbottomtwo">MYR 0.00</div>
-				</div>
-				<div>
-					<div class="fristcardbottom">Current Month Personal Purchase FV</div>
-					<div class="fristcardbottomtwo">0</div>
-				</div>
-				<div>
-					<div class="fristcardbottom">Current Month Personal Sponsor FV</div>
-					<div class="fristcardbottomtwo">0</div>
-				</div>
-				<div>
-					<div class="fristcardbottom">Retail Percentage</div>
-					<div class="fristcardbottomtwo">30%</div>
-				</div>
-				<div>
-					<div class="fristcardbottom">Personal Sales FV</div>
-					<div class="fristcardbottomtwo">0</div>
-				</div>
-				<div>
-					<div class="fristcardbottom">Millionaire + Challenge Date</div>
-					<div class="fristcardbottomtwo">28/09/2023</div>
-				</div> -->
-				<!-- <div>
-					<div class="fristcardbottom">Referral Link</div>
-					<div class="fristcardbottomtwo"><a
-							href="https://ioffice.felement.vip/SignUp/?r=MY60122122378">https://ioffice.felement.vip/SignUp/?r=MY60122122378</a>
-					</div>
-				</div> -->
 			</el-card>
 			<el-card class="box-card second">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
@@ -95,8 +61,8 @@
 				
 				<div v-for="item in typesArray" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
 					<div class="bonustype">
-						<div v-show="levelName">{{item.levelname_en}}:</div>
-						<div v-show="!levelName">{{item.levelname}}:</div>
+						<div v-show="levelName">{{item.levelname_en}}</div>
+						<div v-show="!levelName">{{item.levelname}}</div>
 						<div>{{item.bonus}}</div>
 					</div>
 				</div>
@@ -107,72 +73,49 @@
 				</div>
 				<div v-for="item in weeksArray" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
 					<div class="bonustype">
-						<div>{{$t('home.week')}}{{item.num}}:</div>
+						<div>{{$t('home.week')}}{{item.num}}</div>
 						<div>{{item.sumordermoney}}</div>
 					</div>
 				</div>
 				<div class="bonustype" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
-					<div>{{$t('home.totalCashPoint')}}:</div>
+					<div>{{$t('home.totalCashPoint')}}</div>
 					<div>{{sumbonus}}</div>
 				</div>
 				<div class="bonustype" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
-					<div>{{$t('home.Totalwithdraw')}}:</div>
+					<div>{{$t('home.Totalwithdraw')}}</div>
 					<div>{{totalWithdraw}}</div>
 				</div>
 			</el-card>
 
 
-			<el-card class="box-card news">
+			<el-card class="box-card news" style="padding: 0;">
 				<div slot="header" class="clearfix headers">
-					<div class="yearmonth">
-						<div style="font-size: 20rpx;font-weight: 600;line-height: 72rpx;">
+					<div class="yearmonth" style="display: flex;justify-content: space-between;">
+						<div style="font-size: 24rpx;font-weight: 600;line-height: 72rpx;">
 							{{$t('home.news')}}
 						</div>
-						<div class="gt" style="display: flex;justify-content: space-between;">
-							<div class="monthright" style="font-size: 20rpx;line-height: 60rpx;">{{$t('home.yearmonth')}}：</div>
-							<div class="year">
-								<el-select v-model="year" slot="prepend" placeholder="请选择" size="mini"
-									@change="gettable">
+						<!-- <div class="gt" style="display: flex;"> -->
+							<!-- <div class="monthright" style="font-size: 24rpx;line-height: 60rpx;">{{$t('home.yearmonth')}}：</div> -->
+							<!-- <div class="year">
+								<el-select v-model="year" slot="prepend" :placeholder="$t('home.year')" size="mini"
+									>
 									<div v-for="(item,index) in yearArr">
 										<el-option :label="item" :value="item"></el-option>
 									</div>
 								</el-select>
 							</div>
 							<div class="month" >
-								<el-select v-model="mouth" slot="prepend" placeholder="请选择" size="mini"
-									@change="gettable">
+								<el-select v-model="mouth" slot="prepend" :placeholder="$t('home.month')" size="mini"
+									>
 									<div v-for="o in 12" :key="o" class="text item">
 										<el-option :label="o" :value="o"></el-option>
 									</div>
 								</el-select>
-							</div>
-						</div>
+							</div> -->
+						<!-- </div> -->
 					</div>
 				</div>
-				<announcement-table :year="year" :mouth='mouth' />
-				<!-- <div class="lastcard">
-					<div style="font-size: 20rpx;font-weight: 600;">下载中心</div>
-					<div><a
-							href="https://ioffice.felement.vip/Content2/uploads/20230303091534FELEMENT-Distributors-Policy--Procedures.pdf">
-							DISTRIBUTORS' POLICY & PROCEDURES
-						</a></div>
-					<div><a
-							href="https://ioffice.felement.vip/Content2/uploads/20230303091712FELEMENT-Distributor-Agreement.pdf">
-							DISTRIBUTORS' AGREEMENT
-						</a></div>
-					<div><a
-							href="https://ioffice.felement.vip/Content2/uploads/2023030309394020230214_Maintain-Account-Active.pdf">
-							MAINTAIN ACCOUNT ACTIVE
-						</a></div>
-					<div><a
-							href="https://ioffice.felement.vip/Content2/uploads/2023030309400320230215_Felement-New-Members-Group.pdf">
-							FELEMENT WHATSAPP & TELEGRAM GROUP
-						</a></div>
-					<div><a
-							href="https://ioffice.felement.vip/Content2/uploads/2023030309411520230214_Withholding-Tax-For-Agents.pdf">
-							WITHOLDING TAX FOR AGENTS
-						</a></div>
-				</div> -->
+				<announcement-table  />
 			</el-card>
 		</div>
 	</view>
@@ -187,9 +130,9 @@
 		name: "my-home",
 		data() {
 			return {
-				avatarUrl: 'https://ioffice.felement.vip/Content/images/company/logo500.png',
-				mouth: 0,
-				year: 0,
+				avatarUrl: uni.getStorageSync('logo'),
+				// mouth: 0,
+				// year: 0,
 				yearArr: [],
 				joiningDate: '',
 				RetailBonus: '',
@@ -219,7 +162,7 @@
 				}else{
 					return false
 				}
-			}
+			},
 		},
 		methods: {
 			handleAdstatus(type) {
@@ -235,10 +178,10 @@
 				const yearNew = current.getFullYear()
 				this.yearArr = [yearNew - 1, yearNew]
 				const mouthNew = current.getMonth()
-				this.mouth = mouthNew + 1
-				this.year = yearNew
+				// this.mouth = this.$t('home.year')
+				// this.year = this.$t('home.month')
 			},
-			async getinfo() {
+			getinfo() {
 				let _this = this
 				const {
 					userinfo
@@ -258,17 +201,7 @@
 					.catch(err => {
 						console.log(err)
 					})
-				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner')
-					.then(res=>{
-						// console.log(res)
-						const {result:{shopmes:{logo,name}}} = res
-						// uni.setStorageSync('name',name)
-						_this.avatarUrl = logo
-					})
-					.catch(err=>{
-						console.log(err)
-					})
-				await _this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.infomes')
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.infomes')
 					.then(res => {
 						// console.log(res)
 						const {

@@ -20,11 +20,11 @@
 						</template>
 					</el-table-column> -->
 				</el-table>
-				<div v-show="paginations" class="pagination sumbit">
+				<!-- <div v-if="paginations" class="pagination sumbit">
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
 						:current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"
 						layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
-				</div>
+				</div> -->
 			</div>
 			<div v-show="!adstatusa">
 				<el-skeleton :rows="20" animated  />
@@ -52,19 +52,8 @@
 					</div>
 					<div class="announcement" style="font-size: 28rpx;margin-top: 20rpx;">
 						<div style="margin-right: 30rpx;"><b>{{$t('table.announcementcontent')}}:</b></div>
-						<div>{{detail}}</div>
-					</div>
-					<!-- <el-descriptions-item :label="$t('table.announcementid')"><el-tag size="small">{{id}}</el-tag></el-descriptions-item> -->
-					<!-- <el-descriptions-item :label="$t('table.announcementtitle')"></el-descriptions-item>
-					<el-descriptions-item :label="$t('table.announcementtime')">{{time}}</el-descriptions-item>
-					<el-descriptions-item :label="$t('table.announcementcontent')">
 						<div v-html="detail"></div>
-					</el-descriptions-item> -->
-					<!-- <el-descriptions-item :label="$t('table.productimages')">
-						<img :src="img" style="width: 100rpx;">
-					</el-descriptions-item> -->
-				<!-- </el-descriptions> -->
-				<!-- <el-button @tap="resert" size="mini" style="margin-top: 20rpx;">{{$t('table.raturnhome')}}</el-button> -->
+					</div>
 			</el-card>
 			</el-main>
 		</div>
@@ -73,16 +62,16 @@
 
 <script>
 	export default {
-		props: {
-			year: {
-				type: Number,
-				default: 0
-			},
-			mouth: {
-				type: Number,
-				default: 0
-			}
-		},
+		// props: {
+		// 	year: {
+		// 		type: Number,
+		// 		default: 0
+		// 	},
+		// 	mouth: {
+		// 		type: Number,
+		// 		default: 0
+		// 	}
+		// },
 		data() {
 			return {
 				tableData: [],
@@ -97,24 +86,24 @@
 				pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
 				size:'',
 				adstatusa:false,
-				paginations:false
+				// paginations:false
 			}
 		},
 		mounted() {
 			this.getannoumn()
 		},
-		watch: {
-			year(n, o) {
+		// watch: {
+		// 	year(n, o) {
 				// console.log(n,o)
-				this.year = n
-				this.getannoumn()
-			},
-			mouth(n, o) {
+				// this.year = n
+				// this.getannoumn()
+			// },
+			// mouth(n, o) {
 				// console.log(n,o)
-				this.mouth = n
-				this.getannoumn()
-			}
-		},
+		// 		this.mouth = n
+		// 		this.getannoumn()
+		// 	}
+		// },
 		methods: {
 			resert() {
 				this.andiable = true
@@ -136,19 +125,23 @@
 			getannoumn() {
 				let _this = this
 				_this.$axios.get(
+						// '/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.noticemes&page=' + _this
+						// .currentPage + '&pagesize=' + _this.pageSize + '&year=' + _this.year + '&month=' + _this.mouth)
 						'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.noticemes&page=' + _this
-						.currentPage + '&pagesize=' + _this.pageSize + '&year=' + _this.year + '&month=' + _this.mouth)
+						.currentPage + '&pagesize=10')
 					.then(res => {
 						const {
+							status,
 							result: {
 								list,
 								total
 							}
 						} = res
-						// console.log(res)
 						_this.tableData = list
 						_this.counttotal = Number(total)
-						if(Number(total)>0){
+						if(Number(total) == 0 || status==0){
+							_this.paginations = false
+						}else{
 							_this.paginations = true
 						}
 						_this.adstatusa = true

@@ -9,7 +9,7 @@
 	"login.Forgot":"Forgot your password? Click here",
 	"menu.home":"Home Page",
 	"menu.ewallets":"E-wallets",
-	"menu.ewallethistory":"E-allet History",
+	"menu.ewallethistory":"E-wallet History",
 	"menu.ewalletwithdrawals":"E-wallet Withdrawals",
 	"menu.ewalletwithdrawalstatus":"E-wallet Withdrawal Status",
 	"menu.bonuseshelp":"Bonus Description",
@@ -24,7 +24,9 @@
 	"menu.logoff":"Log Off",
 	"home.reviewagreement":"Review the agreement",
 	"home.Checkthepopupwindow":"Check the pop-up window",
-	"home.news":"News/Announcements",
+	"home.news":"Announcements",
+	"home.year":"years",
+	"home.month":"month",
 	"home.yearmonth":"Year-month",
 	"home.title":"title",
 	"home.updatetime":"Update time",
@@ -234,5 +236,8 @@
 	"enroll.participate":"participate",
 	"enroll.Notinvolved":"Not involved",
 	"enroll.validemailaddress":"Please enter a valid email address",
-	"pass.emailverificationcode":"Please enter the email verification code"
+	"pass.emailverificationcode":"Please enter the email verification code",
+	"home.agreement":"Agreement",
+	"home.Information":"Information",
+	"Record.information":"Record information"
 }

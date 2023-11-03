@@ -6,7 +6,7 @@
 					class="demo-ruleForm" :label-position="labelPosition" size="small" >
 					<div class="title">{{$t('pass.Changepassword')}}</div>
 					<el-form-item :label="$t('pass.IDcard')+':'" prop="postcard">
-						<el-input clearable v-model="ruleForm.postcard" autocomplete="off" size="small" style="width:600rpx;"></el-input>
+						<el-input clearable v-model="ruleForm.postcard"  size="small" style="width:600rpx;"></el-input>
 					</el-form-item>
 					<el-form-item :label="$t('pass.Currentpassword')+':'" prop="newpass">
 						<el-input clearable type="password" v-model="ruleForm.newpass" size="small"></el-input>

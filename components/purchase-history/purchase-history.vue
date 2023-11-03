@@ -39,7 +39,7 @@
 				</div>
 				<el-table :data="tableData" class="custom-table" @row-click="hanldeDeatils" border v-if="idStatus">
 
-					<el-table-column prop="goodtype.name" :label="$t('product.Gradename')" align="center">
+					<el-table-column prop="goods[0].goods[0].title" :label="$t('product.Gradename')" align="center">
 					</el-table-column>
 					<el-table-column prop="ordersn" :label="$t('product.Ordernumber')" align="center">
 					</el-table-column>
@@ -182,7 +182,7 @@
 						.currentPage + '&type=' + self.member + '&pagesize=' + self.pageSize + '&year=' + self.year+'&month='+self.mouth)
 					.then(res => {
 						const { result:{list,total} } = res
-						// console.log(res)
+						// console.log(list)
 						self.tableData = list
 						self.counttotal = Number(total)
 						// if(Number(total)>0){

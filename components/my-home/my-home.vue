@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<el-card v-show="homeStatus">
-				<el-skeleton :rows="20" animated  />
+			<el-skeleton :rows="20" animated />
 		</el-card>
 		<div class="grid-container" v-show="!homeStatus">
 			<el-card class="box-card frist">
@@ -25,65 +25,74 @@
 				</div>
 				<div>
 					<div class="fristcardbottom">{{$t('home.productPoint')}}</div>
-					<div class="fristcardbottomtwo">MYR {{credit5}}</div>
+					<div class="fristcardbottomtwo">MYR {{credit2}}</div>
 				</div>
 				<div>
 					<div class="fristcardbottom">{{$t('home.totalCashPoint')}}</div>
-					<div class="fristcardbottomtwo">MYR {{credit2}}</div>
+					<div class="fristcardbottomtwo">MYR  {{credit5}}</div>
 				</div>
 				<div style="margin-top: 20rpx;">
-					<el-tag @tap="handleAdstatus(0)" style="margin-right: 20rpx;">{{$t('home.reviewagreement')}}</el-tag>
-					<div><el-tag @tap="handleAdstatus(1)" style="margin-top: 20rpx;">{{$t('home.Checkthepopupwindow')}}</el-tag></div>
+					<el-tag @tap="handleAdstatus(0)"
+						style="margin-right: 20rpx;">{{$t('home.reviewagreement')}}</el-tag>
+					<div><el-tag @tap="handleAdstatus(1)"
+							style="margin-top: 20rpx;">{{$t('home.Checkthepopupwindow')}}</el-tag></div>
 				</div>
 			</el-card>
 			<el-card class="box-card second">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
 					{{$t('home.Groupmembership')}}
 				</div>
-				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{flevelchildrennum}}</div>
+				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{flevelchildrennum}}
+				</div>
 			</el-card>
 			<el-card class="box-card three">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
 					{{$t('home.Groupsales')}}
 				</div>
-				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{childrenordermoney}}</div>
+				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{childrenordermoney}}
+				</div>
 			</el-card>
 			<el-card class="box-card four">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
 					{{$t('home.commission')}}
 				</div>
-				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{commissionmoney}}</div>
+				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{commissionmoney}}
+				</div>
 			</el-card>
 			<el-card class="box-card wu">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
-					{{$t('home.Bonustype')}}
+					<b>{{$t('home.Bonustype')}}</b>
 				</div>
-				
-				<div v-for="item in typesArray" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
+
+				<div v-for="item in typesArray" style="font-size: 28rpx;margin-top: 20rpx;">
 					<div class="bonustype">
 						<div v-show="levelName">{{item.levelname_en}}</div>
 						<div v-show="!levelName">{{item.levelname}}</div>
-						<div>{{item.bonus}}</div>
+						<div><b>{{item.bonus}}</b> <i style="margin-left: 10rpx;color:#b36d61" class="el-icon-success"
+								v-if="item.bonus"></i> 
+								<!-- <i style="margin-left: 10rpx;color:#b36d61"
+								class="" v-else></i> -->
+								</div>
 					</div>
 				</div>
 			</el-card>
 			<el-card class="box-card sex">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
-					{{$t('home.Monthlyincome')}}
+					<b>{{$t('home.Monthlyincome')}}</b>
 				</div>
-				<div v-for="item in weeksArray" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
+				<div v-for="item in weeksArray" style="font-size: 28rpx;margin-top: 20rpx;">
 					<div class="bonustype">
-						<div>{{$t('home.week')}}{{item.num}}</div>
-						<div>{{item.sumordermoney}}</div>
+						<div>{{$t('home.clause')}} {{item.num}} {{$t('home.weeks')}}</div>
+						<div><b>{{item.sumordermoney}}</b></div>
 					</div>
 				</div>
-				<div class="bonustype" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
+				<div class="bonustype" style="font-size: 28rpx;margin-top: 20rpx;">
 					<div>{{$t('home.totalCashPoint')}}</div>
-					<div>{{sumbonus}}</div>
+					<div><b>{{sumbonus}}</b></div>
 				</div>
-				<div class="bonustype" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
+				<div class="bonustype" style="font-size: 28rpx;margin-top: 20rpx;">
 					<div>{{$t('home.Totalwithdraw')}}</div>
-					<div>{{totalWithdraw}}</div>
+					<div><b>{{totalWithdraw}}</b></div>
 				</div>
 			</el-card>
 
@@ -95,8 +104,8 @@
 							{{$t('home.news')}}
 						</div>
 						<!-- <div class="gt" style="display: flex;"> -->
-							<!-- <div class="monthright" style="font-size: 24rpx;line-height: 60rpx;">{{$t('home.yearmonth')}}：</div> -->
-							<!-- <div class="year">
+						<!-- <div class="monthright" style="font-size: 24rpx;line-height: 60rpx;">{{$t('home.yearmonth')}}：</div> -->
+						<!-- <div class="year">
 								<el-select v-model="year" slot="prepend" :placeholder="$t('home.year')" size="mini"
 									>
 									<div v-for="(item,index) in yearArr">
@@ -115,7 +124,7 @@
 						<!-- </div> -->
 					</div>
 				</div>
-				<announcement-table  />
+				<announcement-table />
 			</el-card>
 		</div>
 	</view>
@@ -137,7 +146,7 @@
 				joiningDate: '',
 				RetailBonus: '',
 				nickname: '',
-				Account:'',
+				Account: '',
 				credit2: '',
 				registerPoint: '',
 				credit5: '',
@@ -145,21 +154,21 @@
 				weeksArray: [],
 				sumbonus: '',
 				totalWithdraw: '',
-				homeStatus:true,
-				childrenordermoney:0,
-				flevelchildrennum:'',
-				commissionmoney:'',
+				homeStatus: true,
+				childrenordermoney: 0,
+				flevelchildrennum: '',
+				commissionmoney: '',
 			};
 		},
 		mounted() {
 			this.getMounth()
 			this.getinfo()
 		},
-		computed:{
-			levelName(){
-				if(uni.getLocale()=='en'){
+		computed: {
+			levelName() {
+				if (uni.getLocale() == 'en') {
 					return true
-				}else{
+				} else {
 					return false
 				}
 			},
@@ -196,7 +205,7 @@
 							result
 						} = res
 						uni.setStorageSync('data', result)
-						console.log('更新',res)
+						console.log('更新', res)
 					})
 					.catch(err => {
 						console.log(err)
@@ -229,8 +238,8 @@
 								}
 							}
 						} = res
-						if(status==1){
-							uni.setStorageSync('email',email)
+						if (status == 1) {
+							uni.setStorageSync('email', email)
 							_this.childrenordermoney = childrenordermoney
 							_this.commissionmoney = commissionmoney
 							_this.flevelchildrennum = flevelchildrennum
@@ -337,15 +346,15 @@
 
 	.second,
 	.three,
-	.four {
+	.four,
+	.wu,
+	.sex {
 		position: relative;
 		width: 100%;
 		height: 100%;
 	}
 
-	.second::after,
-	.three::after,
-	.four::after {
+	.second::after {
 		content: "";
 		position: absolute;
 		bottom: 0;
@@ -356,6 +365,71 @@
 		background-size: contain;
 		background-repeat: no-repeat;
 		background-position: bottom right;
+		pointer-events: none;
+	}
+
+	.three::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 65%;
+		height: 65%;
+		background-image: url("../../static/img/GROUP.png");
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: bottom right;
+		pointer-events: none;
+	}
+
+	.four::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 65%;
+		height: 65%;
+		background-image: url("../../static/img/COMMISSION.png");
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: bottom right;
+		pointer-events: none;
+	}
+
+	.wu::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		/* left: 20%; */
+		/* right: 0; */
+		width: 100%;
+		height: 100%;
+		filter: alpha(opacity=40);
+		-moz-opacity: 0.4;
+		-khtml-opacity: 0.4;
+		opacity: 0.4;
+		background-image: url("../../static/img/Bonus.png");
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: bottom;
+		/* background-position: center; */
+		pointer-events: none;
+	}
+
+	.sex::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 60%;
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.4;
+		-khtml-opacity: 0.4;
+		opacity: 0.4;
+		background-image: url("../../static/img/Monthly.png");
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center bottom;
 		pointer-events: none;
 	}
 
@@ -401,10 +475,33 @@
 
 	/* 在屏幕宽度小于990px时 */
 	@media screen and (max-width: 990px) {
-		/* .bonustype {
-			display: grid;
-			grid-template-columns: 1fr;
-		} */
+		.wu::after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			width: 40%;
+			height: 40%;
+			background-image: url("../../static/img/Bonus.png");
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: bottom right;
+			pointer-events: none;
+		}
+
+		.sex::after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			width: 60%;
+			height: 60%;
+			background-image: url("../../static/img/Monthly.png");
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: bottom right;
+			pointer-events: none;
+		}
 
 		.grid-container {
 			grid-template-columns: 100%;

@@ -1,12 +1,16 @@
 <template>
 	<view class="content">
 		<el-container>
-			<el-dialog :title="titlet" :visible.sync="centerDialogVisible" :width="width" style="height: 100%;">
+			<el-dialog :title="titlet" :visible.sync="centerDialogVisible" :width="width" style="height: 100%;" :show-close="false" :close-on-click-modal="false">
 				<div id="print" ref="print" style="" v-html="tanccontent"></div>
+				<div>
+					<el-checkbox v-model="checked">{{$t('home.Agreeagreement')}}</el-checkbox>
+				</div>
 				<span slot="footer" class="dialog-footer">
+					
 					<i class="el-icon-printer" @click="handleCustomButton"
 						style="margin-right: 35rpx;margin-top: 20rpx;"></i>
-					<el-button type="primary" @click="changeads" size="mini">{{$t('home.Closewindow')}}</el-button>
+					<el-button type="primary" @click="changeads" size="mini" :disabled="!checked">{{$t('home.Closewindow')}}</el-button>
 				</span>
 			</el-dialog>
 
@@ -40,7 +44,7 @@
 					<el-menu-item-group>
 						<el-menu-item index="4-3" @tap="handleshoppingAddress">{{$t('home.address')}}</el-menu-item>
 						<el-menu-item index="4-0" @tap="handleshopping">{{$t('menu.allCommodities')}}</el-menu-item>
-						<el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item>
+						<!--  <el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item> -->
 						<el-menu-item index="4-2" @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
@@ -148,6 +152,7 @@
 		},
 		data() {
 			return {
+				checked:false,
 				footesr:uni.getStorageSync('footer'),
 				name:uni.getStorageSync('name'),
 				centerDialogVisible: false,
@@ -344,6 +349,7 @@
 						console.log(res)
 						if (res.status == 1) {
 							_this.centerDialogVisible = false
+							_this.checked = false
 						}
 					})
 					.catch(err => {

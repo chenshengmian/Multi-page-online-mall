@@ -83,7 +83,7 @@
 												style="font-size: 24rpx;">MYR</span>{{item.marketprice}}</div>
 										<div class="bottom clearfix">
 											<!-- <time class="time">库存： {{ item.marketprice }}</time> -->
-											<time class="time">{{$t('shopping.inventory')}}： {{ item.sales }}</time>
+											<!-- <time class="time">{{$t('shopping.inventory')}}： {{ item.sales }}</time> -->
 										</div>
 										<div style="margin-top: 15rpx;position: absolute;bottom: 0;right:0;">
 											<button :style="[lineHeight]"

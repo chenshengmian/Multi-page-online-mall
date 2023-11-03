@@ -38,7 +38,7 @@
 						<!-- <span slot="title">{{$t('menu.shopping')}}</span> -->
 						<el-menu-item index="4-3" @tap="handleshoppingAddress">{{$t('home.address')}}</el-menu-item>
 						<el-menu-item index="4-0" @tap="handleshoppings">{{$t('menu.allCommodities')}}</el-menu-item>
-						<el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item>
+						<!--  <el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item> -->
 						<el-menu-item index="4-2" @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>

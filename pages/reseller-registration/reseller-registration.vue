@@ -2,7 +2,7 @@
 	<view class="content">
 		<el-container>
 			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
-				@select="handleSelect" style="">
+				 style="">
 				<div class="userLo">{{name}}</div>
 				<!-- <image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image> -->
 								<!-- <image src="../../static/img/favicon.png" v-else class="userLogo"></image> -->
@@ -37,7 +37,7 @@
 						<!-- <span slot="title">{{$t('menu.shopping')}}</span> -->
 						<el-menu-item index="4-3" @tap="handleshoppingAddress">{{$t('home.address')}}</el-menu-item>
 						<el-menu-item index="4-0" @tap="handleshopping">{{$t('menu.allCommodities')}}</el-menu-item>
-						<el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item>
+						<!--  <el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item> -->
 						<el-menu-item index="4-2" @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>

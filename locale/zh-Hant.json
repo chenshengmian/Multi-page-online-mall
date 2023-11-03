@@ -34,7 +34,7 @@
 	"home.registerPoint":"注冊點",
 	"home.joiningDate":"加盟日期",
 	"home.productPoint":"產品點",
-	"home.totalCashPoint":"縂現金積分",
+	"home.totalCashPoint":"現金積分",
 	"home.Groupmembership":"組成員",
 	"home.Groupsales":"集團銷售（FV）",
 	"home.commission":"佣金（馬幣）",
@@ -55,7 +55,7 @@
 	"table.announcementtime":"公告時間",
 	"table.announcementcontent":"公告内容",
 	"table.productimages":"商品圖片",
-	"table.raturnhome":"返回主頁",
+	"table.raturnhome":"返回列表",
 	"withdrawal.cashPointsBalance":"現金積分餘額",
 	"withdrawal.transferableBalance":"可轉賬餘額",
 	"withdrawal.identityCard":"身份證前",
@@ -147,7 +147,7 @@
 	"product.Ordernumber":"訂單單號",
 	"product.Creationtime":"創建時間",
 	"product.Paymentstatus":"支付狀態",
-	"product.Gradename":"等級名稱",
+	"product.Gradename":"商品名稱",
 	"product.Timeorder":"下單時間",
 	"product.Amount":"數額",
 	"product.MemberOrder":"會員的訂單",
@@ -241,5 +241,9 @@
 	"pass.emailverificationcode":"請輸入郵箱驗證碼",
 	"home.agreement":"協議",
 	"home.Information":"信息",
-	"Record.information":"記錄信息"
+	"Record.information":"記錄信息",
+	"home.clause":"第",
+	"home.weeks":"周",
+	"home.Agreeagreement":"同意以上協議",
+	"withdrawal.Certify":"立即认证"
 }

@@ -71,7 +71,6 @@
 		mounted() {
 			this.check()
 			this.change(uni.getLocale())
-			this.getUserInfo()
 			this.names()
 		},
 		methods: {
@@ -124,15 +123,18 @@
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner')
 					.then(res=>{
 						console.log(res)
-						const {result:{shopmes:{name,copyrighttext,logo}}} = res
-						this.footer = copyrighttext
-						uni.setStorageSync('footer',copyrighttext)
-						uni.setStorageSync('logo',logo)
-						uni.setStorageSync('name',name)
-						_this.name = name
-						uni.setNavigationBarTitle({
-							title:name
-						})
+						const {status,result:{shopmes:{name,copyrighttext,logo}}} = res
+						if(status==1){
+							this.footer = copyrighttext
+							uni.setStorageSync('footer',copyrighttext)
+							uni.setStorageSync('logo',logo)
+							uni.setStorageSync('name',name)
+							_this.getUserInfo()
+							_this.name = name
+							uni.setNavigationBarTitle({
+								title:name
+							})
+						}
 					})
 					.catch(err=>{
 						console.log(err)

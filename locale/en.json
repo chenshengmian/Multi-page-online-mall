@@ -34,7 +34,7 @@
 	"home.registerPoint":"Register Point",
 	"home.joiningDate":"Joining Date",
 	"home.productPoint":"Product Point",
-	"home.totalCashPoint":"Total Cash Point",
+	"home.totalCashPoint":"Cash Point",
 	"home.address":"Shipping address",
 	"home.Groupmembership":"GROUP MEMBERS",
 	"home.Groupsales":"GROUP SALES (FV)",
@@ -55,7 +55,7 @@
 	"table.announcementtime":"Announcement time",
 	"table.announcementcontent":"Announcement content",
 	"table.productimages":"Product images",
-	"table.raturnhome":"Home page",
+	"table.raturnhome":"Return to the list",
 	"withdrawal.cashPointsBalance":"Cash Points Balance",
 	"withdrawal.transferableBalance":"Transferable balance",
 	"withdrawal.identityCard":"Identity card (Front)",
@@ -146,7 +146,7 @@
 	"product.Ordernumber":"Order number",
 	"product.Creationtime":"Creation time",
 	"product.Paymentstatus":"Payment status",
-	"product.Gradename":"Grade name",
+	"product.Gradename":"The title of the product",
 	"product.Timeorder":"Time of order",
 	"product.Amount":"Amount",
 	"product.MemberOrder":"Member's Order",
@@ -239,5 +239,9 @@
 	"pass.emailverificationcode":"Please enter the email verification code",
 	"home.agreement":"Agreement",
 	"home.Information":"Information",
-	"Record.information":"Record information"
+	"Record.information":"Record information",
+	"home.clause":"Week",
+	"home.weeks":"",
+	"home.Agreeagreement":"Agree to the above agreement",
+	"withdrawal.Certify":"Certify now"
 }

@@ -34,7 +34,7 @@
 	"home.registerPoint":"注册点",
 	"home.joiningDate":"加盟日期",
 	"home.productPoint":"产品点",
-	"home.totalCashPoint":"总现金积分",
+	"home.totalCashPoint":"现金积分",
 	"home.Groupmembership":"组成员",
 	"home.Groupsales":"集团销售（FV）",
 	"home.commission":"佣金（马币）",
@@ -55,7 +55,7 @@
 	"table.announcementtime":"公告时间",
 	"table.announcementcontent":"公告内容",
 	"table.productimages":"商品图片",
-	"table.raturnhome":"返回主页",
+	"table.raturnhome":"返回列表",
 	"withdrawal.cashPointsBalance":"现金积分余额",
 	"withdrawal.transferableBalance":"可转账余额",
 	"withdrawal.identityCard":"身份证前",
@@ -146,7 +146,7 @@
 	"product.Ordernumber":"订单单号",
 	"product.Creationtime":"创建时间",
 	"product.Paymentstatus":"支付状态",
-	"product.Gradename":"等级名称",
+	"product.Gradename":"商品名称",
 	"product.Timeorder":"下单时间",
 	"product.Amount":"数额",
 	"product.MemberOrder":"会员的订单",
@@ -240,5 +240,9 @@
 	"pass.emailverificationcode":"请输入邮箱验证码",
 	"home.agreement":"协议",
 	"home.Information":"信息",
-	"Record.information":"记录信息"
+	"Record.information":"记录信息",
+	"home.clause":"第",
+	"home.weeks":"周",
+	"home.Agreeagreement":"同意以上协议",
+	"withdrawal.Certify":"立即认证"
 }

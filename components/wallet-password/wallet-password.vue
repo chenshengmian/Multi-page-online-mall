@@ -2,7 +2,7 @@
 	<view>
 		<el-card>
 			<div class="wallect">
-				<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" :label-width="labelwidth"
+				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" :label-width="labelwidth"
 					class="demo-ruleForm" :label-position="labelPosition" size="small">
 					<div class="title">{{title}}</div>
 					<el-form-item :label="$t('pass.IDcard')+':'" prop="postcard">

@@ -32,8 +32,8 @@
 					<div class="fristcardbottomtwo">MYR  {{credit5}}</div>
 				</div>
 				<div style="margin-top: 20rpx;">
-					<el-tag @tap="handleAdstatus(0)"
-						style="margin-right: 20rpx;">{{$t('home.reviewagreement')}}</el-tag>
+					<!-- <el-tag @tap="handleAdstatus(0)"
+						style="margin-right: 20rpx;">{{$t('home.reviewagreement')}}</el-tag> -->
 					<div><el-tag @tap="handleAdstatus(1)"
 							style="margin-top: 20rpx;">{{$t('home.Checkthepopupwindow')}}</el-tag></div>
 				</div>
@@ -212,7 +212,7 @@
 					})
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.infomes')
 					.then(res => {
-						// console.log(res)
+						console.log(res)
 						const {
 							status,
 							result: {
@@ -228,6 +228,7 @@
 								alllevelmes,
 								lastmormoney,
 								monthmes,
+								mlevel,
 								email,
 								bonuslevelmes: {
 									bonus,
@@ -240,6 +241,7 @@
 						} = res
 						if (status == 1) {
 							uni.setStorageSync('email', email)
+							// uni.setStorageSync('mlevel',mlevel)
 							_this.childrenordermoney = childrenordermoney
 							_this.commissionmoney = commissionmoney
 							_this.flevelchildrennum = flevelchildrennum

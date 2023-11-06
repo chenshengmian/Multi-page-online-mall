@@ -21,12 +21,12 @@
 						<el-input v-model="ruleForm.name" ></el-input>
 					</div>
 				</el-form-item>
-				<el-form-item :label="$t('enroll.NickName')+':'" prop="nickname" :label-width="labelw">
+				<el-form-item :label="$t('NickName')+':'" prop="nickname" :label-width="labelw">
 				    <el-input v-model="ruleForm.nickname" ></el-input>
 				</el-form-item>
 				<el-form-item :label="$t('enroll.nationality')+':'" prop="region" :label-width="labelw">
-					<el-select v-model="ruleForm.region" :placeholder="$t('enroll.selectnationality')">
-						<el-option :label="$t('enroll.CHINA')" :value="$t('enroll.CHINA')"></el-option>
+					<el-select style="width: 500rpx;" v-model="ruleForm.region" :placeholder="$t('enroll.selectnationality')" :filterable = "true">
+						<!-- <el-option :label="$t('enroll.CHINA')" :value="$t('enroll.CHINA')"></el-option>
 						<el-option :label="$t('enroll.MALAYSIA')" :value="$t('enroll.MALAYSIA')"></el-option>
 						<el-option :label="$t('enroll.AMERICAN')" :value="$t('enroll.AMERICAN')"></el-option>
 						<el-option :label="$t('enroll.JAPAN')" :value="$t('enroll.JAPAN')" ></el-option>
@@ -36,25 +36,28 @@
 						<el-option :label="$t('enroll.GERMANY')" :value="$t('enroll.GERMANY')" ></el-option>
 						<el-option :label="$t('enroll.SINGAPORE')" :value="$t('enroll.SINGAPORE')"></el-option>
 						<el-option :label="$t('enroll.VIETNAM')" :value="$t('enroll.VIETNAM')" ></el-option>
-						<el-option :label="$t('enroll.THAILAND')" :value="$t('enroll.THAILAND')"></el-option>
+						<el-option :label="$t('enroll.THAILAND')" :value="$t('enroll.THAILAND')"></el-option> -->
+						<block v-for="item in phoneData">
+							<block v-if="language==0">
+								<el-option :label="item.chinese_name" :value="item.chinese_name"></el-option>
+							</block>
+							<block v-else-if="language==1">
+								<el-option :label="item.chineseht_name" :value="item.chineseht_name"></el-option>
+							</block>
+							<block v-else="language==2">
+								<el-option :label="item.english_name" :value="item.english_name"></el-option>
+							</block>
+						</block>
 					</el-select>
 				</el-form-item>
 				<el-form-item :label="$t('enroll.gender')" prop="gender" :label-width="labelw">
-					<el-select v-model="ruleForm.gender">
+					<el-select v-model="ruleForm.gender" :placeholder="$t('enroll.selectgender')">
 						<el-option :label="$t('enroll.man')" value="0"></el-option>
 						<el-option :label="$t('enroll.woman')" value="1"></el-option>
 					</el-select>
 				</el-form-item>
-				<!-- <el-form-item label="出生日期:" prop="time" :label-width="labelw">
-					<el-col span="15">
-						<el-form-item prop="time">
-							<el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.time"
-								style="width: 100%;"></el-date-picker>
-						</el-form-item>
-					</el-col>
-				</el-form-item> -->
 				<el-form-item :label="$t('enroll.Proofidentity')+':'" prop="filetype" :label-width="labelw">
-					<el-select v-model="ruleForm.filetype">
+					<el-select v-model="ruleForm.filetype" :placeholder="$t('enroll.selectidentification')">
 						<el-option label="-" value="-"></el-option>
 						<el-option :label="$t('enroll.Companynumber')" value="0"></el-option>
 						<el-option :label="$t('withdrawal.idCard')" value="1"></el-option>
@@ -64,26 +67,36 @@
 				<el-form-item :label="$t('enroll.Companypassportnumber')+':'" prop="number" :label-width="labelw">
 					<el-input v-model="ruleForm.number"></el-input>
 				</el-form-item>
+				
+				
 				<el-form-item :label="$t('login.eamil')+':'" prop="email" :label-width="labelw">
 					<div class="email" style="display: flex;">
-						<el-input v-model="ruleForm.email"></el-input>
-						<el-button  @tap="sendEamil">{{$t('enroll.Sendverification')}}</el-button>
-						<el-input v-model="code" :placeholder="$t('enroll.verificationcode')"></el-input>
+						<el-input class="girds" v-model="ruleForm.email"></el-input>
+						<!-- <el-button  @tap="sendEamil" :loading="true">{{$t('enroll.Sendverification')}}</el-button> -->
+						<!-- <div class="sandst"> -->
+						<el-button class="sands"  @tap="sendEamil" :loading="sendStatus">{{sand}}<span v-show="sendStatus">s</span></el-button>
+						<el-input class="codes" v-model="code" :placeholder="$t('enroll.verificationcode')"></el-input>
+						<!-- </div> -->
 					</div>
 				</el-form-item>
+				
+				
 				<el-form-item :label="$t('enroll.SalespersonID')+':'" prop="superiorID" :label-width="labelw" >
 					<el-input v-model="ruleForm.superiorID" :placeholder="$t('enroll.Ifoptional')"></el-input>
 				</el-form-item>
 				<el-form-item :label="$t('enroll.telephonenumber')+':'" :label-width="labelw" prop="selectedPrefix">
 					 <el-row>
-					    <el-col :span="8">
-					      <el-select v-model="ruleForm.prefixes" @change="handlePrefixChange">
-					        <el-option label="+86" value="+86"></el-option>
-					        <el-option label="+80" value="+80"></el-option>
-					      </el-select>
+					    <el-col :span="9">
+							<el-select  v-model="ruleForm.prefixes" @change="handlePrefixChange" :filterable = "true" >
+								<!-- <el-option label="+86" value="+86"></el-option> -->
+								<!-- <el-option label="+80" value="+80"></el-option> -->
+								<block v-for="item in phoneData">
+									<el-option :label="'+'+item.phone_code" :value="'+'+item.phone_code"></el-option>
+								</block>
+							</el-select>
 					    </el-col>
 					    <el-col :span="20">
-					      <el-input v-model="ruleForm.phoneNumber" :placeholder="placeholder"></el-input>
+					      <el-input v-model="ruleForm.phoneNumber" :placeholder="$t('enroll.enteraphonenumber')"></el-input>
 					    </el-col>
 					  </el-row>
 				</el-form-item>
@@ -100,8 +113,8 @@
 					<el-input v-model="ruleForm.zipcode"></el-input>
 				</el-form-item>
 				<el-form-item :label="$t('enroll.country')+':'" prop="country" :label-width="labelw">
-					<el-select v-model="ruleForm.country" :placeholder="$t('enroll.selectcountry')">
-						<el-option :label="$t('enroll.CHINA')" :value="$t('enroll.CHINA')"></el-option>
+					<el-select v-model="ruleForm.country" :placeholder="$t('enroll.selectcountry')" :filterable = "true">
+					<!-- 	<el-option :label="$t('enroll.CHINA')" :value="$t('enroll.CHINA')"></el-option>
 						<el-option :label="$t('enroll.MALAYSIA')" :value="$t('enroll.MALAYSIA')"></el-option>
 						<el-option :label="$t('enroll.AMERICAN')" :value="$t('enroll.AMERICAN')"></el-option>
 						<el-option :label="$t('enroll.JAPAN')" :value="$t('enroll.JAPAN')" ></el-option>
@@ -111,7 +124,18 @@
 						<el-option :label="$t('enroll.GERMANY')" :value="$t('enroll.GERMANY')" ></el-option>
 						<el-option :label="$t('enroll.SINGAPORE')" :value="$t('enroll.SINGAPORE')"></el-option>
 						<el-option :label="$t('enroll.VIETNAM')" :value="$t('enroll.VIETNAM')" ></el-option>
-						<el-option :label="$t('enroll.THAILAND')" :value="$t('enroll.THAILAND')"></el-option>
+						<el-option :label="$t('enroll.THAILAND')" :value="$t('enroll.THAILAND')"></el-option> -->
+						<block v-for="item in phoneData">
+							<block v-if="language==0">
+								<el-option :label="item.chinese_name" :value="item.chinese_name"></el-option>
+							</block>
+							<block v-else-if="language==1">
+								<el-option :label="item.chineseht_name" :value="item.chineseht_name"></el-option>
+							</block>
+							<block v-else="language==2">
+								<el-option :label="item.english_name" :value="item.english_name"></el-option>
+							</block>
+						</block>
 					</el-select>
 				</el-form-item>
 				<el-form-item :label="$t('enroll.TWGmodel')+':'" prop="paymentType" :label-width="labelw">
@@ -123,7 +147,7 @@
 				<el-form-item :label="$t('enroll.MembershipLevel')+':'" prop="membershipGood" :label-width="labelw">
 					<el-radio-group v-model="ruleForm.membershipGood" style="">
 						<block v-for="item in datas">
-							<el-radio  :label="item.gid" :key="item.gid">
+							<el-radio class="radioe"  :label="item.gid" :key="item.gid">
 								{{ item.levelname }}
 							</el-radio>
 						</block>
@@ -138,6 +162,7 @@
 </template>
 
 <script>
+	import countryCode from '@/utils/countryCodeAndPhoneCode.json'
 	export default {
 		props:{
 			nodeid:{
@@ -148,11 +173,14 @@
 		name: "reseller-registration",
 		data() {
 			return {
+				sendStatus:false,
+				sand:this.$t('enroll.Sendverification'),
 				width:'30%',
 				modal:false,
 				dialogVisible: false,
 				labelPosition:'top',
 				isresgistra:'',
+				phoneData:countryCode,
 				userinfo:{},
 				ruleForm: {
 					name: '',
@@ -190,7 +218,6 @@
 				datas:'',
 				emailCode:'', 
 				code:'',
-				placeholder: this.$t('enroll.enteraphonenumber'), // 输入框的占位符
 				labelw:'540rpx',
 				rules: {
 					name: [{
@@ -252,7 +279,32 @@
 				}
 			};
 		},
+		computed:{
+			language(){
+				if(uni.getLocale()=='en'){
+					return 2
+				}else if(uni.getLocale()=='zh-Hans'){
+					return 0
+				}else if(uni.getLocale()=='zh-Hant'){
+					return 1
+				}
+			},
+			// interval(){
+			// 	if(uni.getLocale()=='en'){
+			// 		let object = {
+			// 			'width': '650rpx'
+			// 		}
+			// 		return object
+			// 	}else{
+			// 		let object = {
+			// 			'width': '380rpx'
+			// 		}
+			// 		return object
+			// 	}
+			// }
+		},
 		mounted() {
+			// console.log(countryCode)
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
 			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 			this.getballInfo()
@@ -279,7 +331,7 @@
 				let self = this
 				self.$refs[formName].validate((valid) => {
 					if(valid){
-						const {credit2} = self.userinfo
+						const {credit1} = self.userinfo
 						let id = self.ruleForm.membershipGood
 						let data = self.datas
 						console.log(data)
@@ -289,11 +341,11 @@
 						// console.log(ball)
 						const { price,levelname,levelid } = ball
 						self.ruleForm.membershipLevel = levelid
-						if(parseFloat(price)>parseFloat(credit2)){
+						if(parseFloat(price)>parseFloat(credit1)){
 							self.$message(this.$t('enroll.Insufficien'));
 						}else{
 							self.dialogVisible = true
-							self.isresgistra = this.$t('enroll.usebalance')+credit2+this.$t('shopping.purchase')+levelname+this.$t('enroll.consume')+price+'MYR'
+							self.isresgistra = this.$t('enroll.usebalance')+' '+credit1+' '+this.$t('shopping.purchase')+' '+levelname+' '+this.$t('enroll.consume')+' '+price+' MYR'
 						}
 					}else{
 						return false;
@@ -342,7 +394,7 @@
 						})
 				}
 				else{
-					self.$message('邮箱验证码错误！');
+					self.$message(self.$t('reg.Email'));
 				}
 			},
 			handlePrefixChange() {
@@ -378,26 +430,50 @@
 			},
 			sendEamil(){
 				let self = this
-				let array = {
-					'email' : self.ruleForm.email
+				if(self.ruleForm.email == ''){
+					self.$message(this.$t('enroll.enteremailaddress'))
+				}else{
+					let array = {
+						'email' : self.ruleForm.email
+					}
+					self.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.email.ts',array)
+						.then(res=>{
+							// console.log(res)
+							// console.log(typeof(res) == 'string')
+							if(typeof(res) == 'string'){
+								self.$message(this.$t('enroll.codeiscorrect'))
+							}else{
+								const {status, result:{message} } = res
+								self.emailCode = message
+								if(status==1){
+									self.$message({
+										message: this.$t('enroll.sentagain'),
+										type: 'success'
+									})
+									self.sendStatus = true
+									self.sand = 60;
+									// self.show = false;
+									self.timer = setInterval(() => {
+									if (self.sand > 0 && self.sand <= 60) {
+										self.sand-- ;
+									} else {
+										self.sendStatus = false
+										self.sand = self.$t('enroll.Sendverification');
+										clearInterval(self.timer);
+										self.timer = null;
+									  }
+									}, 1000);
+								}else if(status == 0){
+									self.$message(this.$t('enroll.codeiscorrect'))
+								}
+							}
+							
+						})
+						.catch(err=>{
+							console.log(err)
+						})
 				}
-				self.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.email.ts',array)
-					.then(res=>{
-						// console.log(res)
-						const {status, result:{message} } = res
-						self.emailCode = message
-						if(status==1){
-							self.$message({
-								message: this.$t('enroll.sentagain'),
-								type: 'success'
-							})
-						}else{
-							self.$message(this.$t('enroll.codeiscorrect'))
-						}
-					})
-					.catch(err=>{
-						console.log(err)
-					})
+				
 			}
 		}
 	}
@@ -422,7 +498,6 @@
 	.item {
 		padding: 36rpx 0;
 	}
-
 	.resgister {
 		display: flex;
 		justify-content: center;
@@ -432,6 +507,32 @@
 	}
 	/* 在屏幕宽度小于990px时 */
 	@media screen and (max-width: 990px) {
+		.email{
+			display: block !important;
+		}
+		.email div{
+			margin-top: 5rpx;
+		}
+		.girds{
+			display: grid !important;
+			grid-template-rows: 1fr;
+		}
+		.sands{
+			width: 40%;
+			margin-top: 10rpx;
+			margin-right: 12rpx;
+		}
+		.radioe{
+			margin-top: 5rpx;
+		}
+		/* .sandst{
+			display: flex; */
+			/* justify-content: end; */
+		/* } */
+		.codes{
+			margin-top: 10rpx;
+			width: 56%;
+		}
 		/* .el-form-item{
 			display: flex;
 			flex-wrap: wrap;

@@ -204,7 +204,7 @@
 				}
 				uni.setLocale(lan)
 				this.$i18n.locale = lan
-				// this.$router.go(0)
+				// //this.$router.go(0) 
 			},
 			names() {
 				let _this = this

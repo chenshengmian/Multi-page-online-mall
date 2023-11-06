@@ -116,13 +116,13 @@
 				}
 				uni.setLocale(lan)
 				this.$i18n.locale = lan
-				// this.$router.go(0)
+				// //this.$router.go(0) 
 			},
 			names(){
 				let _this = this
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner')
 					.then(res=>{
-						console.log(res)
+						// console.log(res)
 						const {status,result:{shopmes:{name,copyrighttext,logo}}} = res
 						if(status==1){
 							this.footer = copyrighttext

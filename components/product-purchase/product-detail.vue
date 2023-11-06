@@ -38,21 +38,24 @@
 				</el-table-column>
 			</el-table>
 			<div  v-else>
-				<el-card shadow="never" class="text item tablediv">
+				<div style="font-size: 28rpx;margin-bottom: 30rpx;;border-top: 1rpx solid #d1d1d1;border-bottom: 1rpx solid #d1d1d1;padding: 20rpx 0rpx;">{{$t('menu.productshopping')}}</div>
+				<!-- <el-card shadow="never" class="text item tablediv">
 					<div><b>{{$t('product.Ordernumber')}}</b></div>
 					<div><b>{{$t('product.Matchingname')}}</b></div>
 					<div><b>{{$t('shopping.inventory')}}</b></div>
 					<div><b>{{$t('product.Quantitypurchased')}}</b></div>
 					<div><b>{{$t('product.Price')}}</b></div>
-				</el-card>
+				</el-card> -->
 				<block v-for="data in tableData" >
 					<el-card shadow="never" class="text item">
 						<div class="tablediv">
 							<div>{{data.goodssn}}</div>
 							<div>{{data.title}}</div>
 							<div>{{data.total}}</div>
-							<div><el-input-number v-model="data.buynum" size="mini" :min="1" @change="changeNum"></el-input-number></div>
-							<div>{{data.price}}</div>
+							<div style="display: flex;justify-content: space-between;">
+								<div style="color: red;"><span style="font-size: 23rpx;">MYR</span> {{data.price}}</div>
+								<div><el-input-number v-model="data.buynum" size="mini" :min="1" @change="changeNum"></el-input-number></div>
+							</div>
 						</div>
 					</el-card>
 				</block>

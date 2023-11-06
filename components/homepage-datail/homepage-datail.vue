@@ -53,8 +53,8 @@
 						<!-- <div style="font-size: 25rpx;margin-top: 15rpx;color: orangered;display: flex;">商品价格：{{price}}</div> -->
 						<div style="display: flex;justify-content: space-between;margin-top: 40rpx;">
 							<div>
-								<span style="font-size: 28rpx;margin-top: 15rpx;color: #777070;">{{$t('shopping.inventory')}}：{{total}}</span>
-								<el-divider direction="vertical"></el-divider>
+								<!-- <span style="font-size: 28rpx;margin-top: 15rpx;color: #777070;">{{$t('shopping.inventory')}}：{{total}}</span> -->
+								<!-- <el-divider direction="vertical"></el-divider> -->
 								<span style="font-size: 28rpx;margin-top: 15rpx;color: #777070;">{{$t('shopping.Sales')}}：{{sales}}</span>
 							</div>
 							<div style="color: red;">
@@ -67,9 +67,6 @@
 						<el-button type="danger" size="mini" @tap="buyNow"><b>{{$t('shopping.Buynow')}}</b></el-button>
 					</el-card>
 				</el-main>
-				<el-footer>
-					<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
-				</el-footer>
 			</el-container>
 			<!-- <el-footer>
 			<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
@@ -277,10 +274,13 @@
 	/* .el-card{
 		position: relative;
 	} */
+	.el-footer{
+		position: relative;
+	}
 	.el-button--danger{
-		position: fixed;
-		bottom: 80px;
-		width: 84.5%;
+		position: absolute;
+		bottom: 100px;
+		width: 84%;
 		/* margin-top: 10rpx; */
 	}
 	.time {

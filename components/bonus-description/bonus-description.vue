@@ -58,23 +58,8 @@
 						<div><span style="margin-left: 78rpx; display: inline-block;">{{$t('purse.level')}} : </span><span
 								style="margin-left: 10rpx; display: inline-block;"> {{levelname}}</span></div>
 					</div>
-					<!-- <div class="bonusAll" style="margin-top: 20rpx;">
-						<div class="bonustitle">奖金摘要</div>
-						<div class="bonusright"><span>Retail Bonus (Personal)</span>0.00</span></div>
-						<div class="bonusright"><span>Retail Bonus (Overriding)</span></span>0.00</span></div>
-						<div class="bonusright"><span>Network Bonus</span></span>0.00</span></div>
-						<div class="bonusright"><span>Matching Bonus</span></span>0.00</span></div>
-						<div class="bonusright"><span>Travel Bonus</span></span>0.00</span></div>
-						<div class="bonusright"><span>Gold Millionaire Pool</span></span>0.00</span></div>
-						<div class="bonusright"><span>Retail Bonus (Overriding)</span></span>0.00</span></div>
-						<div class="bonusright"><span>Platinm Millionaire Pool</span></span>0.00</span></div>
-						<div class="bonusright"><span>Diamond Millionaire Pool</span></span>0.00</span></div>
-						<div class="bonusright"><span>总计</span></span>0.00</span></div>
-
-					</div> -->
 				</div>
-				<!-- <div class="tabletitle">Retail Bonus (Personal)</div> -->
-				<el-table :data="tableData"  v-if="idStatus">
+				<el-table :data="tableData"  v-if="idStatus" border>
 					<el-table-column label="ID" width="50">
 						<template slot-scope="scope">
 							{{ (scope.$index+1)+(currentPage-1)*pageSize }}
@@ -92,20 +77,27 @@
 					</el-table-column>
 				</el-table>
 				<div  v-else>
-					<el-card shadow="never" class="text item">
-						<div><b>{{$t('purse.date')}}</b></div>
+					<!-- <el-card shadow="never" class="text item"> -->
+					<div style="font-size: 28rpx;margin-bottom: 30rpx;;border-top: 1rpx solid #d1d1d1;border-bottom: 1rpx solid #d1d1d1;padding: 20rpx 0rpx;">{{$t('Record.information')}}</div>
+						<!-- <div><b>{{$t('purse.date')}}</b></div>
 						<div><b>{{$t('purse.remark')}}</b></div>
 						<div><b>{{$t('purse.Paymentstatus')}}</b></div>
 						<div><b>{{$t('purse.Rewardtype')}}</b></div>
-						<div><b>{{$t('purse.bonus')}}</b></div>
-					</el-card>
+						<div><b>{{$t('purse.bonus')}}</b></div> -->
+					<!-- </el-card> -->
 					<block v-for="data in tableData">
 						<el-card shadow="never" class="text item">
 							<div>{{data.createtimestr}}</div>
 							<div>{{data.remark}}</div>
-							<div>{{data.paystatusstr}}</div>
+							<!-- <div>{{data.paystatusstr}}</div> -->
 							<div>{{data.btypestr}}</div>
-							<div>{{data.price}}</div>
+							<div style="display: flex;justify-content: space-between;">
+								<div style="color: red;"><span style="font-size: 23rpx;">MYR</span> {{data.price}}</div>
+								<div>
+									<div v-if="data.paystatus==0"><el-link type="danger">{{data.paystatusstr}}</el-link></div>
+									<div v-else style="color: blueviolet;"><el-link>{{data.paystatusstr}}</el-link></div>
+								</div>
+							</div>
 						</el-card>
 					</block>
 				</div>

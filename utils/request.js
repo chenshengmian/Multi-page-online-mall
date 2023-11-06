@@ -3,7 +3,7 @@ import configs from './config.json'
 import { Loading } from 'element-ui';
 const request = axios.create({
 	baseURL: configs.https,
-	timeout: 5000,
+	timeout: 10000,
 })
 request.interceptors.request.use(
 	async (config) => {
@@ -44,7 +44,7 @@ request.interceptors.request.use(
 		// 	title: '加载中...',
 		// 	mask: true,
 		// })
-		// Loading.service();
+		Loading.service();
 		
 		return config
 	},
@@ -55,13 +55,13 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
 	(response) => {
-		// let loadingInstance = Loading.service();
-		// loadingInstance.close();
+		let loadingInstance = Loading.service();
+		loadingInstance.close();
 		return response.data;
 	},
 	(error) => {
-		// let loadingInstance = Loading.service();
-		// loadingInstance.close();
+		let loadingInstance = Loading.service();
+		loadingInstance.close();
 		return Promise.reject(error);
 	}
 )

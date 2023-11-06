@@ -1,24 +1,31 @@
 <template>
 	<view class="content">
 		<el-container>
-			<el-dialog :title="titlet" :visible.sync="centerDialogVisible" :width="width" style="height: 100%;" :show-close="false" :close-on-click-modal="false">
+			<el-dialog :title="titlet" :visible.sync="centerDialogVisible" :width="width" style="height: 100%;"
+				:show-close="false" :close-on-click-modal="false">
 				<div id="print" ref="print" style="" v-html="tanccontent"></div>
-				<div>
-					<el-checkbox v-model="checked">{{$t('home.Agreeagreement')}}</el-checkbox>
+				<div v-show="statusagree==1">
+					<el-checkbox v-model="checked">{{$t('home.agree')}}</el-checkbox><span @tap="changeagree"
+						style="color: #409EFF;cursor: pointer;">{{$t('home.agreement')}}</span>
 				</div>
-				<span slot="footer" class="dialog-footer">
-					
+				<span slot="footer" class="dialog-footer" v-show="statusagree==1">
 					<i class="el-icon-printer" @click="handleCustomButton"
-						style="margin-right: 35rpx;margin-top: 20rpx;"></i>
-					<el-button type="primary" @click="changeads" size="mini" :disabled="!checked">{{$t('home.Closewindow')}}</el-button>
+						style="margin-right: 35rpx;display: inline-block;height: 34px;line-height: 34px;"></i>
+					<el-button type="primary" @click="changeads" size="mini"
+						:disabled="!checked">{{$t('home.Closewindow')}}</el-button>
+				</span>
+				<span slot="footer" class="dialog-footer" v-show="statusagree==0">
+					<i class="el-icon-printer" @click="handleCustomButton"
+						style="margin-right: 35rpx;display: inline-block;height: 34px;line-height: 34px;"></i>
+					<el-button type="primary" @click="closeagree" size="mini"
+						>{{$t('home.Finishreview')}}</el-button>
 				</span>
 			</el-dialog>
 
-			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
-				 style="">
-				 <div class="userLo">{{name}}</div>
+			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse" style="">
+				<div class="userLo">{{name}}</div>
 				<!-- <image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image> -->
-								<!-- <image src="../../static/img/favicon.png" v-else class="userLogo"></image> -->
+				<!-- <image src="../../static/img/favicon.png" v-else class="userLogo"></image> -->
 				<el-menu-item index="1" @tap="handleperson">
 					<i class="el-icon-menu"></i>
 					<span slot="title">{{$t('menu.home')}}</span>
@@ -29,9 +36,11 @@
 						<span slot="title" v-if="disable">{{$t('menu.ewallets')}}</span>
 					</template>
 					<el-menu-item-group>
-						<el-menu-item index="2-1" @tap="handlepurchasehistory">{{$t('menu.ewallethistory')}}</el-menu-item>
+						<el-menu-item index="2-1"
+							@tap="handlepurchasehistory">{{$t('menu.ewallethistory')}}</el-menu-item>
 						<el-menu-item index="2-2" @tap="handlewithdraw">{{$t('menu.ewalletwithdrawals')}}</el-menu-item>
-						<el-menu-item index="2-3" @tap="handlewithdrawStatus">{{$t('menu.ewalletwithdrawalstatus')}}</el-menu-item>
+						<el-menu-item index="2-3"
+							@tap="handlewithdrawStatus">{{$t('menu.ewalletwithdrawalstatus')}}</el-menu-item>
 						<el-menu-item index="2-4" @tap="handlebonus">{{$t('menu.bonuseshelp')}}</el-menu-item>
 						<el-menu-item index="2-5" @tap="handlekycgo">KYC</el-menu-item>
 					</el-menu-item-group>
@@ -64,13 +73,13 @@
 						<div style="display: flex;align-items: center;" :class="{'colorb':isblock}">
 							<i class="el-icon-s-grid changeStatu" @tap="changeStatus"></i>
 							<!-- <image src="../../static/img/favicon.png" class="changeStatus1 smalllogo"></image> -->
-														<i class="el-icon-s-grid changeStatus1" @tap="showDrawer" ></i>
+							<i class="el-icon-s-grid changeStatus1" @tap="showDrawer"></i>
 						</div>
 						<div style="display: flex;align-items: center;">
 							<!-- <div class="userLo">{{logoname}}</div> -->
 							<el-dropdown trigger="click" class="my-drawer">
 								<span class="el-dropdown-link">
-									<el-avatar :src="circleUrl" class="el-icon--right"  
+									<el-avatar :src="circleUrl" class="el-icon--right"
 										style="width: 65rpx;height: 65rpx;"></el-avatar>
 								</span>
 								<el-dropdown-menu slot="dropdown" class="atvatr">
@@ -79,14 +88,14 @@
 									</el-dropdown-item>
 									<div @tap="hanldeChangepass">
 										<el-row>
-											<el-dropdown-item >
+											<el-dropdown-item>
 												<i class="el-icon-user-solid"></i>{{$t('menu.newloginPassword')}}
 											</el-dropdown-item>
 										</el-row>
 									</div>
 									<div @tap="hanldeChangeEwalletspass">
 										<el-row>
-											<el-dropdown-item >
+											<el-dropdown-item>
 												<i class="el-icon-user-solid"></i>{{$t('menu.newEwallectPassword')}}
 											</el-dropdown-item>
 										</el-row>
@@ -100,10 +109,9 @@
 								</el-dropdown-menu>
 							</el-dropdown>
 
-							
+
 							<el-row>
-								<i class="el-icon-setting setting" style=""
-									@tap="showDrawerleft"></i>
+								<i class="el-icon-setting setting" style="" @tap="showDrawerleft"></i>
 							</el-row>
 						</div>
 					</div>
@@ -116,23 +124,27 @@
 							Mode</span><br /></el-row>
 					<el-row><el-switch v-model="option2" @change="handleOptionChange('option2')"></el-switch><span>Dark
 							Mode</span></el-row> -->
-							 <el-radio-group v-model="radio"  @input="handleLangChange" >
-							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="en"><b>{{$t('locale.en')}}</b></el-radio></div>
-							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hans"><b>{{$t('locale.zhHans')}}</b></el-radio></div>
-							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hant"><b>{{$t('locale.zhHant')}}</b></el-radio></div>
-							</el-radio-group>
-							<!-- <el-row><el-switch v-model="lang1" @change="handleLangChange('en')"></el-switch><span></span><br /></el-row>
+					<el-radio-group v-model="radio" @input="handleLangChange">
+						<div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio
+								label="en"><b>{{$t('locale.en')}}</b></el-radio></div>
+						<div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio
+								label="zh-Hans"><b>{{$t('locale.zhHans')}}</b></el-radio></div>
+						<div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio
+								label="zh-Hant"><b>{{$t('locale.zhHant')}}</b></el-radio></div>
+					</el-radio-group>
+					<!-- <el-row><el-switch v-model="lang1" @change="handleLangChange('en')"></el-switch><span></span><br /></el-row>
 							<el-row><el-switch v-model="lang2" @change="handleLangChange('zh-Hans')"></el-switch><span>
 									</span></el-row>
 							<el-row><el-switch v-model="lang3" @change="handleLangChange('zh-Hant')"></el-switch><span>
 									</span></el-row> -->
 				</el-drawer>
 				<div class="ableta">
-					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
+					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer"
+						@handleClose="handleClose"></my-drawer>
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
-						<my-home @changeAd="getAdstatus"/>
-					
+					<my-home @changeAd="getAdstatus" />
+
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
 					<div class="footer">{{footesr}}</div>
@@ -152,9 +164,9 @@
 		},
 		data() {
 			return {
-				checked:false,
-				footesr:uni.getStorageSync('footer'),
-				name:uni.getStorageSync('name'),
+				checked: false,
+				footesr: uni.getStorageSync('footer'),
+				name: uni.getStorageSync('name'),
 				centerDialogVisible: false,
 				isCollapse: false,
 				disable: true,
@@ -180,13 +192,14 @@
 				width: '30%',
 				tanccontent: '<p>这是一段包含HTML标签的内容</p>',
 				type: 0,
-				radio:uni.getLocale(),
-				titlet:''
+				radio: uni.getLocale(),
+				titlet: '',
+				statusagree: 0
 			}
 		},
 		mounted(param) {
 			uni.setNavigationBarTitle({
-				title:uni.getStorageSync('name')
+				title: uni.getStorageSync('name')
 			})
 			// console.log(1111)
 			this.login()
@@ -203,88 +216,107 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			handleshoppingAddress(){
+			closeagree(){
+				let object = {
+					'type': 1
+				}
+				this.getAdstatus(object)
+			},
+			changeagree() {
+				let type = 0
+				if (this.statusagree == 0) {
+					type = 1
+				} else {
+					type = 0
+				}
+				let object = {
+					'type': type
+				}
+				this.getAdstatus(object)
+			},
+			handleshoppingAddress() {
 				uni.navigateTo({
-					url:'/pages/shippingAddress/shippingAddress'
+					url: '/pages/shippingAddress/shippingAddress'
 				})
 			},
-			handleClose(param){
+			handleClose(param) {
 				this.drawerVisible = param
 			},
-			handleLangChange(str){
+			handleLangChange(str) {
 				// console.log(str)
 				uni.setLocale(str)
 				this.$i18n.locale = str
-				this.$router.go(0)
+				this.drawerVisibletwo = false
+				//this.$router.go(0) 
 			},
-			handleshopping(){
+			handleshopping() {
 				uni.navigateTo({
-					url:'/pages/shopping/shopping'
+					url: '/pages/shopping/shopping'
 				})
 			},
-			hanldeChangepass(){
+			hanldeChangepass() {
 				uni.navigateTo({
-					url:'/pages/login-password/login-password'
+					url: '/pages/login-password/login-password'
 				})
 			},
-			hanldeChangeEwalletspass(){
+			hanldeChangeEwalletspass() {
 				uni.navigateTo({
-					url:'/pages/wallet-password/wallet-password'
+					url: '/pages/wallet-password/wallet-password'
 				})
 			},
-			handlepurchasehistory(){
+			handlepurchasehistory() {
 				// console.log(111)
 				uni.navigateTo({
-					url:'/pages/wallet-records/wallet-records'
+					url: '/pages/wallet-records/wallet-records'
 				})
 			},
-			handleperson(){
+			handleperson() {
 				uni.navigateTo({
-					url:'/pages/personalPage/personalPage'
+					url: '/pages/personalPage/personalPage'
 				})
 			},
-			handlewithdraw(){
+			handlewithdraw() {
 				uni.navigateTo({
-					url:'/pages/withdraw-money/withdraw-money'
+					url: '/pages/withdraw-money/withdraw-money'
 				})
 			},
-			handlewithdrawStatus(){
+			handlewithdrawStatus() {
 				uni.navigateTo({
-					url:'/pages/withdrawal-status/withdrawal-status'
+					url: '/pages/withdrawal-status/withdrawal-status'
 				})
 			},
-			handlebonus(){
+			handlebonus() {
 				uni.navigateTo({
-					url:'/pages/bonus-description/bonus-description'
+					url: '/pages/bonus-description/bonus-description'
 				})
 			},
-			handlekycgo(){
+			handlekycgo() {
 				uni.navigateTo({
-					url:'/pages/know-yourCustomer/know-yourCustomer'
+					url: '/pages/know-yourCustomer/know-yourCustomer'
 				})
 			},
-			handlebinarytree(){
+			handlebinarytree() {
 				uni.navigateTo({
-					url:'/pages/binary-tree/binary-tree'
+					url: '/pages/binary-tree/binary-tree'
 				})
 			},
-			handleannucement(){
+			handleannucement() {
 				uni.navigateTo({
-					url:'/pages/announcement-table/announcement-table'
+					url: '/pages/announcement-table/announcement-table'
 				})
 			},
 			handleCustomButton() {
 				this.$print(this.$refs.print)
-			
+
 			},
-			handleProduct(){
+			handleProduct() {
 				uni.navigateTo({
-					url:'/pages/product-purchase/product-purchase'
+					url: '/pages/product-purchase/product-purchase'
 				})
 			},
-			handlepurchase(){
+			handlepurchase() {
 				uni.navigateTo({
-					url:'/pages/purchase-history/purchase-history'
+					url: '/pages/purchase-history/purchase-history'
 				})
 			},
 			getAdstatus(param) {
@@ -296,7 +328,7 @@
 				let self = this
 				this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.agr')
 					.then(res => {
-						// console.log('弹窗',type)
+						console.log('弹窗', res)
 						const {
 							result: {
 								agrcontent,
@@ -304,6 +336,7 @@
 							}
 						} = res
 						self.centerDialogVisible = true
+						self.statusagree = type
 						if (type == 0) {
 							let str = self.htmlEntityDecode(agrcontent)
 							const styleToAdd =
@@ -311,7 +344,6 @@
 							str = str.replace(/(text-wrap: nowrap;)/g, `$1 ${styleToAdd}`);
 							self.tanccontent = str
 							self.titlet = self.$t('home.agreement')
-
 						} else {
 							let str = self.htmlEntityDecode(content)
 							const styleToAdd =
@@ -371,12 +403,7 @@
 								content
 							}
 						} = res
-						// if(self.type==0){
-						// 	self.tanccontent = self.htmlEntityDecode(agrcontent)
-						// }else{
 						self.tanccontent = self.htmlEntityDecode(content)
-						// }
-
 					})
 					.catch(err => {
 						console.log(err)
@@ -393,7 +420,7 @@
 								mobile
 							}
 						} = res
-						uni.setStorageSync('mobile',mobile)
+						uni.setStorageSync('mobile', mobile)
 						self.username = nickname
 						// console.log('登录状态',res)
 						if (adstatus == 0) {
@@ -418,7 +445,7 @@
 						console.log(err)
 					})
 
-		
+
 			},
 			handlereg(param) {
 				this.index = param
@@ -444,8 +471,8 @@
 			},
 			logOff() {
 				this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.logout')
-					.then(res=>{
-						
+					.then(res => {
+
 					})
 				uni.clearStorageSync();
 				uni.navigateTo({
@@ -508,21 +535,26 @@
 	}
 </script>
 <style>
-	
-	
-	.content{
+	.content {
 		/* position: fixed; */
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
 	}
-	/deep/table{
+
+	/deep/table {
 		width: auto !important;
 	}
-	/deep/.el-table__empty-block{
+
+	/deep/.el-table__empty-block {
 		width: auto !important;
 	}
-	@page { margin-bottom: 20;margin-top: 20; }
+
+	@page {
+		margin-bottom: 20;
+		margin-top: 20;
+	}
+
 	/* .perpage {page-break-after:always;} */
 	/* /deep/#print p span{
 		overflow-x: hidden !important;
@@ -617,12 +649,12 @@
 		cursor: pointer;
 	}
 
-	@media screen and (max-width: 1400px)  and (min-width: 990px){
+	@media screen and (max-width: 1400px) and (min-width: 990px) {
 		.userLo {
 			width: 73%;
 		}
 	}
-	
+
 
 
 	@media screen and (max-width: 990px) {
@@ -630,19 +662,21 @@
 			height: 120rpx !important;
 			width: 100% !important;
 			position: fixed;
-			top:0;
+			top: 0;
 		}
-		.el-main{
-			height: 85vh!important;
+
+		.el-main {
+			height: 85vh !important;
 			margin: 120rpx 0rpx;
 		}
-		
-		.el-footer{
+
+		.el-footer {
 			bottom: 0;
 			position: fixed;
-			width: 100%!important;
+			width: 100% !important;
 		}
-/* 
+
+		/* 
 		.homepage {
 			width: 100% !important;
 		} */
@@ -655,7 +689,7 @@
 			display: block !important;
 		}
 
-		
+
 		.asos,
 		.fullsc,
 		.placeholder {
@@ -665,7 +699,7 @@
 		.changeStatus1 {
 			display: block !important;
 			font-size: 50rpx;
-			/* margin-top: 30rpx; */ 
+			/* margin-top: 30rpx; */
 			cursor: pointer;
 			width: 100%;
 		}
@@ -742,7 +776,7 @@
 		/* width: 90vw; */
 	}
 
-	.el-footer{
+	.el-footer {
 		/* position: fixed; */
 		/* bottom: 0; */
 		/* left: 0; */
@@ -751,6 +785,7 @@
 		z-index: 999;
 		/* width: 88%; */
 	}
+
 	.footer {
 		height: 120rpx;
 		line-height: 120rpx;

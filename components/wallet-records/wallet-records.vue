@@ -68,20 +68,26 @@
 					</el-table-column>
 				</el-table>
 				<div  v-else> 
-					<el-card shadow="never" class="text item">
+					<!-- <el-card shadow="never" class="text item">
 						<div><b>{{$t('purse.date')}}</b></div>
 						<div><b>{{$t('purse.TransactionDescription')}}</b></div>
 						<div><b>{{$t('purse.Incoming')}}</b></div>
 						<div><b>{{$t('purse.type')}}</b></div>
-					</el-card>
+					</el-card> -->
+					<div style="margin-top: 20rpx;font-size: 28rpx;border-top: 1rpx solid #d1d1d1;border-bottom: 1rpx solid #d1d1d1;padding: 20rpx 0rpx;">{{$t('Record.information')}}</div>
 					<block v-for="data in tableData">
 						<el-card shadow="never" class="text item">
 							<div>{{data.timestr}}</div>
 							<div>{{data.remark}}</div>
-							<div>{{data.num}}</div>
-							<div v-if="data.credittype=='credit1'">{{$t('purse.Cashcredits')}}</div>
-							<div v-else-if="data.credittype=='credit2'">{{$t('purse.Travelcredits')}}</div>
-							<div v-else>{{$t('purse.ProductPoints')}}</div>
+							<!-- <div>{{data.num}}</div> -->
+							<div style="display: flex;justify-content: space-between;">
+								<div style="color: red;"><span style="font-size: 23rpx;">MYR</span> {{data.num}}</div>
+								<div>
+									<div v-if="data.credittype=='credit1'"><el-link type="danger">{{$t('purse.Cashcredits')}}</el-link></div>
+									<div v-else-if="data.credittype=='credit2'"><el-link type="success">{{$t('purse.Travelcredits')}}</el-link></div> 
+									<div v-else><el-link>{{$t('purse.ProductPoints')}}</el-link></div>
+								</div>
+							</div>
 						</el-card>
 					</block>
 				</div>

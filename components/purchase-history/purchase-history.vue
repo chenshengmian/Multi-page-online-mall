@@ -63,14 +63,15 @@
 					</el-table-column>
 				</el-table>
 				<div  v-else>
-					<el-card shadow="never" class="text item">
-						<div><b>{{$t('Record.information')}}</b></div>
+					<div style="margin-top: 20rpx;font-size: 28rpx;border-top: 1rpx solid #d1d1d1;border-bottom: 1rpx solid #d1d1d1;padding: 20rpx 0rpx;">{{$t('Record.information')}}</div>
+					<!-- <el-card shadow="never" class="text item">
+						<div><b>{{$t('Record.information')}}</b></div> -->
 						<!-- <div><b>{{$t('product.Gradename')}}</b></div>
 						<div><b>{{$t('product.Ordernumber')}}</b></div>
 						<div><b>{{$t('product.Timeorder')}}</b></div>
 						<div><b>{{$t('product.Amount')}}</b></div>
 						<div><b>{{$t('product.Paymentstatus')}}</b></div> -->
-					</el-card>
+					<!-- </el-card> -->
 					<block v-for="data in tableData" >
 						<el-card shadow="never" class="text item">
 							<div @click="hanldeDeatils(data)">

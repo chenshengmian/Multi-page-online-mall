@@ -81,10 +81,18 @@
 					  prop="statusstr"
 					  align="center" 
 					  :label="$t('purse.state')">
+					  	<template slot-scope="scope">
+					  		<div v-if="scope.row.status==0"><el-tag type="danger">{{scope.row.statusstr}}</el-tag></div> 
+					  		<div v-else-if="scope.row.status==1"><el-tag type="success">{{scope.row.statusstr}}</el-tag></div> 
+					  		<div v-else-if="scope.row.status==2"><el-tag type="warning">{{scope.row.statusstr}}</el-tag></div>
+					  		<div v-else-if="scope.row.status==3"><el-tag type="info">{{scope.row.statusstr}}</el-tag></div>
+					  		<div v-else style="color: blueviolet;"><el-tag>{{scope.row.statusstr}}</el-tag></div>
+					  	</template>
 					</el-table-column>
 				  </el-table>
 				  <div  v-else>
-				  	<el-card shadow="never" class="text item">
+					<div style="margin-top: 20rpx;font-size: 28rpx;border-top: 1rpx solid #d1d1d1;border-bottom: 1rpx solid #d1d1d1;padding: 20rpx 0rpx;">{{$t('Record.information')}}</div>
+				  	<!-- <el-card shadow="never" class="text item">
 				  		<div><b>{{$t('home.title')}}</b></div>
 				  		<div><b>{{$t('purse.Dateapplication')}}</b></div>
 				  		<div><b>{{$t('withdrawal.bankName')}}</b></div>
@@ -92,7 +100,7 @@
 						<div><b>{{$t('withdrawal.bankAccountNumber')}}</b></div>
 						<div><b>{{$t('withdrawal.transferAmount')}}</b></div>
 						<div><b>{{$t('purse.state')}}</b></div>
-				  	</el-card>
+				  	</el-card> -->
 				  	<block v-for="data in tableData">
 				  		<el-card shadow="never" class="text item">
 				  			<div>{{data.title}}</div>
@@ -100,8 +108,18 @@
 				  			<div>{{data.logmes.bank_name}}</div>
 				  			<div>{{data.realname}}</div>
 				  			<div>{{data.logmes.bank_account_number}}</div>
-				  			<div>{{data.money}}</div>
-							<div>{{data.statusstr}}</div>
+				  			<!-- <div>{{data.money}}</div> -->
+							<!-- <div>{{data.statusstr}}</div> -->
+							<div style="display: flex;justify-content: space-between;">
+								<div style="color: red;"><span style="font-size: 23rpx;">MYR</span> {{data.money}}</div>
+								<div>
+									<div v-if="data.status==0"><el-link type="danger">{{data.statusstr}}</el-link></div>
+									<div v-else-if="data.status==1"><el-link type="success">{{data.statusstr}}</el-link></div> 
+									<div v-else-if="data.status==2"><el-link type="warning">{{data.statusstr}}</el-link></div>
+									<div v-else-if="data.status==3"><el-link type="info">{{data.statusstr}}</el-link></div>
+									<div v-else style="color: blueviolet;"><el-link>{{data.statusstr}}</el-link></div>
+								</div>
+							</div>
 				  		</el-card>
 				  	</block>
 				  </div>

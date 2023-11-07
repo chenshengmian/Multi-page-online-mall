@@ -2,75 +2,40 @@
 	<div class="home">
 		<div class="homep" style="width: 100%;">
 			<el-container>
-				<!-- <el-header>
-					<div class="header"> -->
-						<!-- <div class="logo">
-							<img :src="logo" alt="" style="width: 100rpx;height: 100rpx;border-radius: 50%;">
-						</div> -->
-						<!-- <div class="sreach">
-							<el-input placeholder="请输入内容" v-model="input3" class="input-with-select"> -->
-								<!-- <el-select v-model="select" slot="prepend" placeholder="请选择">
-								<el-option label="一球" value="1"></el-option>
-								<el-option label="三球" value="2"></el-option>
-								<el-option label="七球" value="3"></el-option>
-							</el-select> -->
-								<!-- <el-button class="imgsreach" slot="append" icon="el-icon-search"></el-button>
-							</el-input> 
-						</div> -->
-						<!-- <div>
-							<el-button type="primary" @tap="handlelogo">登陆</el-button>
-						</div> -->
-					<!-- </div>
-
-				</el-header> -->
 				<el-main>
 					<el-card shadow="never">
-						<!-- <el-descriptions title="商品信息" :column="3" border>
-							<el-descriptions-item label="商品名称">{{title}}</el-descriptions-item>
-							<el-descriptions-item label="商品价格">{{price}}</el-descriptions-item>
-							<el-descriptions-item label="商品库存">{{total}}</el-descriptions-item>
-							<el-descriptions-item label="备注">
-								<el-tag size="small">{{title}}</el-tag>
-							</el-descriptions-item>
-							<el-descriptions-item label="商品图片">
+						<div class="liji" style="display: flex;">
+							<!-- <div> -->
+								<el-carousel height="400px" style="width: 400px;border-radius: 20rpx;" :autoplay="false" arrow="never">
+								    <el-carousel-item v-for="item in imgarr" :key="item">
+										<img :src="item" alt="" class="carousel-image">
+								    </el-carousel-item>
+								</el-carousel>
+							<!-- </div> -->
+							<div  style="margin-left: 60rpx;">
+								<div class="titlel" style="font-size: 50rpx;margin-top: 15rpx;"><b>{{title}}</b></div>
 								<div>
-									<block v-for="(item,i) in imgarr">
-										<img :src="item" style="width: 100rpx;">
-									</block>
+									<span class="sales" style="font-size: 36rpx;margin-top: 15rpx;color: #777070;">{{subtitle}}</span>
 								</div>
-							</el-descriptions-item>
-						</el-descriptions>
-
-						<div v-html="content"></div>
-
-						<el-button @tap="resert" size="mini" style="margin-top: 20rpx;">返回主页</el-button> -->
-						<el-carousel height="200px" :autoplay="false" arrow="never">
-						    <el-carousel-item v-for="item in imgarr" :key="item">
-								<img :src="item" alt="" class="carousel-image">
-						    </el-carousel-item>
-						</el-carousel>
-						<div style="font-size: 30rpx;margin-top: 15rpx;"><b>{{title}}</b></div>
-						<!-- <div style="font-size: 25rpx;margin-top: 15rpx;color: orangered;display: flex;">商品价格：{{price}}</div> -->
-						<div style="display: flex;justify-content: space-between;margin-top: 40rpx;">
-							<div>
-								<!-- <span style="font-size: 28rpx;margin-top: 15rpx;color: #777070;">{{$t('shopping.inventory')}}：{{total}}</span> -->
-								<!-- <el-divider direction="vertical"></el-divider> -->
-								<span style="font-size: 28rpx;margin-top: 15rpx;color: #777070;">{{$t('shopping.Sales')}}：{{sales}}</span>
-							</div>
-							<div style="color: red;">
-								<span style="font-size: 28rpx;">MYR</span><b style="font-size: 45rpx;">{{price}}</b>
+								<div class="contnents" style="margin-top: 40rpx;">
+									<div>
+										<span class="sales" style="font-size: 36rpx;margin-top: 15rpx;color: #777070;">{{$t('shopping.Sales')}}：{{sales}}</span>
+									</div>
+									<div class="prices" style="color: red;margin-top: 40rpx;">
+										<span style="font-size: 28rpx;">MYR</span><b class="pricess" style="font-size: 45rpx;">{{price}}</b>
+									</div>
+								</div>
+								<el-button type="danger" size="mini" @tap="buyNow"><b>{{$t('shopping.Buynow')}}</b></el-button>
 							</div>
 						</div>
-						<div style="font-size: 30rpx;margin-top: 15rpx;"><b>{{$t('shopping.Productdetails')}}</b></div>
-						<div v-html="content" style="margin-top: 15rpx;" v-show="deatilStatus"></div>
+						<el-divider ></el-divider>
+						<div class="Productdetails" style="font-size: 40rpx;margin: 30rpx;"><b>{{$t('shopping.Productdetails')}}</b></div>
+						<div  v-html="content" style="margin-top: 15rpx;width: 2400rpx;margin: 0 auto;" v-show="deatilStatus"></div>
 						<el-empty :description="$t('shopping.emptydata')"  v-show="!deatilStatus"></el-empty>
-						<el-button type="danger" size="mini" @tap="buyNow"><b>{{$t('shopping.Buynow')}}</b></el-button>
+						
 					</el-card>
 				</el-main>
 			</el-container>
-			<!-- <el-footer>
-			<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
-		</el-footer> -->
 
 		</div>
 	</div>
@@ -87,6 +52,7 @@
 		},
 		data() {
 			return {
+				subtitle:'',
 				sales:0,
 				prounddatastatus: false,
 				dialogTableVisible: false,
@@ -174,7 +140,7 @@
 				// console.log(id)
 				let _this = this
 				_this.homediable = false
-				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.goodsdetail&id=' + this.ids)
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.goods.detail&id=' + this.ids)
 					.then(res => {
 						console.log(res)
 						const {
@@ -185,12 +151,14 @@
 								total,
 								thumb_url,
 								content,
-								sales
+								sales,
+								subtitle
 							}
 						} = res
 						if(content==''){
 							_this.deatilStatus = false
 						}
+						_this.subtitle = subtitle
 						_this.id = id
 						_this.sales = sales
 						_this.title = title
@@ -277,10 +245,15 @@
 	.el-footer{
 		position: relative;
 	}
+	.liji{
+		position: relative;
+	}
 	.el-button--danger{
 		position: absolute;
-		bottom: 100px;
-		width: 84%;
+		bottom: 0;
+		right: 0;
+		/* bottom: 100px; */
+		/* width: 84%; */
 		/* margin-top: 10rpx; */
 	}
 	.time {
@@ -497,9 +470,9 @@
 	}
 
 	@media screen and (max-width: 990px) {
-		.el-button--danger{
+		/* .el-button--danger{
 			width: 78% !important;
-		}
+		} */
 		.homep ,.el-footer{
 			width: 100% !important;
 		}
@@ -527,10 +500,40 @@
 	@media screen and (max-width: 990px) {
 		/deep/.el-carousel__container {
 			height: 300rpx !important;
+			width: 300rpx !important; 
+		}
+		/deep/.el-carousel__item{
+			width: 300rpx !important;
+			 height: 300rpx !important;
+		}
+		.carousel-image {
+			width: 300rpx !important;
+			height: 300rpx !important;
+			object-fit: fill;
+			/* 适应方式，可根据需求选择合适的值，如：contain、cover、fill 等 */
+		}
+		.titlel{
+			font-size: 30rpx !important;
+		}
+		.sales{
+			font-size: 26rpx !important;
+		}
+		.pricess{
+			font-size: 35rpx !important;
+		}
+		.prices{
+			margin-top: 20rpx !important;
+		}
+		.contnents{
+			margin-top: 20rpx !important;
 		}
 
 		.el-carousel {
-			height: 300rpx;
+			width: 300rpx !important;
+		}
+		
+		.Productdetails{
+			font-size: 34rpx !important;
 		}
 
 
@@ -554,14 +557,5 @@
 		.el-input-group__append {
 			width: 50% !important;
 		}
-
-		/* .home {
-			height: 100vh;
-		} */
-
-		/* .carousel-container,.el-carousel,.el-carousel .el-carousel__container{
-			height: 300rpx !important;
-			overflow: hidden;
-		} */
 	}
 </style>

@@ -16,6 +16,14 @@
 		<el-card class="box-card">
 			<div class="resgister"><b>{{$t('enroll.Registered')}}</b></div>
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm"  class="demo-ruleForm" :label-position="labelPosition" label-width="100px">
+				<el-form-item :label="$t('reg.Referrer')":label-width="labelw" >
+					<el-input v-model="userinfoid" :disabled="true"></el-input>
+				</el-form-item>
+				<el-form-item :label="$t('reg.Node')"  :label-width="labelw" >
+					<el-tag>{{nodeids}}</el-tag>
+					<!-- <el-input v-model="ruleForm.superiorID" :placeholder="$t('enroll.Ifoptional')"></el-input> -->
+				</el-form-item>
+				
 				<el-form-item :label="$t('enroll.Newdealername')+':'" prop="name" :label-width="labelw">
 					<div>
 						<el-input v-model="ruleForm.name" ></el-input>
@@ -25,7 +33,7 @@
 				    <el-input v-model="ruleForm.nickname" ></el-input>
 				</el-form-item>
 				<el-form-item :label="$t('enroll.nationality')+':'" prop="region" :label-width="labelw">
-					<el-select style="width: 500rpx;" v-model="ruleForm.region" :placeholder="$t('enroll.selectnationality')" :filterable = "true">
+					<el-select  v-model="ruleForm.region" :placeholder="$t('enroll.selectnationality')" :filterable = "true">
 						<!-- <el-option :label="$t('enroll.CHINA')" :value="$t('enroll.CHINA')"></el-option>
 						<el-option :label="$t('enroll.MALAYSIA')" :value="$t('enroll.MALAYSIA')"></el-option>
 						<el-option :label="$t('enroll.AMERICAN')" :value="$t('enroll.AMERICAN')"></el-option>
@@ -50,7 +58,7 @@
 						</block>
 					</el-select>
 				</el-form-item>
-				<el-form-item :label="$t('enroll.gender')" prop="gender" :label-width="labelw">
+				<el-form-item :label="$t('enroll.gender')+':'" prop="gender" :label-width="labelw">
 					<el-select v-model="ruleForm.gender" :placeholder="$t('enroll.selectgender')">
 						<el-option :label="$t('enroll.man')" value="0"></el-option>
 						<el-option :label="$t('enroll.woman')" value="1"></el-option>
@@ -74,8 +82,13 @@
 						<el-input class="girds" v-model="ruleForm.email"></el-input>
 						<!-- <el-button  @tap="sendEamil" :loading="true">{{$t('enroll.Sendverification')}}</el-button> -->
 						<!-- <div class="sandst"> -->
-						<el-button class="sands"  @tap="sendEamil" :loading="sendStatus">{{sand}}<span v-show="sendStatus">s</span></el-button>
-						<el-input class="codes" v-model="code" :placeholder="$t('enroll.verificationcode')"></el-input>
+						<el-col :span="11">
+							<el-input class="codes" v-model="code" :placeholder="$t('enroll.verificationcode')"></el-input>
+						</el-col>
+						    <el-col class="line" :span="2"></el-col>
+						<el-col :span="11" style="display: flex;justify-content: end;margin-top: 10rpx;">
+							<el-button class="sands"  @tap="sendEamil" :loading="sendStatus">{{sand}}<span v-show="sendStatus">s</span></el-button>
+						</el-col>
 						<!-- </div> -->
 					</div>
 				</el-form-item>
@@ -85,20 +98,22 @@
 					<el-input v-model="ruleForm.superiorID" :placeholder="$t('enroll.Ifoptional')"></el-input>
 				</el-form-item>
 				<el-form-item :label="$t('enroll.telephonenumber')+':'" :label-width="labelw" prop="selectedPrefix">
-					 <el-row>
-					    <el-col :span="9">
-							<el-select  v-model="ruleForm.prefixes" @change="handlePrefixChange" :filterable = "true" >
+					 <!-- <el-row> -->
+					    <!-- <el-col :span="9"> -->
+						<div style="display: flex;">
+							<el-select  v-model="ruleForm.prefixes" @change="handlePrefixChange" :filterable = "true" allow-create>
 								<!-- <el-option label="+86" value="+86"></el-option> -->
 								<!-- <el-option label="+80" value="+80"></el-option> -->
 								<block v-for="item in phoneData">
 									<el-option :label="'+'+item.phone_code" :value="'+'+item.phone_code"></el-option>
 								</block>
 							</el-select>
-					    </el-col>
-					    <el-col :span="20">
-					      <el-input v-model="ruleForm.phoneNumber" :placeholder="$t('enroll.enteraphonenumber')"></el-input>
-					    </el-col>
-					  </el-row>
+					    <!-- </el-col> -->
+					    <!-- <el-col :span="20"> -->
+							<el-input v-model="ruleForm.phoneNumber" :placeholder="$t('enroll.enteraphonenumber')"></el-input>
+						</div>
+					    <!-- </el-col> -->
+					  <!-- </el-row> -->
 				</el-form-item>
 				<el-form-item :label="$t('enroll.address')+':'" prop="address" :label-width="labelw">
 					<el-input v-model="ruleForm.address"></el-input>
@@ -168,7 +183,11 @@
 			nodeid:{
 				type:String,
 				default:''
-			}
+			},
+			left:{
+				type:String,
+				default:''
+			},
 		},
 		name: "reseller-registration",
 		data() {
@@ -181,7 +200,9 @@
 				labelPosition:'top',
 				isresgistra:'',
 				phoneData:countryCode,
+				userinfoid:uni.getStorageSync('tokenArray').userinfo,
 				userinfo:{},
+				nodeids:'',
 				ruleForm: {
 					name: '',
 					region: '',
@@ -304,7 +325,7 @@
 			// }
 		},
 		mounted() {
-			// console.log(countryCode)
+			this.nodeids = this.left == 1 ? 'L' + this.nodeid : 'R' + this.nodeid
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
 			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 			this.getballInfo()
@@ -375,6 +396,10 @@
 								}
 								self.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.selectTree',array)
 									.then(res=>{
+										// self.$message({
+										// 	message: message,
+										// 	type: 'success'
+										// })
 										const { result } = res
 										uni.setStorageSync('data',result)
 										// console.log('更新',result)
@@ -389,8 +414,8 @@
 							}
 							
 						})
-						.catch(res=>{
-							console.log(res)
+						.catch(err=>{
+							self.$message(err.message)
 						})
 				}
 				else{
@@ -438,7 +463,7 @@
 					}
 					self.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.email.ts',array)
 						.then(res=>{
-							// console.log(res)
+							console.log(res)
 							// console.log(typeof(res) == 'string')
 							if(typeof(res) == 'string'){
 								self.$message(this.$t('enroll.codeiscorrect'))
@@ -470,7 +495,7 @@
 							
 						})
 						.catch(err=>{
-							console.log(err)
+							self.$message(err.message)
 						})
 				}
 				
@@ -505,23 +530,37 @@
 	.el-form-item__label{
 		width: 100% !important;
 	}
+	.email{
+		display: block !important;
+	}
+	.email div{
+		margin-top: 5rpx;
+	}
+	/* .sands{
+		width: 20%;
+		margin-top: 10rpx;
+		margin-right: 12rpx;
+	}
+	.codes{
+		margin-top: 10rpx;
+		width: 79.5%;
+	} */
 	/* 在屏幕宽度小于990px时 */
 	@media screen and (max-width: 990px) {
-		.email{
-			display: block !important;
+		/* .sands{
+			width: 41.5%;
+			margin-top: 10rpx;
+			margin-right: 12rpx;
 		}
-		.email div{
-			margin-top: 5rpx;
-		}
+		.codes{
+			margin-top: 10rpx;
+			width: 56%;
+		} */
 		.girds{
 			display: grid !important;
 			grid-template-rows: 1fr;
 		}
-		.sands{
-			width: 40%;
-			margin-top: 10rpx;
-			margin-right: 12rpx;
-		}
+		
 		.radioe{
 			margin-top: 5rpx;
 		}
@@ -529,10 +568,7 @@
 			display: flex; */
 			/* justify-content: end; */
 		/* } */
-		.codes{
-			margin-top: 10rpx;
-			width: 56%;
-		}
+		
 		/* .el-form-item{
 			display: flex;
 			flex-wrap: wrap;

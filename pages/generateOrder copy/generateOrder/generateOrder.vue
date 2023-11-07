@@ -3,9 +3,9 @@
 		<el-container>
 			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
 				 style="">
+				 <div class="userLo">{{name}}</div>
 				<!-- <image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image> -->
 								<!-- <image src="../../static/img/favicon.png" v-else class="userLogo"></image> -->
-				<div class="userLo">{{name}}</div>
 				<el-menu-item index="1" @tap="handleperson">
 					<i class="el-icon-menu"></i>
 					<span slot="title">{{$t('menu.home')}}</span>
@@ -16,7 +16,6 @@
 						<span slot="title" v-if="disable">{{$t('menu.ewallets')}}</span>
 					</template>
 					<el-menu-item-group>
-						<!-- <span slot="title">{{$t('menu.ewallets')}}</span> -->
 						<el-menu-item index="2-1" @tap="handlepurchasehistory">{{$t('menu.ewallethistory')}}</el-menu-item>
 						<el-menu-item index="2-2" @tap="handlewithdraw">{{$t('menu.ewalletwithdrawals')}}</el-menu-item>
 						<el-menu-item index="2-3" @tap="handlewithdrawStatus">{{$t('menu.ewalletwithdrawalstatus')}}</el-menu-item>
@@ -24,34 +23,18 @@
 						<el-menu-item index="2-5" @tap="handlekycgo">KYC</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
-				<!-- <el-menu-item index="3">
-					<i class="el-icon-menu"></i>
-					<span slot="title">经销商注册</span>
-				</el-menu-item> -->
 				<el-submenu index="4">
 					<template slot="title">
 						<i class="el-icon-s-fold"></i>
 						<span slot="title" v-if="disable">{{$t('menu.shopping')}}</span>
 					</template>
 					<el-menu-item-group>
-						<!-- <span slot="title">{{$t('menu.shopping')}}</span> -->
 						<el-menu-item index="4-3" @tap="handleshoppingAddress">{{$t('home.address')}}</el-menu-item>
 						<el-menu-item index="4-0" @tap="handleshopping">{{$t('menu.allCommodities')}}</el-menu-item>
 						<!--  <el-menu-item index="4-1" @tap="handleProduct">{{$t('menu.productshopping')}}</el-menu-item> -->
 						<el-menu-item index="4-2" @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
-				<!-- <el-submenu index="5">
-					<template slot="title">
-						<i class="el-icon-s-fold"></i>
-						<span slot="title" v-if="disable">报告</span>
-					</template>
-					<el-menu-item-group>
-						<span slot="title">报告</span>
-						<el-menu-item index="5-1">小组销售报告</el-menu-item>
-						<el-menu-item index="5-2">Member Tree</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu> -->
 				<el-menu-item index="6" @tap="handlebinarytree">
 					<i class="el-icon-menu"></i>
 					<span slot="title">{{$t('menu.architecturediagram')}}</span>
@@ -72,9 +55,9 @@
 						</div>
 						<div style="display: flex;align-items: center;">
 							<!-- <div class="userLo">{{logoname}}</div> -->
-							<el-dropdown trigger="click">
+							<el-dropdown trigger="click" class="my-drawer">
 								<span class="el-dropdown-link">
-									<el-avatar :src="circleUrl" class=" el-icon--right"
+									<el-avatar :src="circleUrl" class=" el-icon--right"  
 										style="width: 65rpx;height: 65rpx;"></el-avatar>
 								</span>
 								<el-dropdown-menu slot="dropdown" class="atvatr">
@@ -83,25 +66,18 @@
 									</el-dropdown-item>
 									<div @tap="hanldeChangepass">
 										<el-row>
-											<el-dropdown-item>
+											<el-dropdown-item >
 												<i class="el-icon-user-solid"></i>{{$t('menu.newloginPassword')}}
 											</el-dropdown-item>
 										</el-row>
 									</div>
 									<div @tap="hanldeChangeEwalletspass">
 										<el-row>
-											<el-dropdown-item>
+											<el-dropdown-item >
 												<i class="el-icon-user-solid"></i>{{$t('menu.newEwallectPassword')}}
 											</el-dropdown-item>
 										</el-row>
 									</div>
-									<!-- <div @tap="hanldeKYC">
-										<el-row>
-											<el-dropdown-item>
-												<i class="el-icon-user-solid"></i>KYC
-											</el-dropdown-item>
-										</el-row>
-									</div> -->
 									<el-row>
 										<el-dropdown-item style="border-top: 2rpx solid #DCDFE6;">
 											<div @tap="logOff"><i class="el-icon-switch-button"></i><el-link href="#"
@@ -110,6 +86,8 @@
 									</el-row>
 								</el-dropdown-menu>
 							</el-dropdown>
+
+							
 							<el-row>
 								<i class="el-icon-setting setting"
 									@tap="showDrawerleft"></i>
@@ -125,28 +103,24 @@
 							Mode</span><br /></el-row>
 					<el-row><el-switch v-model="option2" @change="handleOptionChange('option2')"></el-switch><span>Dark
 							Mode</span></el-row> -->
-							<el-radio-group v-model="radio"  @input="handleLangChange" >
+							 <el-radio-group v-model="radio"  @input="handleLangChange" >
 							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="en"><b>{{$t('locale.en')}}</b></el-radio></div>
 							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hans"><b>{{$t('locale.zhHans')}}</b></el-radio></div>
 							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hant"><b>{{$t('locale.zhHant')}}</b></el-radio></div>
 							</el-radio-group>
+							<!-- <el-row><el-switch v-model="lang1" @change="handleLangChange('en')"></el-switch><span></span><br /></el-row>
+							<el-row><el-switch v-model="lang2" @change="handleLangChange('zh-Hans')"></el-switch><span>
+									</span></el-row>
+							<el-row><el-switch v-model="lang3" @change="handleLangChange('zh-Hant')"></el-switch><span>
+									</span></el-row> -->
 				</el-drawer>
 				<div class="ableta">
 					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
-					<block v-if="transmit==16">
-						<announcement-table />
-					</block>
-					<block v-else-if="transmit==15">
-						<binary-tree/>
-					</block>
-					<block v-else-if="transmit==14">
-						<shippingAddress/>
-					</block>
-					<block v-else-if="transmit==13">
-						<bonus-description/>
-					</block>
+						<!-- <my-home @changeAd="getAdstatus"/> -->
+						<generate-order :orderid = "orderid"/>
+					
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
 					<div class="footer">{{footesr}}</div>
@@ -157,32 +131,18 @@
 </template>
 
 <script>
-	import AnnouncementTable from '@/components/announcement-table/announcement-table.vue'
-	import BinaryTree from '@/components/binary-tree/binary-tree.vue'
-	import ShippingAddress from '@/components/shippingAddress/shippingAddress.vue'
-	import BonusDescription from '@/components/bonus-description/bonus-description.vue'
+	import MyDrawer from '@/components/my-drawer/my-drawer.vue';
 	import GenerateOrder from '@/components/generate-order/generate-order.vue'
-	import homepagedatail from '@/components/homepage-datail/homepage-datail.vue'
 	export default {
-		props:{
-			transmit:{
-				type:Number,
-				default:0
-			},
-		},
 		components: {
-			AnnouncementTable,
-			BinaryTree,
-			ShippingAddress,
-			BonusDescription,
+			MyDrawer,
 			GenerateOrder,
-			homepagedatail
 		},
 		data() {
 			return {
-				orderid:this.orderid,
 				footesr:uni.getStorageSync('footer'),
 				name:uni.getStorageSync('name'),
+				centerDialogVisible: false,
 				isCollapse: false,
 				disable: true,
 				drawerVisible: false,
@@ -190,9 +150,9 @@
 				circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
 				drawerSize: '60%',
 				screenWidth: 0,
+				// option1: true,
+				// option2: false,
 				index: '1',
-				option1: true,
-				option2: false,
 				classp: true,
 				isblock: false,
 				baColr: '#F2F2F2',
@@ -202,13 +162,20 @@
 				drawbg: '#FFFFFF',
 				nodeid: '',
 				todatail: {},
+				maindisable: false,
 				username: '',
 				width: '30%',
-				radio:uni.getLocale()
+				tanccontent: '<p>这是一段包含HTML标签的内容</p>',
+				type: 0,
+				radio:uni.getLocale(),
+				orderid:1
 			}
 		},
-		mounted(param) {
-			// console.log(1111)
+		onLoad(param){
+			// console.log(param)
+			this.orderid = Number(param.orderid)
+		},
+		mounted() {
 			uni.setNavigationBarTitle({
 				title:uni.getStorageSync('name')
 			})
@@ -226,12 +193,10 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			handleLangChange(str){
-				// console.log(str)
-				uni.setLocale(str)
-				this.$i18n.locale = str
-				// this.$router.go(0)
-				this.drawerVisibletwo = false
+			handleshoppingAddress(){
+				uni.navigateTo({
+					url:'/pages/shippingAddress/shippingAddress'
+				})
 			},
 			handleshoppingAddress(){
 				uni.navigateTo({
@@ -240,6 +205,13 @@
 			},
 			handleClose(param){
 				this.drawerVisible = param
+			},
+			handleLangChange(str){
+				// console.log(str)
+				uni.setLocale(str)
+				this.$i18n.locale = str
+				this.drawerVisibletwo = false
+				//this.$router.go(0) 
 			},
 			handleshopping(){
 				uni.navigateTo({
@@ -311,20 +283,28 @@
 					url:'/pages/purchase-history/purchase-history'
 				})
 			},
-			login() {
+			async login() {
 				let self = this
-				this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member')
+				await this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member')
 					.then(res => {
-						console.log('登录状态',res)
+						// console.log('登录状态',res)
 						const {
 							status,
 							result: {
 								avatar,
 								nickname,
-								adstatus
+								adstatus,
+								mobile
 							}
 						} = res
+						uni.setStorageSync('mobile',mobile)
 						self.username = nickname
+						// console.log('登录状态',res)
+						if (adstatus == 0) {
+							self.centerDialogVisible = false
+						} else {
+							self.centerDialogVisible = true
+						}
 						if (status == 100) {
 							self.$message({
 								message: this.$t('home.loginstatus'),
@@ -342,22 +322,6 @@
 						console.log(err)
 					})
 
-				const {
-					userinfo
-				} = uni.getStorageSync('tokenArray')
-				let array = {
-					'userid': userinfo
-				}
-			},
-			getdatail(res) {
-				// const lastarr = res[res.length -1]
-				// // console.log(lastarr)
-				const {
-					id,
-					index
-				} = res
-				this.todatail = res
-				this.index = index
 			},
 			logOff() {
 				this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.logout')
@@ -369,36 +333,21 @@
 					url: '/pages/userLogin/userLogin'
 				})
 			},
+			showDrawer() {
+				// console.log(111)
+				this.drawerVisible = !this.drawerVisible;
+			},
+			showDrawerleft() {
+				this.drawerVisibletwo = !this.drawerVisibletwo;
+			},
+			handleDrawerClose() {
+				this.isblock = false
+			},
 			changeStatus() {
 				let self = this
 				self.isCollapse = !self.isCollapse
 				self.disable = !self.disable
 				self.classp = !self.classp
-			},
-			showDrawer() {
-				// console.log(111)
-				this.drawerVisible = !this.drawerVisible;
-			},
-			toggleFullscreen() {
-				const element = document.documentElement; // 获取整个文档的根元素
-				// console.log(element)
-				if (element.requestFullscreen) {
-					// 兼容不同浏览器的API调用方式
-					element.requestFullscreen();
-				} else if (element.mozRequestFullScreen) { // Firefox
-					element.mozRequestFullScreen();
-				} else if (element.webkitRequestFullscreen) { // Chrome, Safari和Opera
-					element.webkitRequestFullscreen();
-				} else if (element.msRequestFullscreen) { // IE/Edge
-					element.msRequestFullscreen();
-				}
-			},
-			showDrawerleft() {
-				this.drawerVisibletwo = !this.drawerVisibletwo;
-				// this.isblock = true
-			},
-			handleDrawerClose() {
-				this.isblock = false
 			},
 			getScreenWidth() {
 				this.screenWidth = window.innerWidth;
@@ -424,21 +373,12 @@
 					}
 				}
 			},
-			handleOptionChange(option) {
-				if (option === 'option1') {
-					this.option2 = !this.option1; // 关闭选项2并开启选项1
-				} else if (option === 'option2') {
-					this.option1 = !this.option2; // 关闭选项1并开启选项2
-				}
-				this.option1 == true ? (this.baColr = '#F2F2F2', this.hColr = '#fff', this.footbg = '#FAFAFA', this
-					.topColor = '#fff', this.drawbg = '#fff') : (this.baColr = '#1F2431', this.hColr = '#7A6FBE', this
-					.footbg = '#323A4E',
-					this.topColor = '#7A6FBE', this.drawbg = '#2A3142')
-			},
 		}
 	}
 </script>
 <style>
+	
+	
 	.content{
 		/* position: fixed; */
 		width: 100%;
@@ -584,6 +524,7 @@
 			display: block !important;
 		}
 
+		
 		.asos,
 		.fullsc,
 		.placeholder {

@@ -243,7 +243,7 @@
 							uni.setStorageSync('email', email)
 							// uni.setStorageSync('mlevel',mlevel)
 							_this.childrenordermoney = childrenordermoney
-							_this.commissionmoney = commissionmoney
+							_this.commissionmoney = credit5
 							_this.flevelchildrennum = flevelchildrennum
 							_this.typesArray = alllevelmes
 							_this.joiningDate = jointime

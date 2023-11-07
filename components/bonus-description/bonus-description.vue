@@ -25,7 +25,7 @@
 								</div>
 							</el-select>
 						</div>
-						<div class="year">
+						<!-- <div class="year">
 							<el-select v-model="lyear" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium">
 								<div v-for="(item,index) in yearArr">
 									<el-option :label="item" :value="item"></el-option>
@@ -38,7 +38,7 @@
 									<el-option :label="o" :value="o"></el-option>
 								</div>
 							</el-select>
-						</div>
+						</div> -->
 						<div class="sumbit">
 							<el-button type="primary" size="medium" @tap="handleSelect">{{$t('purse.WithdrawalStatus')}}</el-button>
 						</div>
@@ -129,8 +129,8 @@
 				idStatus:true,
 				fmouth: '',
 				fyear: '',
-				lmouth: '',
-				lyear: '',
+				// lmouth: '',
+				// lyear: '',
 				yearArr: [],
 				tableData:[],
 				account:'',
@@ -183,14 +183,14 @@
 				const mouthNew = current.getMonth()
 				this.fmouth = mouthNew + 1
 				this.fyear = yearNew
-				this.lmouth = mouthNew + 1
-				this.lyear = yearNew
+				// this.lmouth = mouthNew + 1
+				// this.lyear = yearNew
 			},
 			handleCustom(){
 				this.$print(this.$refs.print)
 			},
 			getbonusInfo(){
-				let query = '&syear='+this.fyear+'&smonth='+this.fmouth+'&eyear='+this.lyear+'&emonth='+this.lmouth+'&page='+this.currentPage+'&pagesize='+this.pageSize
+				let query = '&syear='+this.fyear+'&smonth='+this.fmouth+'&page='+this.currentPage+'&pagesize='+this.pageSize
 				let _this = this
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc.bonusdesc'+query)
 					.then(res=>{

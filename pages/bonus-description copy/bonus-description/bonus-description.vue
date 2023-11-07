@@ -1,11 +1,12 @@
 <template>
 	<view class="content">
 		<el-container>
+
 			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
-				 style="">
+				@select="handleSelect" style="">
+				<div class="userLo">{{name}}</div>
 				<!-- <image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image> -->
 								<!-- <image src="../../static/img/favicon.png" v-else class="userLogo"></image> -->
-				<div class="userLo">{{name}}</div>
 				<el-menu-item index="1" @tap="handleperson">
 					<i class="el-icon-menu"></i>
 					<span slot="title">{{$t('menu.home')}}</span>
@@ -125,28 +126,64 @@
 							Mode</span><br /></el-row>
 					<el-row><el-switch v-model="option2" @change="handleOptionChange('option2')"></el-switch><span>Dark
 							Mode</span></el-row> -->
-							<el-radio-group v-model="radio"  @input="handleLangChange" >
-							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="en"><b>{{$t('locale.en')}}</b></el-radio></div>
-							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hans"><b>{{$t('locale.zhHans')}}</b></el-radio></div>
-							    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hant"><b>{{$t('locale.zhHant')}}</b></el-radio></div>
-							</el-radio-group>
+					<el-radio-group v-model="radio"  @input="handleLangChange" >
+					    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="en"><b>{{$t('locale.en')}}</b></el-radio></div>
+					    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hans"><b>{{$t('locale.zhHans')}}</b></el-radio></div>
+					    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hant"><b>{{$t('locale.zhHant')}}</b></el-radio></div>
+					</el-radio-group>
 				</el-drawer>
 				<div class="ableta">
 					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
-					<block v-if="transmit==16">
+					<!-- <div v-if="index=='1'" style="width: 100%;"> -->
+						<bonus-description />
+					<!-- </div> -->
+					<!-- <div v-else-if="index=='2-1'">
+						<wallet-records />
+					</div> -->
+					<!-- <div v-else-if="index=='2-2'">
+						<withdraw-money @changekyc="changekyc" @wmindex="wmindex" />
+					</div>
+					<div v-else-if="index=='2-3'">
+						<withdrawal-status />
+					</div>
+					<div v-else-if="index=='2-4'">
+						<bonus-description />
+					</div>
+					<div v-else-if="index=='3'">
+						<reseller-registration :nodeid='nodeid' @handlereg="handlereg" />
+					</div>
+					<div v-else-if="index=='4-1'">
+						<product-purchase @godatail="getdatail" />
+					</div>
+					<div v-else-if="index=='4-2'">
+						<purchase-history />
+					</div>
+					<div v-else-if="index=='4-3'">
+						<product-detail :todatail='todatail' @getresrt="newindex" />
+					</div>
+					<div v-else-if="index=='5-1'">
+						<performance-reports />
+					</div>
+					<div v-else-if="index=='5-2'">
+						<member-tree />
+					</div>
+					<div v-else-if="index=='6'">
+						<binary-tree @indexChange="getIndex" />
+					</div>
+					<div v-else-if="index=='7'">
+						<login-password />
+					</div>
+					<div v-else-if="index=='8'">
+						<wallet-password />
+					</div>
+					<div v-else-if="index=='2-5'">
+						<know-yourCustomer @kycindex="kycindex" />
+					</div>
+					<div v-else-if="index=='10'">
 						<announcement-table />
-					</block>
-					<block v-else-if="transmit==15">
-						<binary-tree/>
-					</block>
-					<block v-else-if="transmit==14">
-						<shippingAddress/>
-					</block>
-					<block v-else-if="transmit==13">
-						<bonus-description/>
-					</block>
+					</div> -->
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
 					<div class="footer">{{footesr}}</div>
@@ -157,30 +194,13 @@
 </template>
 
 <script>
-	import AnnouncementTable from '@/components/announcement-table/announcement-table.vue'
-	import BinaryTree from '@/components/binary-tree/binary-tree.vue'
-	import ShippingAddress from '@/components/shippingAddress/shippingAddress.vue'
-	import BonusDescription from '@/components/bonus-description/bonus-description.vue'
-	import GenerateOrder from '@/components/generate-order/generate-order.vue'
-	import homepagedatail from '@/components/homepage-datail/homepage-datail.vue'
+	import BinaryTree from '@/components/binary-tree/binary-tree.vue';
 	export default {
-		props:{
-			transmit:{
-				type:Number,
-				default:0
-			},
-		},
 		components: {
-			AnnouncementTable,
-			BinaryTree,
-			ShippingAddress,
-			BonusDescription,
-			GenerateOrder,
-			homepagedatail
+			BinaryTree
 		},
 		data() {
 			return {
-				orderid:this.orderid,
 				footesr:uni.getStorageSync('footer'),
 				name:uni.getStorageSync('name'),
 				isCollapse: false,
@@ -191,9 +211,9 @@
 				drawerSize: '60%',
 				screenWidth: 0,
 				index: '1',
+				classp: true,
 				option1: true,
 				option2: false,
-				classp: true,
 				isblock: false,
 				baColr: '#F2F2F2',
 				hColr: '#FFFFFF',
@@ -208,10 +228,10 @@
 			}
 		},
 		mounted(param) {
-			// console.log(1111)
 			uni.setNavigationBarTitle({
 				title:uni.getStorageSync('name')
 			})
+			// console.log(1111)
 			this.login()
 			// console.log(uni.getStorageSync('tokenArray'))
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
@@ -226,13 +246,6 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			handleLangChange(str){
-				// console.log(str)
-				uni.setLocale(str)
-				this.$i18n.locale = str
-				// this.$router.go(0)
-				this.drawerVisibletwo = false
-			},
 			handleshoppingAddress(){
 				uni.navigateTo({
 					url:'/pages/shippingAddress/shippingAddress'
@@ -240,6 +253,13 @@
 			},
 			handleClose(param){
 				this.drawerVisible = param
+			},
+			handleLangChange(str){
+				// console.log(str)
+				uni.setLocale(str)
+				this.$i18n.locale = str
+				this.drawerVisibletwo = false
+				//this.$router.go(0) 
 			},
 			handleshopping(){
 				uni.navigateTo({
@@ -311,11 +331,11 @@
 					url:'/pages/purchase-history/purchase-history'
 				})
 			},
-			login() {
+			async login() {
 				let self = this
-				this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member')
+				await this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member')
 					.then(res => {
-						console.log('登录状态',res)
+						// console.log('登录状态',res)
 						const {
 							status,
 							result: {
@@ -434,6 +454,12 @@
 					.topColor = '#fff', this.drawbg = '#fff') : (this.baColr = '#1F2431', this.hColr = '#7A6FBE', this
 					.footbg = '#323A4E',
 					this.topColor = '#7A6FBE', this.drawbg = '#2A3142')
+			},
+			handleSelect(index) {
+				// console.log(index);
+				let self = this
+				self.index = index
+				this.drawerVisible = false
 			},
 		}
 	}

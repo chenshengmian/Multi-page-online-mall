@@ -5,12 +5,13 @@
 				<span>{{$t('menu.ewalletwithdrawals')}}</span>
 			</div>
 			<div style="font-size: 26rpx;text-decoration: underline;">{{$t('withdrawal.accountSummary')}}</div>
-			<el-row>
+			<!-- <el-row>
 				<el-col :span="elleft">{{$t('withdrawal.cashPointsBalance')}}</el-col>
 				<el-col :span="elright">{{credit2}}</el-col>
-			</el-row>
+			</el-row> -->
 			<el-row>
-				<el-col :span="elleft">{{$t('withdrawal.transferableBalance')}}</el-col>
+				<!-- <el-col :span="elleft">{{$t('withdrawal.transferableBalance')}}</el-col> -->
+				<el-col :span="elleft">{{$t('withdrawal.cashPointsBalance')}}</el-col>
 				<el-col :span="elright">{{credit5}}</el-col>
 			</el-row>
 			<!-- <el-row>

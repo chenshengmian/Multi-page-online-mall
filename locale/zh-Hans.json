@@ -249,5 +249,9 @@
 	"reg.Email":"邮箱验证码错误！",
 	"home.agree":"同意",
 	"home.agreement":"协议",
-	"home.Finishreview":"完成查看"
+	"home.Finishreview":"完成查看",
+	"reg.Referrer":"推荐人ID:",
+	"reg.Node":"节点ID:",
+	"tree.Fivedisplayed":"显示五层",
+	"tree.all":"显示全部"
 }

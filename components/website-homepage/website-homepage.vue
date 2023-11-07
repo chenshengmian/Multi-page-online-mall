@@ -70,9 +70,11 @@
 					<!-- <el-tag type="danger">个性推荐</el-tag> -->
 					<!-- </div> -->
 					<el-empty :image-size="200" v-show="prounddatastatus"></el-empty>
-					<el-row :gutter="24" v-show="!prounddatastatus" style="width: 100%;">
-						<el-col :span="span" v-for="item in prounddata">
-							<el-card :body-style="{ padding: '20px' }" shadow="never"
+					<!-- <el-row :gutter="24" v-show="!prounddatastatus" style="width: 100%;"> -->
+						<!-- <el-col :span="span" > -->
+						<div class="allcards">
+						<div class="cards" v-for="item in prounddata" v-show="!prounddatastatus" >
+							<el-card shadow="never"
 								@click.native="handelDetail(item.id)">
 								<div style="display: flex;position: relative;">
 									<img :src="item.thumb" class="image">
@@ -92,8 +94,10 @@
 									</div>
 								</div>
 							</el-card>
-						</el-col>
-					</el-row>
+							</div>
+							</div>
+						<!-- </el-col> -->
+					<!-- </el-row> -->
 					<div class="pagination" v-show="!prounddatastatus">
 						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
 							:current-page="currentPage" :page-sizes="[6, 9, 12, 24]" :page-size="pageSize"
@@ -537,8 +541,8 @@
 	}
 
 	.image {
-		width: 400rpx;
-		height: 400rpx;
+		width: 250rpx;
+		height: 250rpx;
 		display: block;
 	}
 
@@ -641,8 +645,20 @@
 		justify-content: center;
 		margin: 35rpx 0rpx;
 	}
+	
+	.allcards{
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-gap: 50rpx;
+	}
 
 	@media screen and (max-width: 990px) {
+		.allcards{
+			display: grid;
+			grid-template-columns: 1fr;
+			grid-gap: 50rpx;
+		}
 		/deep/.el-carousel__container {
 			height: 300rpx;
 		}
@@ -652,7 +668,7 @@
 		}
 
 		.image {
-			width: 40%;
+			width: 200rpx;
 			height: 200rpx;
 			display: block;
 		}

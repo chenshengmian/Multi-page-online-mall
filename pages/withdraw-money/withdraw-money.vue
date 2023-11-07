@@ -3,7 +3,7 @@
 		<el-container>
 
 			<el-menu  class="el-menu-vertical-demo asos" :collapse="isCollapse"
-				@select="handleSelect" style="">
+				 style="">
 				<div class="userLo">{{name}}</div>
 				<!-- <image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image> -->
 								<!-- <image src="../../static/img/favicon.png" v-else class="userLogo"></image> -->
@@ -446,12 +446,6 @@
 					.footbg = '#323A4E',
 					this.topColor = '#7A6FBE', this.drawbg = '#2A3142')
 			},
-			// handleSelect(index) {
-			// 	// console.log(index);
-			// 	let self = this
-			// 	self.index = index
-			// 	this.drawerVisible = false
-			// },
 		}
 	}
 </script>

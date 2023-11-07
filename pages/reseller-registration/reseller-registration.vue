@@ -136,7 +136,7 @@
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
 					<!-- <div v-if="index=='1'" style="width: 100%;"> -->
-					<reseller-registration :nodeid='nodeid' @handlereg="handlereg" />
+					<reseller-registration :nodeid='nodeid' :left='left' :right='right' @handlereg="handlereg" />
 					<!-- </div> -->
 					<!-- <div v-else-if="index=='2-1'">
 						<wallet-records />
@@ -220,6 +220,8 @@
 				topColor: '#FFFFFF',
 				drawbg: '#FFFFFF',
 				nodeid: '',
+				left:'',
+				right:'',
 				todatail: {},
 				username: '',
 				width: '30%',
@@ -239,6 +241,7 @@
 		onLoad(param) {
 			// console.log(param)
 			this.nodeid = param.nodeid
+			this.left = param.left
 		},
 		// onShow() {
 		// 	this.login()

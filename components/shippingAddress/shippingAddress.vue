@@ -9,7 +9,7 @@
 				<el-empty v-show="addressStatus" :image-size="200" :description="$t('address.nodeliveryaddress')"></el-empty>
 				<!-- 添加或者修改收货地址 -->
 				<el-dialog :title="title" :visible.sync="dialogFormVisible" :modal="false" :width="width"
-					@close="handleClose">
+					@close="handleClose" :close-on-click-modal="false" >
 					<el-form :model="ruleForm" :label-position="labelPosition" :rules="rules" ref="ruleForm" >
 						<el-form-item :label="$t('address.Contactnumber')" prop="mobile" :label-width="formLabelWidth">
 							<el-input v-model="ruleForm.mobile" autocomplete="off"></el-input>
@@ -290,6 +290,9 @@
 </script>
 
 <style scoped>
+	.el-dialog{
+		z-index: 9999999;
+	}
 	.el-card {
 		font-size: 26rpx;
 	}

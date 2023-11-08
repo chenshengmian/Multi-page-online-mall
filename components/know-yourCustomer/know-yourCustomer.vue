@@ -46,8 +46,8 @@
 					<el-input v-model="ruleForm.email"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" @tap="submitForm('ruleForm')" size="small" v-show="kycStatus">{{$t('withdrawal.revise')}}</el-button>
-					<el-button type="primary" @tap="submitForm('ruleForm')" size="small" v-show="!kycStatus">{{$t('withdrawal.Certify')}}</el-button>
+					<el-button type="primary" @tap="submitForm('ruleForm')" size="small" v-if="kycStatus">{{$t('withdrawal.revise')}}</el-button>
+					<el-button type="primary" @tap="submitForm('ruleForm')" size="small" v-else>{{$t('withdrawal.Certify')}}</el-button>
 					<!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
 				</el-form-item>
 			</el-form>

@@ -267,7 +267,7 @@
 				uni.setLocale(str)
 				this.$i18n.locale = str
 				this.drawerVisibletwo = false
-				//this.$router.go(0) 
+				//this.$router.go(0)   
 			},
 			handleshoppings(){
 				uni.navigateTo({

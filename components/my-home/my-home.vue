@@ -52,11 +52,13 @@
 				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{childrenordermoney}}
 				</div>
 			</el-card>
-			<el-card class="box-card four">
-				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
-					{{$t('home.commission')}}
-				</div>
-				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{commissionmoney}}
+			<el-card class="box-card four" >
+				<div style="cursor: pointer;" @tap="handleBous">
+					<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
+						{{$t('home.commission')}}
+					</div>
+					<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{commissionmoney}}
+					</div>
 				</div>
 			</el-card>
 			<el-card class="box-card wu">
@@ -174,6 +176,11 @@
 			},
 		},
 		methods: {
+			handleBous(){
+				uni.navigateTo({
+					url:'/pages/bonus-description/bonus-description'
+				})
+			},
 			handleAdstatus(type) {
 				// console.log(type)
 				const array = {

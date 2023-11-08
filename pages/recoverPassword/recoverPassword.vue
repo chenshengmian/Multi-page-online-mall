@@ -193,29 +193,34 @@
 					this.typeStatus1 = 'primary'
 					this.typeStatus2 = 'info'
 					this.typeStatus3 = 'info'
+					uni.setStorageSync('textlang',2)
 				} else if (lan == 'zh-Hans') {
 					this.typeStatus1 = 'info'
 					this.typeStatus2 = 'primary'
 					this.typeStatus3 = 'info'
+					uni.setStorageSync('textlang',0)
 				} else {
 					this.typeStatus1 = 'info'
 					this.typeStatus2 = 'info'
 					this.typeStatus3 = 'primary'
+					uni.setStorageSync('textlang',1)
 				}
 				uni.setLocale(lan)
 				this.$i18n.locale = lan
-				// //this.$router.go(0) 
+				// //this.$router.go(0)   
 			},
 			names() {
 				let _this = this
-				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner')
+				let textlang =  uni.getStorageSync('textlang')
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner&textlang='+textlang)
 					.then(res => {
 						console.log(res)
 						const {
 							result: {
 								shopmes: {
 									name,
-									copyrighttext
+									copyrighttext,
+									logo
 								}
 							}
 						} = res
@@ -225,6 +230,7 @@
 						this.footer = copyrighttext
 						uni.setStorageSync('footer', copyrighttext)
 						uni.setStorageSync('name', name)
+						uni.setStorageSync('logo',logo)
 						_this.name = name
 					})
 					.catch(err => {
@@ -236,9 +242,10 @@
 				_this.$refs[formName].validate((valid) => {
 					if (valid) {
 						console.log(_this.rogerThat)
+						let textlang =  uni.getStorageSync('textlang')
 						uni.request({
 							url: config.https +
-								'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.handlenewPass',
+								'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.handlenewPass&textlang='+textlang,
 							method: 'post',
 							data: _this.ruleForm,
 							success(res) {

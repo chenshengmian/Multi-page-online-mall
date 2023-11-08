@@ -40,10 +40,10 @@ request.interceptors.request.use(
 				})
 			
 		}
-		// uni.showLoading({
-		// 	title: '加载中...',
-		// 	mask: true,
-		// })
+		config.params = {
+		    ...config.params,
+		    textlang: uni.getStorageSync('textlang'), // 你的额外参数的值
+		};
 		Loading.service();
 		
 		return config

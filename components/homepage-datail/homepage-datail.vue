@@ -251,9 +251,9 @@
 	.el-button--danger{
 		position: absolute;
 		bottom: 0;
-		right: 0;
+		right: 13%;
 		/* bottom: 100px; */
-		/* width: 84%; */
+		width: 10%;
 		/* margin-top: 10rpx; */
 	}
 	.time {
@@ -470,9 +470,10 @@
 	}
 
 	@media screen and (max-width: 990px) {
-		/* .el-button--danger{
-			width: 78% !important;
-		} */
+		.el-button--danger{
+			width: 30% !important;
+			right: 0;
+		}
 		.homep ,.el-footer{
 			width: 100% !important;
 		}

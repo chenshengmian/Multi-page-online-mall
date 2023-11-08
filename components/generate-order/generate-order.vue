@@ -131,9 +131,10 @@
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.order.detail&orderid=' + this
 						.orderid)
 					.then(res => {
-						// console.log(res)
+						console.log(res)
 						const { status,result:{list:{gmess,addressmes,goodsprice,price,ordersn,statusstr,timestr} }} = res
 						_this.$nextTick(function(){
+						if(res.status == 1){
 							_this.timestr = timestr
 							_this.shopping = gmess
 							_this.ordersn = ordersn
@@ -145,15 +146,29 @@
 							_this.mobile = addressmes.mobile
 							_this.address = addressmes.address
 							_this.showSataus = false
+						}else if(res.status == 0){
+							// const { result:{ message }} = res
+							// _this.$notify({
+							//     title: 'mistake',
+							//     message: message,
+							//     duration: 0
+							// });
+						}
+							
 						})
 					})
 					.catch(err => {
 						console.log(err)
+						this.$notify({
+						    title: 'mistake',
+						    message: err,
+						    duration: 0
+						});
 					})
 					
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.order.bankmes')
 					.then(res=>{
-						console.log(res)
+						// console.log(res)
 						const { result:{sysbankcard,sysbankname,sklogo} } = res
 						_this.sysbankcard = sysbankcard
 						_this.sysbankname = sysbankname

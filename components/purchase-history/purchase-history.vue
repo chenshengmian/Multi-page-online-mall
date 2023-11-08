@@ -25,21 +25,30 @@
 								</div>
 							</el-select>
 						</div>
-						<div class="year">
+						<!-- <div class="year">
 							<el-select v-model="member" slot="prepend" :placeholder="$t('purse.Pleaseselect')"  size="medium">
 								<div v-for="(item,index) in memberArr">
 									<el-option :label="item" :value="++index"></el-option>
 								</div>
 							</el-select>
-						</div>
+						</div> -->
 					</div>
 					<div class="sumbit">
 						<el-button type="primary" size="medium" @tap="handleSelect">{{$t('purse.submit')}}</el-button>
 					</div>
 				</div>
-				<el-table :data="tableData" class="custom-table" @row-click="hanldeDeatils" border v-if="idStatus">
+				<el-table :data="tableData" class="custom-table" @row-click="hanldeDeatils" border v-if="idStatus" style="margin-top: 30rpx;">
 
 					<el-table-column prop="goods[0].goods[0].title" :label="$t('product.Gradename')" align="center">
+					</el-table-column>
+					<el-table-column prop="goods[0].goods[0].thumb" :label="$t('history.thumb')" align="center">
+						<template slot-scope="scope">
+							 <el-image 
+							    style="width: 100px; height: 100px"
+							    :src="scope.row.goods[0].goods[0].thumb" 
+							    >
+							  </el-image>
+						</template>
 					</el-table-column>
 					<el-table-column prop="ordersn" :label="$t('product.Ordernumber')" align="center">
 					</el-table-column>
@@ -77,6 +86,13 @@
 							<div @click="hanldeDeatils(data)">
 								<div>{{data.goodtype.name}}</div>
 								<div><b>{{data.ordersn}}</b></div>
+								<div>
+									<el-image
+									   style="width: 100px; height: 100px"
+									   :src="data.goods[0].goods[0].thumb" 
+									   >
+									 </el-image>
+								</div>
 								<div style="font-size: 25rpx;color: #afafaf;">{{data.createtime}}</div>
 								<div style="display: flex;justify-content: space-between;">
 									<div style="color: red;"><span style="font-size: 25rpx;">MYR</span> {{data.price}}</div>
@@ -114,7 +130,7 @@
 				memberArr: [this.$t('product.MemberOrder'), this.$t('product.Helporders')],
 				yearArr: [],
 				tableData: [],
-				member: '',
+				member: 1,
 				counttotal: 0,
 				currentPage: 1, // 当前页码
 				pageSize: uni.getStorageSync('pageSize'), // 每页显示的条数
@@ -161,8 +177,8 @@
 				const yearNew = current.getFullYear()
 				this.yearArr = [yearNew - 5, yearNew - 4, yearNew - 3, yearNew - 2, yearNew - 1, yearNew]
 				const mouthNew = current.getMonth()
-				this.mouth = this.mouthArr[mouthNew]
-				this.year = yearNew
+				// this.mouth = this.mouthArr[mouthNew]
+				// this.year = yearNew
 			},
 			// 处理每页显示条数变化
 			handleSizeChange(val) {

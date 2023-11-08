@@ -105,22 +105,26 @@
 					this.typeStatus1 = 'primary'
 					this.typeStatus2 = 'info'
 					this.typeStatus3 = 'info'
+					uni.setStorageSync('textlang',2)
 				}else if(lan=='zh-Hans'){
 					this.typeStatus1 = 'info'
 					this.typeStatus2 = 'primary'
 					this.typeStatus3 = 'info'
+					uni.setStorageSync('textlang',0)
 				}else{
 					this.typeStatus1 = 'info'
 					this.typeStatus2 = 'info'
 					this.typeStatus3 = 'primary'
+					uni.setStorageSync('textlang',1)
 				}
 				uni.setLocale(lan)
 				this.$i18n.locale = lan
-				// //this.$router.go(0) 
+				// //this.$router.go(0)   
 			},
 			names(){
 				let _this = this
-				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner')
+				let textlang =  uni.getStorageSync('textlang')
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner&textlang='+textlang)
 					.then(res=>{
 						// console.log(res)
 						const {status,result:{shopmes:{name,copyrighttext,logo}}} = res
@@ -142,8 +146,9 @@
 			},
 			getUserInfo() {
 				let self = this
+				let textlang =  uni.getStorageSync('textlang')
 				uni.request({
-					url: config.https + '/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account',
+					url: config.https + '/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account&textlang='+textlang,
 					method: 'post',
 					success(res) {
 						const {
@@ -175,16 +180,10 @@
 			},
 			submitForm() {
 				let self = this
-				// const keys = CryptoJS.enc.Utf8.parse(config.key)
-				// const dataString = JSON.stringify(this.formLabelAlign)
-				// const encryptedData = CryptoJS.AES.encrypt(dataString, keys).toString();
-				// console.log(encryptedData)
-				// const transferData = {
-				// 	'data':encryptedData
-				// }
+				let textlang =  uni.getStorageSync('textlang')
 				uni.request({
 					url: config.https +
-						'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.login',
+						'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.login&textlang='+textlang,
 					method: 'post',
 					data: this.formLabelAlign,
 					success(res) {

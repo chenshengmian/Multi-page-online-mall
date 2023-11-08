@@ -85,9 +85,9 @@
 						<el-col :span="11">
 							<el-input class="codes" v-model="code" :placeholder="$t('enroll.verificationcode')"></el-input>
 						</el-col>
-						    <el-col class="line" :span="2"></el-col>
-						<el-col :span="11" style="display: flex;justify-content: end;margin-top: 10rpx;">
-							<el-button class="sands"  @tap="sendEamil" :loading="sendStatus">{{sand}}<span v-show="sendStatus">s</span></el-button>
+						    <!-- <el-col class="line" :span="2"></el-col> -->
+						<el-col :span="11" style="margin-top: 10rpx;margin-left: 30rpx;">
+							<el-button style="height: 40px; display: inline-block;"  class="sands"  @tap="sendEamil" :loading="sendStatus">{{sand}}<span v-show="sendStatus">s</span></el-button>
 						</el-col>
 						<!-- </div> -->
 					</div>
@@ -385,9 +385,10 @@
 					// console.log(self.ruleForm)
 					self.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.reg',self.ruleForm)
 						.then(res=>{
-							const  {status,result:{message}} = res
+							const  {status} = res
 							// console.log(res)
 							if(status==0){
+								const  {result:{message}} = res
 								self.$message(message)
 							}else{
 								const { userinfo } = uni.getStorageSync('tokenArray')

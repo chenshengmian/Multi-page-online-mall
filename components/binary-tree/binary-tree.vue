@@ -1,12 +1,49 @@
 <template>
 	<view>
-		<el-card class="box-card">
-			<div style="display: flex;justify-content: end;">
-				<el-button @tap="handlefour" size="mini">{{$t('tree.Fivedisplayed')}}</el-button>
+		<el-card class="box-card" style="position: relative;">
+			<div v-if="treeStatuss">
+				<div>
+				    <span><i class="el-icon-caret-left"></i> {{$t('tree.Left')}}:{{Left}}</span>
+				    <el-divider direction="vertical"></el-divider>
+				    <span><i class="el-icon-caret-right"></i> {{$t('tree.Right')}}:{{Right}}</span>
+				    <el-divider direction="vertical"></el-divider>
+				    <span class="huan"><i class="el-icon-share"></i> {{$t('tree.Total')}}:{{Total}}</span>
+				  </div>
+			</div>
+			<div style="display: flex;justify-content: end;display: -webkit-flex; -webkit-justify-content: flex-end; " v-if="treeStatuss">
+				<!-- <block v-for="(item,index) in nodeArr">
+					<el-button @tap="handlefour" size="mini">{{item.nickname}}</el-button>
+				</block> -->
+				<el-select v-model="value" :placeholder="$t('purse.Pleaseselect')" @change="handleChange">
+				    <el-option
+				      v-for="item in nodeArr"
+				      :key="item.nickname"
+				      :label="item.nickname"
+				      :value="item.id">
+				    </el-option>
+				  </el-select>
+				<el-button @tap="handlefour" size="mini" style="margin-left: 20rpx;">{{$t('tree.Fivedisplayed')}}</el-button>
 				<el-button @tap="handleAll" size="mini">{{$t('tree.all')}}</el-button>
 			</div>
-			<l-echart ref="chart" style="height: 78vh;width: 100%;max-width: 1366px;" v-if="treeStatus"></l-echart>
-			<el-empty :description="$t('tree.notpurchaseballs')" v-else></el-empty>
+			<div>
+				<div>
+					<l-echart ref="chart" style="height: 71.5vh;width: 100%;max-width: 1366px;" v-if="treeStatus"></l-echart>
+					<el-empty :description="$t('tree.notpurchaseballs')" v-else></el-empty>
+				</div>
+				<div style="position: absolute;right: 20rpx;top: 120px;">
+				<div  v-for="item in typesArray" style="font-size: 28rpx;margin-top: 20rpx;width: 300px;z-index: 9999;background-color: white;" v-show="treeStatuss"  v-if="typeSatatus">
+					<div class="bonustype" >
+						<div v-show="levelName">{{item.levelname_en}}</div>
+						<div v-show="!levelName">{{item.levelname}}</div>
+						<div><b>{{item.bonus}}</b> <i style="margin-left: 10rpx;color:#b36d61" class="el-icon-success"
+								v-if="item.bonus"></i> 
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+			
+			
 		</el-card>
 	</view>
 </template>
@@ -21,25 +58,39 @@
 		data() {
 			return {
 				treeStatus: true,
-				initialTreeDepthNum:4 
+				treeStatuss: false,
+				initialTreeDepthNum:4 ,
+				nodeArr:[],
+				value:'',
+				Total:0,
+				Right:0,
+				Left:0,
+				typesArray:[],
+				typeSatatus:true,
 			}
+		},
+		computed: {
+			levelName() {
+				if (uni.getLocale() == 'en') {
+					return true
+				} else {
+					return false
+				}
+			},
 		},
 		mounted() {
 			this.gets()
+			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
+			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
+		},
+		beforeDestroy() {
+			 window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods:{
-			 handleChartRender() {
-			      this.$refs.chart && this.$refs.chart.on('mousemove', params => {
-			        if (params.componentType === 'series') {
-			          this.showTooltip = true;
-			          this.tooltipLeft = params.event.offsetX;
-			          this.tooltipTop = params.event.offsetY;
-			          this.tooltipContent = '数值：' + params.value;
-			        } else {
-			          this.showTooltip = false;
-			        }
-			      })
-			    },
+			handleChange(){
+				// console.log(this.value)
+				this.gets(this.value)
+			},
 			handlefour(){
 				this.initialTreeDepthNum = 4
 				this.gets()
@@ -56,26 +107,36 @@
 						uni.setStorageSync('mlevel',mlevel)
 						self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.selectTree&nodeid='+nodeids)
 							.then(res=>{
-								const { result } = res
-								uni.setStorageSync('data', result)
-								this.$refs.chart.init(echarts, chart => {
+								console.log(res)
+								const { result:{tree,node,count,left,right,alllevelmes} } = res
+								self.Total = count
+								self.Right = right
+								self.typesArray = alllevelmes
+								self.Left = left
+								self.nodeArr = node
+								uni.setStorageSync('data', tree)
+								self.$refs.chart.init(echarts, chart => {
 										var data1 = uni.getStorageSync('data')
 										var mlevel = uni.getStorageSync('mlevel')
 										
 										// console.log(mlevel)
 										if (data1[0] == undefined) {
 											self.treeStatus = false
+											self.treeStatuss = false
+										}else{
+											self.treeStatus = true
+											self.treeStatuss = true
 										}
 										console.log(data1[0])
 										var option = {
-											tooltip: {
-												trigger: 'item',
-												formatter: function(params) {
-													console.log(params)
-													var node = params.data;
-													return node.nickname;
-												}
-											},
+											// tooltip: {
+											// 	trigger: 'item',
+											// 	formatter: function(params) {
+											// 		console.log(params)
+											// 		var node = params.data;
+											// 		return node.nickname;
+											// 	}
+											// },
 											series: [{
 												type: 'tree',
 												initialTreeDepth: self.initialTreeDepthNum,
@@ -152,10 +213,10 @@
 													// self.$message('该节点的父节点还未注册！');
 												}
 											} else {
-												const { userinfo } = uni.getStorageSync('tokenArray')
-												if(userinfo == Number(params.data.userid)){
-													self.gets(params.data.id)
-												}
+												// const { userinfo } = uni.getStorageSync('tokenArray')
+												// if(userinfo == Number(params.data.userid)){
+												// 	self.gets(params.data.id)
+												// }
 											}
 											
 										})
@@ -172,8 +233,43 @@
 			},
 			getss(){
 				var self = this
-				
-			}
+			},
+			getScreenWidth() {
+				this.screenWidth = window.innerWidth;
+				if (this.screenWidth <= 990) {
+					this.initialTreeDepthNum = 2
+					this.typeSatatus = false
+				} else {
+					this.initialTreeDepthNum = 4
+					this.typeSatatus = true
+				}
+			},
+			handleResize() {
+				const newScreenWidth = window.innerWidth;
+				if (newScreenWidth !== this.screenWidth) {
+					this.screenWidth = newScreenWidth;
+					if (newScreenWidth <= 990) {
+						this.initialTreeDepthNum = 2
+						this.typeSatatus = false
+					} else {
+						this.initialTreeDepthNum = 4
+						this.typeSatatus = true
+					}
+				}
+			},
 		}
 	}
 </script>
+
+<style>
+	.bonustype {
+		display: flex;
+		justify-content: space-between;
+	}
+	@media screen and (max-width: 990px) {
+		.huan{
+			display: block;
+			margin-top: 20rpx;
+		}
+	}
+</style>

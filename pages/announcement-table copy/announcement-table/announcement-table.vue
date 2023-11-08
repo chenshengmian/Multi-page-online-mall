@@ -249,7 +249,7 @@
 				// console.log(str)
 				uni.setLocale(str)
 				this.$i18n.locale = str
-				//this.$router.go(0) 
+				//this.$router.go(0)   
 			},
 			handleshoppingAddress(){
 				uni.navigateTo({

@@ -45,17 +45,16 @@
 						<el-button type="primary" size="medium" @tap="handlechanginfo">{{$t('purse.submit')}}</el-button>
 					</div>
 				</div>
-				<el-table :data="tableData" class="custom-table" border v-if="idstatus">
-					<div v-if="idstatus">
+				<el-table :data="tableData" class="custom-table" border v-if="idstatus" style="margin-top: 20rpx;">
+					<!-- <div v-if="idstatus">
 						<el-table-column label="ID" width="40">
 							<template slot-scope="scope">
 								{{ (scope.$index+1)+(currentPage-1)*pageSize }}
 							</template>
 						</el-table-column>
-					</div>
-					<el-table-column prop="timestr" :label="$t('purse.date')" align="center">
-					</el-table-column>
-					<el-table-column prop="remark" :label="$t('purse.TransactionDescription')" align="center">
+					</div> -->
+					
+					<el-table-column prop="remark" :label="$t('purse.TransactionDescription')" align="center" width="650px">
 					</el-table-column>
 					<el-table-column prop="num" :label="$t('purse.Incoming')" align="center">
 					</el-table-column>
@@ -65,6 +64,8 @@
 							<div v-else-if="scope.row.credittype=='credit2'">{{$t('purse.Travelcredits')}}</div>
 							<div v-else>{{$t('purse.ProductPoints')}}</div>
 						</template>
+					</el-table-column>
+					<el-table-column prop="timestr" :label="$t('purse.date')" align="center">
 					</el-table-column>
 				</el-table>
 				<div  v-else> 
@@ -160,8 +161,8 @@
 				const yearNew = current.getFullYear()
 				this.yearArr = [yearNew - 5, yearNew - 4, yearNew - 3, yearNew - 2, yearNew - 1, yearNew]
 				const mouthNew = current.getMonth()
-				this.mouth = this.mouthArr[mouthNew]
-				this.year = yearNew
+				// this.mouth = this.mouthArr[mouthNew]
+				// this.year = yearNew
 			},
 			handlechanginfo() {
 				this.getuserinfo()
@@ -193,7 +194,7 @@
 							}
 						} = res
 						list.forEach(res=>{
-							res.timestr = res.timestr.substring(5,10)
+							res.timestr = res.timestr.substring(5,16)
 							var index = res.remark.indexOf("OPENID");
 							var result = res.remark.substring(0, index);
 							res.remark = result

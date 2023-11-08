@@ -34,6 +34,7 @@
 					class="custom-table"
 					border
 					v-if="idStatus"
+					style="margin-top: 20rpx;"
 				   >
 				   <block v-if="idStatus">
 					   <el-table-column label="ID" width="40">
@@ -186,8 +187,8 @@
 				const yearNew = current.getFullYear()
 				this.yearArr = [yearNew-5,yearNew-4,yearNew-3,yearNew-2,yearNew-1,yearNew]
 				const mouthNew = current.getMonth()
-				this.mouth = this.mouthArr[mouthNew]
-				this.year = yearNew
+				// this.mouth = this.mouthArr[mouthNew]
+				// this.year = yearNew
 			},
 			handlechanginfo(){
 				this.getuserinfo()

@@ -209,9 +209,16 @@
 			handleLangChange(str){
 				// console.log(str)
 				uni.setLocale(str)
+				if(str=='en'){
+					uni.setStorageSync('textlang',2)
+				}else if(str=='zh-Hans'){
+					uni.setStorageSync('textlang',0)
+				}else{
+					uni.setStorageSync('textlang',1)
+				}
 				this.$i18n.locale = str
 				this.drawerVisibletwo = false
-				//this.$router.go(0) 
+				//this.$router.go(0)   
 			},
 			handleshopping(){
 				uni.navigateTo({

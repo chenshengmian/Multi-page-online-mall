@@ -8,7 +8,7 @@
 						<!-- <el-button class="button" text>Operation button</el-button> -->
 					</div>
 				</template>
-				<div >
+				<div style="margin-top: 20rpx;">
 					<!-- <div style="font-size: 26rpx;margin-top: 20rpx;display: flex;justify-content: start;width: 260rpx;">{{$t('home.yearmonth')}}：</div> -->
 					<div class="searchs">
 						<div class="year">
@@ -60,20 +60,23 @@
 					</div>
 				</div>
 				<el-table :data="tableData"  v-if="idStatus" border>
-					<el-table-column label="ID" width="50">
+					<!-- <el-table-column label="ID" width="50">
 						<template slot-scope="scope">
 							{{ (scope.$index+1)+(currentPage-1)*pageSize }}
 						</template>
-					</el-table-column>
-					<el-table-column prop="createtimestr" :label="$t('purse.date')" align="center">
-					</el-table-column>
+					</el-table-column> -->
+					
 					<el-table-column prop="remark" :label="$t('purse.remark')" align="center">
 					</el-table-column>
-					<el-table-column prop="paystatusstr" :label="$t('purse.Paymentstatus')" align="center">
+					<!-- <el-table-column prop="paystatusstr" :label="$t('purse.Paymentstatus')" align="center">
+					</el-table-column> -->
+					<el-table-column prop="btypestr" :label="$t('purse.Rewardtype')" align="center"width="200px">
 					</el-table-column>
-					<el-table-column prop="btypestr" :label="$t('purse.Rewardtype')" align="center">
+					<el-table-column prop="price" :label="$t('purse.bonus')" align="center"width="200px">
 					</el-table-column>
-					<el-table-column prop="price" :label="$t('purse.bonus')" align="center">
+					<el-table-column prop="createtimestr" :label="$t('purse.date')" align="center"width="200px">
+					</el-table-column>
+					<el-table-column prop="paytime" :label="$t('purse.paytime')" align="center" width="200px">
 					</el-table-column>
 				</el-table>
 				<div  v-else>
@@ -86,16 +89,19 @@
 						<div><b>{{$t('purse.bonus')}}</b></div> -->
 					<!-- </el-card> -->
 					<block v-for="data in tableData">
-						<el-card shadow="never" class="text item">
-							<div>{{data.createtimestr}}</div>
-							<div>{{data.remark}}</div>
+						<el-card shadow="never" class="text item" style="margin-top: 20rpx;">
+							<div style="margin-top: 20rpx;">{{$t('purse.date')}}:{{data.createtimestr}}</div>
+							<div style="margin-top: 10rpx;">{{$t('purse.paytime')}}:{{data.paytime}}</div>
+							<div style="margin-top: 10rpx;">{{$t('purse.remark')}}:{{data.remark}}</div>
 							<!-- <div>{{data.paystatusstr}}</div> -->
-							<div>{{data.btypestr}}</div>
-							<div style="display: flex;justify-content: space-between;">
-								<div style="color: red;"><span style="font-size: 23rpx;">MYR</span> {{data.price}}</div>
+							<!-- <div>{{data.btypestr}}</div> -->
+							<div style="display: flex;justify-content: space-between;margin-top: 10rpx;">
+								<div style="color: red;">{{$t('purse.bonus')}}:<span style="font-size: 23rpx;">MYR</span> {{data.price}}</div>
 								<div>
-									<div v-if="data.paystatus==0"><el-link type="danger">{{data.paystatusstr}}</el-link></div>
-									<div v-else style="color: blueviolet;"><el-link>{{data.paystatusstr}}</el-link></div>
+									<div v-if="data.btype==0"><el-link type="danger">{{data.btypestr}}</el-link></div>
+									<div v-else-if="data.btype==1"><el-link type="success">{{data.btypestr}}</el-link></div>
+									<div v-else-if="data.btype==2"><el-link type="warning">{{data.btypestr}}</el-link></div>
+									<div v-else style="color: blueviolet;"><el-link>{{data.btypestr}}</el-link></div>
 								</div>
 							</div>
 						</el-card>
@@ -181,8 +187,8 @@
 				const yearNew = current.getFullYear()
 				this.yearArr = [yearNew - 2, yearNew - 1, yearNew]
 				const mouthNew = current.getMonth()
-				this.fmouth = mouthNew + 1
-				this.fyear = yearNew
+				// this.fmouth = mouthNew + 1
+				// this.fyear = yearNew
 				// this.lmouth = mouthNew + 1
 				// this.lyear = yearNew
 			},
@@ -240,6 +246,9 @@
 </script>
 
 <style>
+	/* .el-card div{
+		margin-top: 10rpx;
+	} */
 	/deep/.el-card__body{
 		padding-top: 0 !important;
 	}

@@ -267,7 +267,14 @@
 				uni.setLocale(str)
 				this.$i18n.locale = str
 				this.drawerVisibletwo = false
-				//this.$router.go(0) 
+				if(str=='en'){
+					uni.setStorageSync('textlang',2)
+				}else if(str=='zh-Hans'){
+					uni.setStorageSync('textlang',0)
+				}else{
+					uni.setStorageSync('textlang',1)
+				}
+				//this.$router.go(0)   
 			},
 			handleshoppings(){
 				uni.navigateTo({

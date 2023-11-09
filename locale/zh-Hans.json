@@ -258,5 +258,9 @@
 	"tree.Left":"左节点数",
 	"tree.Right":"右节点数",
 	"tree.Total":"总节点数",
-	"purse.paytime":"订单完成时间"
+	"purse.paytime":"订单完成时间",
+	"history.printing":"批量打印",
+	"history.Details":"订单详情",
+	"history.Printorder":"打印订单",
+	"history.selectorder":"请选择需要打印的订单"
 }

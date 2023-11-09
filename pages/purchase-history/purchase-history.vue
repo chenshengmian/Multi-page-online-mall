@@ -1,13 +1,67 @@
 <template>
 	<view class="content">
 		<el-container>
-			
+			<el-dialog :title="$t('history.Printorder')" :visible.sync="dialogVisible" width="50%" :close-on-click-modal="false">
+				<div ref="orderPrint" id="orderPrints">
+					<div style="display: flex;">
+						<div>
+							<el-image style="width: 120px; height: 120px"
+								:src="printImg">
+							</el-image>
+						</div>
+						<div style="margin-left: 30rpx;" v-html="header">
+							<!-- <div><b>TECHNO WELLNESS SDN BHD</b></div>
+							<div><b>202301034966 (1528889-H)</b></div>
+							<div><b>10-1 & 11-1, JALAN ASTAKA KU2/1A,</b></div>
+							<div><b>BANDAR BUKIT RAJA,</b></div>
+							<div><b>41050 KLANG, SELANGOR</b></div>
+							<div><b>TEL: 03-33588588</b></div> -->
+						</div>
 
+					</div>
+					<div style="margin: 60rpx 20rpx 60rpx 20rpx;">
+						<div>
+							<div style=" width: 100%;white-space: normal;"><b>INVOICE NUMBER：{{Ordernumber}}</b></div>
+							<div><b>DATE：{{data}}</b></div>
+							<hr style="border: 2px solid #000;">
+							<div><b>Billing Address：</b></div>
+							<div><b>{{address}}</b></div>
+							<div style="margin: 40rpx 0rpx;"><b>Tel：{{mobile}}</b></div>
+							<div style="margin: 40rpx 0rpx;;"><b>Attn：{{realname}}</b></div>
+							<el-table ref="singleTable" :data="tableDatas" highlight-current-row
+								@current-change="handleCurrentChange" :cell-style="columnStyle"
+								highlight-current-row
+								:header-cell-style="{background:'#BEC0BF', color:'black', 'line-hight':'50px', 'text-align': 'center'}"
+								style="width: 100%" border>
+								<el-table-column  type="index" label="No" align="center" width="100">
+								</el-table-column>
+								<el-table-column property="title" label="Item" align="center" width="160">
+								</el-table-column>
+								<el-table-column property="total" align="center" label="Quantity">
+								</el-table-column>
+								<el-table-column property="goodprice" label="Unit Price" align="center">
+								</el-table-column>
+								<el-table-column property="totalprice" label="Total" align="center">
+								</el-table-column>
+							</el-table>
+							<div
+								style="display: flex;justify-content: flex-end;display: -webkit-flex; -webkit-justify-content: flex-end;margin-right: 100rpx;margin-top: 20rpx;">
+								<b>TOTAL：{{totalprice}}</b>
+							</div>
+							<div v-html="footer"></div>
+							<!-- <div style="margin: 40rpx 0rpx;"><b>Terms and Conditions:</b></div>
+							<div style="margin: 40rpx 0rpx;color: #000;">{{TermsConditions}}</div>
+							<div style="color: #000;">Payment can be made to:</div>
+							<div><b>Public Bank: Techno Wellness Sdn Bhd 3236060600</b></div> -->
+							<div style="padding: 90rpx ;margin-left: 90rpx; border-bottom: 2px solid #000;width: 250px;"><b>RECEIVED BY</b></div>
+						</div>
+					</div>
+					<div style="display: flex;justify-content: center;"><i @tap="handlePrintOrder" class="el-icon-printer" style="font-size: 60rpx;"></i></div>
+				</div>
+			</el-dialog>
 			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
 				@select="handleSelect" style="">
 				<div class="userLo">{{name}}</div>
-				<!-- <image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image> -->
-								<!-- <image src="../../static/img/favicon.png" v-else class="userLogo"></image> -->
 				<el-menu-item index="1" @tap="handleperson">
 					<i class="el-icon-menu"></i>
 					<span slot="title">{{$t('menu.home')}}</span>
@@ -18,18 +72,15 @@
 						<span slot="title" v-if="disable">{{$t('menu.ewallets')}}</span>
 					</template>
 					<el-menu-item-group>
-						<!-- <span slot="title">{{$t('menu.ewallets')}}</span> -->
-						<el-menu-item index="2-1" @tap="handlepurchasehistory">{{$t('menu.ewallethistory')}}</el-menu-item>
+						<el-menu-item index="2-1"
+							@tap="handlepurchasehistory">{{$t('menu.ewallethistory')}}</el-menu-item>
 						<el-menu-item index="2-2" @tap="handlewithdraw">{{$t('menu.ewalletwithdrawals')}}</el-menu-item>
-						<el-menu-item index="2-3" @tap="handlewithdrawStatus">{{$t('menu.ewalletwithdrawalstatus')}}</el-menu-item>
+						<el-menu-item index="2-3"
+							@tap="handlewithdrawStatus">{{$t('menu.ewalletwithdrawalstatus')}}</el-menu-item>
 						<el-menu-item index="2-4" @tap="handlebonus">{{$t('menu.bonuseshelp')}}</el-menu-item>
 						<el-menu-item index="2-5" @tap="handlekycgo">KYC</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
-				<!-- <el-menu-item index="3">
-					<i class="el-icon-menu"></i>
-					<span slot="title">经销商注册</span>
-				</el-menu-item> -->
 				<el-submenu index="4">
 					<template slot="title">
 						<i class="el-icon-s-fold"></i>
@@ -43,17 +94,6 @@
 						<el-menu-item index="4-2" @tap="handlepurchase">{{$t('menu.shoppinghistory')}}</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
-				<!-- <el-submenu index="5">
-					<template slot="title">
-						<i class="el-icon-s-fold"></i>
-						<span slot="title" v-if="disable">报告</span>
-					</template>
-					<el-menu-item-group>
-						<span slot="title">报告</span>
-						<el-menu-item index="5-1">小组销售报告</el-menu-item>
-						<el-menu-item index="5-2">Member Tree</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu> -->
 				<el-menu-item index="6" @tap="handlebinarytree">
 					<i class="el-icon-menu"></i>
 					<span slot="title">{{$t('menu.architecturediagram')}}</span>
@@ -70,7 +110,7 @@
 						<div style="display: flex;align-items: center;" :class="{'colorb':isblock}">
 							<i class="el-icon-s-grid changeStatu" @tap="changeStatus"></i>
 							<!-- <image src="../../static/img/favicon.png" class="changeStatus1 smalllogo"></image> -->
-														<i class="el-icon-s-grid changeStatus1" @tap="showDrawer" ></i>
+							<i class="el-icon-s-grid changeStatus1" @tap="showDrawer"></i>
 						</div>
 						<div style="display: flex;align-items: center;">
 							<!-- <div class="userLo">{{logoname}}</div> -->
@@ -113,8 +153,7 @@
 								</el-dropdown-menu>
 							</el-dropdown>
 							<el-row>
-								<i class="el-icon-setting setting"
-									@tap="showDrawerleft"></i>
+								<i class="el-icon-setting setting" @tap="showDrawerleft"></i>
 							</el-row>
 						</div>
 					</div>
@@ -127,64 +166,21 @@
 							Mode</span><br /></el-row>
 					<el-row><el-switch v-model="option2" @change="handleOptionChange('option2')"></el-switch><span>Dark
 							Mode</span></el-row> -->
-					<el-radio-group v-model="radio"  @input="handleLangChange" >
-					    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="en"><b>{{$t('locale.en')}}</b></el-radio></div>
-					    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hans"><b>{{$t('locale.zhHans')}}</b></el-radio></div>
-					    <div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio label="zh-Hant"><b>{{$t('locale.zhHant')}}</b></el-radio></div>
+					<el-radio-group v-model="radio" @input="handleLangChange">
+						<div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio
+								label="en"><b>{{$t('locale.en')}}</b></el-radio></div>
+						<div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio
+								label="zh-Hans"><b>{{$t('locale.zhHans')}}</b></el-radio></div>
+						<div style="margin-left: 40rpx;margin-top: 40rpx;"><el-radio
+								label="zh-Hant"><b>{{$t('locale.zhHant')}}</b></el-radio></div>
 					</el-radio-group>
 				</el-drawer>
 				<div class="ableta">
-					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
+					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer"
+						@handleClose="handleClose"></my-drawer>
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
-					<!-- <div v-if="index=='1'" style="width: 100%;"> -->
-						<purchase-history />
-					<!-- </div> -->
-					<!-- <div v-else-if="index=='2-1'">
-						<wallet-records />
-					</div> -->
-					<!-- <div v-else-if="index=='2-2'">
-						<withdraw-money @changekyc="changekyc" @wmindex="wmindex" />
-					</div>
-					<div v-else-if="index=='2-3'">
-						<withdrawal-status />
-					</div>
-					<div v-else-if="index=='2-4'">
-						<bonus-description />
-					</div>
-					<div v-else-if="index=='3'">
-						<reseller-registration :nodeid='nodeid' @handlereg="handlereg" />
-					</div>
-					<div v-else-if="index=='4-1'">
-						<product-purchase @godatail="getdatail" />
-					</div>
-					<div v-else-if="index=='4-2'">
-						<purchase-history />
-					</div>
-					<div v-else-if="index=='4-3'">
-						<product-detail :todatail='todatail' @getresrt="newindex" />
-					</div>
-					<div v-else-if="index=='5-1'">
-						<performance-reports />
-					</div>
-					<div v-else-if="index=='5-2'">
-						<member-tree />
-					</div>
-					<div v-else-if="index=='6'">
-						<binary-tree @indexChange="getIndex" />
-					</div>
-					<div v-else-if="index=='7'">
-						<login-password />
-					</div>
-					<div v-else-if="index=='8'">
-						<wallet-password />
-					</div>
-					<div v-else-if="index=='2-5'">
-						<know-yourCustomer @kycindex="kycindex" />
-					</div>
-					<div v-else-if="index=='10'">
-						<announcement-table />
-					</div> -->
+					<purchase-history @disd='disd' @getstr="getstr"/>
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
 					<div class="footer">{{footesr}}</div>
@@ -202,8 +198,10 @@
 		},
 		data() {
 			return {
-				footesr:uni.getStorageSync('footer'),
-				name:uni.getStorageSync('name'),
+				printImg:uni.getStorageSync('logo'),
+				TermsConditions:'Any discrepancies with regards to this invoice must be informed within 7 days.',
+				footesr: uni.getStorageSync('footer'),
+				name: uni.getStorageSync('name'),
 				isCollapse: false,
 				disable: true,
 				drawerVisible: false,
@@ -225,12 +223,23 @@
 				todatail: {},
 				username: '',
 				width: '30%',
-				radio:uni.getLocale()
+				radio: uni.getLocale(),
+				dialogVisible: false,
+				tableDatas: [],
+				ids:'',
+				totalprice:0,
+				header:'',
+				Ordernumber:'',
+				data:'',
+				address:'',
+				mobile:'',
+				realname:'',
+				footer:''
 			}
 		},
 		mounted(param) {
 			uni.setNavigationBarTitle({
-				title:uni.getStorageSync('name')
+				title: uni.getStorageSync('name')
 			})
 			// console.log(1111)
 			this.login()
@@ -247,96 +256,157 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			handleshoppingAddress(){
+			getstr(param){
+				let str = param.slice(0, -1);
+				this.ids = str
+				let _this = this
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.order.printer&ids='+str)
+					.then(res=>{
+						console.log(res)
+						const { status,result:{goodslist,orderslist,totalprice,pageinfo:{address,datetime,footer,header,logo,realname,mobile}} } = res
+						_this.tableDatas = Object.values(goodslist)
+						_this.totalprice = totalprice
+						_this.header = _this.htmlEntityDecode(header)
+						_this.footer =  _this.htmlEntityDecode(footer)
+						_this.printImg = logo
+						_this.data = datetime
+						_this.address = address
+						_this.mobile = mobile
+						_this.realname = realname
+						let str = ''
+						orderslist.forEach(res=>{
+							str += res + '; '
+						})
+						_this.Ordernumber = str
+					})
+					.catch(err=>{
+						console.log(err)
+					})
+			},
+			htmlEntityDecode(str) {
+				const entityMap = {
+					'&amp;': '&',
+					'&lt;': '<',
+					'&gt;': '>',
+					'&quot;': '"',
+					'&#39;': "'",
+				};
+			
+				// 替换HTML实体
+				return str.replace(/&amp;|&lt;|&gt;|&quot;|&#39;/g, (match) => entityMap[match]);
+			},
+			handlePrintOrder(){
+				this.$print(this.$refs.orderPrint)
+			},
+			disd(param) {
+				// console.log(this.ids)
+				if(this.ids == ''){
+					this.$message(this.$t('history.selectorder'));
+				}else{
+					this.dialogVisible = param
+				}
+			},
+			columnStyle({
+				row,
+				column,
+				rowIndex,
+				columnIndex
+			}) {
+				if (columnIndex == 0) {
+					return "background:#DCDCDC;color:#000;font-weight:800;";
+				}
+
+			},
+			handleshoppingAddress() {
 				uni.navigateTo({
-					url:'/pages/shippingAddress/shippingAddress'
+					url: '/pages/shippingAddress/shippingAddress'
 				})
 			},
-			handleClose(param){
+			handleClose(param) {
 				this.drawerVisible = param
 			},
-			handleLangChange(str){
+			handleLangChange(str) {
 				// console.log(str)
 				uni.setLocale(str)
 				this.$i18n.locale = str
-				if(str=='en'){
-					uni.setStorageSync('textlang',2)
-				}else if(str=='zh-Hans'){
-					uni.setStorageSync('textlang',0)
-				}else{
-					uni.setStorageSync('textlang',1)
+				if (str == 'en') {
+					uni.setStorageSync('textlang', 2)
+				} else if (str == 'zh-Hans') {
+					uni.setStorageSync('textlang', 0)
+				} else {
+					uni.setStorageSync('textlang', 1)
 				}
 				this.drawerVisibletwo = false
 				//this.$router.go(0)   
 			},
-			handleshopping(){
+			handleshopping() {
 				uni.navigateTo({
-					url:'/pages/shopping/shopping'
+					url: '/pages/shopping/shopping'
 				})
 			},
-			hanldeChangepass(){
+			hanldeChangepass() {
 				uni.navigateTo({
-					url:'/pages/login-password/login-password'
+					url: '/pages/login-password/login-password'
 				})
 			},
-			hanldeChangeEwalletspass(){
+			hanldeChangeEwalletspass() {
 				uni.navigateTo({
-					url:'/pages/wallet-password/wallet-password'
+					url: '/pages/wallet-password/wallet-password'
 				})
 			},
-			handlepurchasehistory(){
+			handlepurchasehistory() {
 				// console.log(111)
 				uni.navigateTo({
-					url:'/pages/wallet-records/wallet-records'
+					url: '/pages/wallet-records/wallet-records'
 				})
 			},
-			handleperson(){
+			handleperson() {
 				uni.navigateTo({
-					url:'/pages/personalPage/personalPage'
+					url: '/pages/personalPage/personalPage'
 				})
 			},
-			handlewithdraw(){
+			handlewithdraw() {
 				uni.navigateTo({
-					url:'/pages/withdraw-money/withdraw-money'
+					url: '/pages/withdraw-money/withdraw-money'
 				})
 			},
-			handlewithdrawStatus(){
+			handlewithdrawStatus() {
 				uni.navigateTo({
-					url:'/pages/withdrawal-status/withdrawal-status'
+					url: '/pages/withdrawal-status/withdrawal-status'
 				})
 			},
-			handlebonus(){
+			handlebonus() {
 				uni.navigateTo({
-					url:'/pages/bonus-description/bonus-description'
+					url: '/pages/bonus-description/bonus-description'
 				})
 			},
-			handlekycgo(){
+			handlekycgo() {
 				uni.navigateTo({
-					url:'/pages/know-yourCustomer/know-yourCustomer'
+					url: '/pages/know-yourCustomer/know-yourCustomer'
 				})
 			},
-			handlebinarytree(){
+			handlebinarytree() {
 				uni.navigateTo({
-					url:'/pages/binary-tree/binary-tree'
+					url: '/pages/binary-tree/binary-tree'
 				})
 			},
-			handleannucement(){
+			handleannucement() {
 				uni.navigateTo({
-					url:'/pages/announcement-table/announcement-table'
+					url: '/pages/announcement-table/announcement-table'
 				})
 			},
 			handleCustomButton() {
 				this.$print(this.$refs.print)
-			
+
 			},
-			handleProduct(){
+			handleProduct() {
 				uni.navigateTo({
-					url:'/pages/product-purchase/product-purchase'
+					url: '/pages/product-purchase/product-purchase'
 				})
 			},
-			handlepurchase(){
+			handlepurchase() {
 				uni.navigateTo({
-					url:'/pages/purchase-history/purchase-history'
+					url: '/pages/purchase-history/purchase-history'
 				})
 			},
 			async login() {
@@ -389,8 +459,8 @@
 			},
 			logOff() {
 				this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.logout')
-					.then(res=>{
-						
+					.then(res => {
+
 					})
 				uni.clearStorageSync();
 				uni.navigateTo({
@@ -473,19 +543,31 @@
 	}
 </script>
 <style>
-	.content{
+
+	/deep/.el-divider {
+		border-color: #000;
+		border-width: 2px;
+	}
+	.content {
 		/* position: fixed; */
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
 	}
-	/deep/table{
+
+	/deep/table {
 		width: auto !important;
 	}
-	/deep/.el-table__empty-block{
+
+	/deep/.el-table__empty-block {
 		width: auto !important;
 	}
-	@page { margin-bottom: 20;margin-top: 20; }
+
+	@page {
+		margin-bottom: 20;
+		margin-top: 20;
+	}
+
 	/* .perpage {page-break-after:always;} */
 	/* /deep/#print p span{
 		overflow-x: hidden !important;
@@ -580,12 +662,12 @@
 		cursor: pointer;
 	}
 
-	@media screen and (max-width: 1400px)  and (min-width: 990px){
+	@media screen and (max-width: 1400px) and (min-width: 990px) {
 		.userLo {
 			width: 73%;
 		}
 	}
-	
+
 
 
 	@media screen and (max-width: 990px) {
@@ -593,19 +675,21 @@
 			height: 120rpx !important;
 			width: 100% !important;
 			position: fixed;
-			top:0;
+			top: 0;
 		}
-		.el-main{
-			height: 85vh!important;
+
+		.el-main {
+			height: 85vh !important;
 			margin: 120rpx 0rpx;
 		}
-		
-		.el-footer{
+
+		.el-footer {
 			bottom: 0;
 			position: fixed;
-			width: 100%!important;
+			width: 100% !important;
 		}
-/* 
+
+		/* 
 		.homepage {
 			width: 100% !important;
 		} */
@@ -704,7 +788,7 @@
 		/* width: 90vw; */
 	}
 
-	.el-footer{
+	.el-footer {
 		/* position: fixed; */
 		/* bottom: 0; */
 		/* left: 0; */
@@ -713,6 +797,7 @@
 		z-index: 999;
 		/* width: 88%; */
 	}
+
 	.footer {
 		height: 120rpx;
 		line-height: 120rpx;

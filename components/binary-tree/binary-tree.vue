@@ -8,6 +8,8 @@
 				    <span><i class="el-icon-caret-right"></i> {{$t('tree.Right')}}:{{Right}}</span>
 				    <el-divider direction="vertical"></el-divider>
 				    <span class="huan"><i class="el-icon-share"></i> {{$t('tree.Total')}}:{{Total}}</span>
+					<el-divider direction="vertical"></el-divider>
+					<span class="huan"><i class="el-icon-medal-1"></i> {{levelmes}}</span>
 				  </div>
 			</div>
 			<div style="display: flex;justify-content: end;display: -webkit-flex; -webkit-justify-content: flex-end; " v-if="treeStatuss">
@@ -30,7 +32,7 @@
 					<l-echart ref="chart" style="height: 71.5vh;width: 100%;max-width: 1366px;" v-if="treeStatus"></l-echart>
 					<el-empty :description="$t('tree.notpurchaseballs')" v-else></el-empty>
 				</div>
-				<div style="position: absolute;right: 20rpx;top: 120px;">
+				<!-- <div style="position: absolute;right: 20rpx;top: 120px;">
 				<div  v-for="item in typesArray" style="font-size: 28rpx;margin-top: 20rpx;width: 300px;z-index: 9999;background-color: white;" v-show="treeStatuss"  v-if="typeSatatus">
 					<div class="bonustype" >
 						<div v-show="levelName">{{item.levelname_en}}</div>
@@ -40,7 +42,7 @@
 						</div>
 					</div>
 				</div>
-				</div>
+				</div> -->
 			</div>
 			
 			
@@ -67,17 +69,18 @@
 				Left:0,
 				typesArray:[],
 				typeSatatus:true,
+				levelmes:''
 			}
 		},
-		computed: {
-			levelName() {
-				if (uni.getLocale() == 'en') {
-					return true
-				} else {
-					return false
-				}
-			},
-		},
+		// computed: {
+			// levelmes() {
+			// 	if (uni.getLocale() == 'en') {
+			// 		this.$router('')
+			// 	} else {
+			// 		return false
+			// 	}
+			// },
+		// },
 		mounted() {
 			this.gets()
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
@@ -108,9 +111,10 @@
 						self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.selectTree&nodeid='+nodeids)
 							.then(res=>{
 								console.log(res)
-								const { result:{tree,node,count,left,right,alllevelmes} } = res
+								const { result:{tree,node,count,left,right,alllevelmes,levelmes} } = res
 								self.Total = count
 								self.Right = right
+								self.levelmes = levelmes
 								self.typesArray = alllevelmes
 								self.Left = left
 								self.nodeArr = node

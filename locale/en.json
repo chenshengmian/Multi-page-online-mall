@@ -257,5 +257,9 @@
 	"tree.Left":"Left",
 	"tree.Right":"Right",
 	"tree.Total":"Total",
-	"purse.paytime":"Order completion time"
+	"purse.paytime":"Order completion time",
+	"history.printing":"Batch printing",
+	"history.Details":"Order Details",
+	"history.Printorder":"Print the order",
+	"history.selectorder":"Please select the order you want to print"
 }

@@ -11,6 +11,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'	
 import request  from './utils/request.js'
 import print from './utils/print.js'
+import prints from 'print-js'
+
+import 'print-js/dist/print.css';
+
+Vue.prototype.$prints = prints;
 import * as echarts from 'echarts'
 import VueI18n from 'vue-i18n'
 import messages from '@/locale/index.js'

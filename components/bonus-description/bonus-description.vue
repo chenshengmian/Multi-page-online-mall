@@ -66,7 +66,7 @@
 						</template>
 					</el-table-column> -->
 					
-					<el-table-column prop="remark" :label="$t('purse.remark')" align="center">
+					<el-table-column prop="remark" :label="$t('purse.remark')" align="left">
 					</el-table-column>
 					<!-- <el-table-column prop="paystatusstr" :label="$t('purse.Paymentstatus')" align="center">
 					</el-table-column> -->

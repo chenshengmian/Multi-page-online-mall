@@ -259,5 +259,9 @@
 	"tree.Left":"左節點數",
 	"tree.Right":"右節點數",
 	"tree.Total":"縂節點數",
-	"purse.paytime":"訂單完成時間"
+	"purse.paytime":"訂單完成時間",
+	"history.printing":"批量打印",
+	"history.Details":"訂單詳情",
+	"history.Printorder":"打印訂單",
+	"history.selectorder":"請選擇需要打印的訂單"
 }

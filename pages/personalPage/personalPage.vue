@@ -2,7 +2,7 @@
 	<view class="content">
 		<el-container>
 			<el-dialog :title="titlet" :visible.sync="centerDialogVisible" :width="width" style="height: 100%;"
-				:show-close="false" :close-on-click-modal="false">
+				:show-close="false" :close-on-click-modal="false" :close-on-press-escape="false" :lock-scroll= "false">
 				<div id="print" ref="print" style="" v-html="tanccontent"></div>
 				<div v-show="statusagree==1">
 					<el-checkbox v-model="checked">{{$t('home.agree')}}</el-checkbox><span @tap="changeagree"

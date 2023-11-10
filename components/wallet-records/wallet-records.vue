@@ -54,7 +54,7 @@
 						</el-table-column>
 					</div> -->
 					
-					<el-table-column prop="remark" :label="$t('purse.TransactionDescription')" align="center" width="650px">
+					<el-table-column prop="remark" :label="$t('purse.TransactionDescription')"  width="650px">
 					</el-table-column>
 					<el-table-column prop="num" :label="$t('purse.Incoming')" align="center">
 					</el-table-column>

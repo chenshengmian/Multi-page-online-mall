@@ -1,9 +1,15 @@
 <template>
 	<view style="background-color: #F5F5F5;">
 		<div class="container">
-			<el-card class="box-card">
-				<div style="width: 100%;display: flex;justify-content: center;"><div>{{name}}</div></div>
-				<div style="margin-top: 50rpx;font-size: 26rpx;display: flex;justify-content: center;"><el-link :type="typeStatus1"
+			<el-card class="box-card" style="position: relative;overflow: visible;">
+				<div style="width: 100%;display: flex;justify-content: center; position: absolute;transform: translateY(-78%);right: 2px;">
+					 <image
+					    style="width: 100px; height: 100px;border-radius: 50%;"
+					    :src="url"
+					    >
+					</image>
+				</div>
+				<div style="margin-top: 100rpx;font-size: 26rpx;display: flex;justify-content: center;"><el-link :type="typeStatus1"
 						 @tap="change('en')"><b>{{$t('locale.en')}}</b></el-link> <el-divider
 						direction="vertical"></el-divider><el-link  :type="typeStatus2"
 						@tap="change('zh-Hans')"><b>{{$t('locale.zhHans')}}</b>
@@ -51,6 +57,7 @@
 	export default {
 		data() {
 			return {
+				url:'',
 				typeStatus1:'info',
 				typeStatus2:'info',
 				typeStatus3:'info',
@@ -133,6 +140,7 @@
 							uni.setStorageSync('footer',copyrighttext)
 							uni.setStorageSync('logo',logo)
 							uni.setStorageSync('name',name)
+							_this.url = logo
 							_this.getUserInfo()
 							_this.name = name
 							uni.setNavigationBarTitle({

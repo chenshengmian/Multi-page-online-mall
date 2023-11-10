@@ -250,15 +250,28 @@
 							uni.setStorageSync('email', email)
 							// uni.setStorageSync('mlevel',mlevel)
 							_this.childrenordermoney = childrenordermoney
-							_this.commissionmoney = credit5
 							_this.flevelchildrennum = flevelchildrennum
 							_this.typesArray = alllevelmes
 							_this.joiningDate = jointime
 							_this.nickname = nickname
-							_this.credit2 = credit2
+							if(credit2==''){
+								_this.credit2 = '0.00'
+							}else{
+								_this.credit2 = credit2
+							}
 							_this.Account = email
-							_this.registerPoint = credit1
-							_this.credit5 = credit5
+							if(credit1==''){
+								_this.registerPoint = '0.00'
+							}else{
+								_this.registerPoint = credit1
+							}
+							if(credit5==''){
+								_this.credit5 = '0.00'
+								_this.commissionmoney = '0.00'
+							}else{
+								_this.credit5 = credit5
+								_this.commissionmoney = credit5
+							}
 							_this.weeksArray = monthmes
 							_this.sumbonus = lastmormoney
 							_this.totalWithdraw = allglobonus

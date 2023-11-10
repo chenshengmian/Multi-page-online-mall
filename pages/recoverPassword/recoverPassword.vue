@@ -1,11 +1,15 @@
 <template>
 	<view style="background-color: #F5F5F5;">
 		<div class="container">
-			<el-card class="box-card" style="width: 900rpx;">
-				<div style="width: 100%;display: flex;justify-content: center;">
-					<div>{{name}}</div>
+			<el-card class="box-card" style="width: 900rpx;position: relative;overflow: visible;">
+				<div style="width: 100%;display: flex;justify-content: center; position: absolute;transform: translateY(-78%);right: 2px;">
+					 <image
+					    style="width: 100px; height: 100px;border-radius: 50%;"
+					    :src="url"
+					    >
+					</image>
 				</div>
-				<div style="margin-top: 50rpx;font-size: 26rpx;display: flex;justify-content: center;"><el-link
+				<div style="margin-top: 100rpx;font-size: 26rpx;display: flex;justify-content: center;"><el-link
 						:type="typeStatus1" @tap="change('en')"><b>{{$t('locale.en')}}</b></el-link> <el-divider
 						direction="vertical"></el-divider><el-link :type="typeStatus2"
 						@tap="change('zh-Hans')"><b>{{$t('locale.zhHans')}}</b>
@@ -88,6 +92,7 @@
 				}
 			};
 			return {
+				url:'',
 				typeStatus1: 'info',
 				typeStatus2: 'info',
 				typeStatus3: 'info',
@@ -231,6 +236,7 @@
 						uni.setStorageSync('footer', copyrighttext)
 						uni.setStorageSync('name', name)
 						uni.setStorageSync('logo',logo)
+						_this.url = logo
 						_this.name = name
 					})
 					.catch(err => {

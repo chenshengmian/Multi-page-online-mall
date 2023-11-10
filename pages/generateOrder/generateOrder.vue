@@ -1,6 +1,22 @@
 <template>
 	<view class="content">
 		<el-container>
+			<el-dialog
+			  :title="$t('genorder.PaymentConfirm')"
+			  :visible.sync="dialogVisible"
+			  :width="diawidth"
+			  :close-on-click-modal = 'false'
+			  >
+			  <el-form>
+					<el-form-item :label="$t('genorder.Paymentpassword')" prop="pass">
+				      <el-input type="password" v-model="vapass" autocomplete="off"></el-input>
+				    </el-form-item>
+			 </el-form>
+			 <div slot="footer" class="dialog-footer">
+			    <el-button @click="dialogVisible = false">{{$t('genorder.PaymentCancel')}}</el-button>
+			    <el-button type="primary" @click="handelpay">{{$t('genorder.PaymentConfirm')}}</el-button>
+			  </div>
+			</el-dialog>
 			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
 				 style="">
 				 <div class="userLo">{{name}}</div>
@@ -119,7 +135,7 @@
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
 						<!-- <my-home @changeAd="getAdstatus"/> -->
-						<generate-order :orderid = "orderid"/>
+						<generate-order :orderid = "orderid" @payStatus="payStatus"/>
 					
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
@@ -168,7 +184,11 @@
 				tanccontent: '<p>这是一段包含HTML标签的内容</p>',
 				type: 0,
 				radio:uni.getLocale(),
-				orderid:1
+				orderid:1,
+				dialogVisible: false,
+				orid:'',
+				vapass:'',
+				diawidth:'30%'
 			}
 		},
 		onLoad(param){
@@ -193,6 +213,40 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handelpay(){
+				let _this = this
+				if(_this.vapass==''){
+					_this.$message(_this.$t('pass.enteryourpassword'))
+				}else{
+					let newarr = {
+						'id': _this.orid,
+						'password':_this.vapass
+					}
+					_this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.order.pay',newarr)
+						.then(res=>{
+							console.log(res)
+							const { status} = res
+							if(status==1){
+								_this.dialogVisible = false
+								_this.vapass = ''
+								_this.$router.go(0)   
+							}else if(status==0){
+								const { result:{message}} = res
+								_this.$message(message)
+							}
+							
+						})
+						.catch(err=>{
+							console.log(err)
+						})
+				}
+				
+			},
+			payStatus(param){
+				const { id, status}  = param
+				this.dialogVisible  = status
+				this.orid  = id
+			},
 			handleshoppingAddress(){
 				uni.navigateTo({
 					url:'/pages/shippingAddress/shippingAddress'
@@ -218,7 +272,7 @@
 				}
 				this.$i18n.locale = str
 				this.drawerVisibletwo = false
-				//this.$router.go(0)   
+				this.$router.go(0)   
 			},
 			handleshopping(){
 				uni.navigateTo({
@@ -361,9 +415,11 @@
 				if (this.screenWidth <= 990) {
 					this.drawerSize = '60%'
 					this.width = '90%'
+					this.diawidth = '90%'
 				} else {
 					this.drawerSize = '15%'
 					this.width = '30%'
+					this.diawidth = '30%'
 				}
 			},
 			handleResize() {
@@ -374,9 +430,11 @@
 					if (newScreenWidth <= 990) {
 						this.drawerSize = '60%'
 						this.width = '90%'
+						this.diawidth = '90%'
 					} else {
 						this.drawerSize = '15%'
 						this.width = '30%'
+						this.diawidth = '30%'
 					}
 				}
 			},

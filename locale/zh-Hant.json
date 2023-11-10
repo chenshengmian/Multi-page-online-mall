@@ -263,5 +263,9 @@
 	"history.printing":"批量打印",
 	"history.Details":"訂單詳情",
 	"history.Printorder":"打印訂單",
-	"history.selectorder":"請選擇需要打印的訂單"
+	"history.selectorder":"請選擇需要打印的訂單",
+	"genorder.Payimmediately":"立即支付",
+	"genorder.Paymentpassword":"請輸入支付密碼",
+	"genorder.PaymentCancel":"取消支付",
+	"genorder.PaymentConfirm":"確認支付"
 }

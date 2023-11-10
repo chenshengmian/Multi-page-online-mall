@@ -262,5 +262,9 @@
 	"history.printing":"批量打印",
 	"history.Details":"订单详情",
 	"history.Printorder":"打印订单",
-	"history.selectorder":"请选择需要打印的订单"
+	"history.selectorder":"请选择需要打印的订单",
+	"genorder.Payimmediately":"立即支付",
+	"genorder.Paymentpassword":"请输入支付密码",
+	"genorder.PaymentCancel":"取消支付",
+	"genorder.PaymentConfirm":"确认支付"
 }

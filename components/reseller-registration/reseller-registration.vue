@@ -33,7 +33,7 @@
 				    <el-input v-model="ruleForm.nickname" ></el-input>
 				</el-form-item>
 				<el-form-item :label="$t('enroll.nationality')+':'" prop="region" :label-width="labelw">
-					<el-select ref="agentSelect" @hook:mounted="cancalReadOnly"  @visible-change="cancalReadOnly" v-model="ruleForm.region" :placeholder="$t('enroll.selectnationality')" :filterable = "true">
+					<el-select  v-model="ruleForm.region" :placeholder="$t('enroll.selectnationality')" :filterable = "true">
 						<!-- <el-option :label="$t('enroll.CHINA')" :value="$t('enroll.CHINA')"></el-option>
 						<el-option :label="$t('enroll.MALAYSIA')" :value="$t('enroll.MALAYSIA')"></el-option>
 						<el-option :label="$t('enroll.AMERICAN')" :value="$t('enroll.AMERICAN')"></el-option>
@@ -101,7 +101,7 @@
 					 <!-- <el-row> -->
 					    <!-- <el-col :span="9"> -->
 						<div style="display: flex;">
-							<el-select ref="agent2Select" @hook:mounted="cancalReadOnly"  @visible-change="cancalReadOnly" v-model="ruleForm.prefixes" @change="handlePrefixChange" :filterable = "true" allow-create>
+							<el-select  v-model="ruleForm.prefixes":placeholder="$t('purse.Pleaseselect')" @change="handlePrefixChange" :filterable = "true" allow-create>
 								<!-- <el-option label="+86" value="+86"></el-option> -->
 								<!-- <el-option label="+80" value="+80"></el-option> -->
 								<block v-for="item in phoneData">
@@ -128,7 +128,7 @@
 					<el-input v-model="ruleForm.zipcode"></el-input>
 				</el-form-item>
 				<el-form-item :label="$t('enroll.country')+':'" prop="country" :label-width="labelw">
-					<el-select ref="agent3Select" @hook:mounted="cancalReadOnly"  @visible-change="cancalReadOnly" v-model="ruleForm.country" :placeholder="$t('enroll.selectcountry')" :filterable = "true">
+					<el-select  v-model="ruleForm.country" :placeholder="$t('enroll.selectcountry')" :filterable = "true">
 					<!-- 	<el-option :label="$t('enroll.CHINA')" :value="$t('enroll.CHINA')"></el-option>
 						<el-option :label="$t('enroll.MALAYSIA')" :value="$t('enroll.MALAYSIA')"></el-option>
 						<el-option :label="$t('enroll.AMERICAN')" :value="$t('enroll.AMERICAN')"></el-option>
@@ -343,40 +343,30 @@
 		    window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			cancalReadOnly(onOff) {
-				console.log(onOff)
-			      this.$nextTick(() => {
-			        if (!onOff) {
-			          const Selects = this.$refs
-			          console.log(Selects)
-			　　　　　　// 如果只有1个下拉框，这段就足够了---start
-			          if (Selects.agentSelect) {
-			            const input = Selects.agentSelect.$el.querySelector('.el-input__inner')
-			            input.removeAttribute('readonly')
-			          }
-			　　　　　　// 如果只有1个下拉框，这段就足够了---end
-			　　　　　　// 如果有多个，就加多几个，代码可以优化，我懒了
-			          if (Selects.agent2Select) {
-			            const appinput = Selects.appSelect.$el.querySelector('.el-input__inner')
-			            appinput.removeAttribute('readonly')
-			          }
-			          if (Selects.agent3Select) {
-			            const gameinput = Selects.gameSelect.$el.querySelector('.el-input__inner')
-			            gameinput.removeAttribute('readonly')
-			          }
-			        }
-			      })
-			},
-			showKeyboard(){
-				uni.showKeyboard({
-				    success: function() {
-				        console.log('键盘呼出成功');
-				    },
-				    fail: function() {
-				        console.log('键盘呼出失败');
-				    }
-				});
-			},
+			// cancalReadOnly(onOff) {
+			// 	console.log(onOff)
+			//       this.$nextTick(() => {
+			//         if (!onOff) {
+			//           const Selects = this.$refs
+			//           console.log(Selects)
+			// 　　　　　　// 如果只有1个下拉框，这段就足够了---start
+			//           if (Selects.agentSelect) {
+			//             const input = Selects.agentSelect.$el.querySelector('.el-input__inner')
+			//             input.removeAttribute('readonly')
+			//           }
+			// 　　　　　　// 如果只有1个下拉框，这段就足够了---end
+			// 　　　　　　// 如果有多个，就加多几个，代码可以优化，我懒了
+			//           if (Selects.agent2Select) {
+			//             const appinput = Selects.appSelect.$el.querySelector('.el-input__inner')
+			//             appinput.removeAttribute('readonly')
+			//           }
+			//           if (Selects.agent3Select) {
+			//             const gameinput = Selects.gameSelect.$el.querySelector('.el-input__inner')
+			//             gameinput.removeAttribute('readonly')
+			//           }
+			//         }
+			//       })
+			// },
 			getballInfo(){
 				// console.log('获取到nodeid',this.nodeid)
 				let self = this

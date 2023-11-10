@@ -104,7 +104,7 @@
 						} = res
 						if (status == 100) {
 							self.$message({
-								message: '登录状态已过期！',
+								message: this.$t('home.loginstatus'),
 								center: true
 							});
 							uni.navigateTo({

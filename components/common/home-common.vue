@@ -237,8 +237,8 @@
 				}else{
 					uni.setStorageSync('textlang',1)
 				}
-				// this.$router.go(0)
-				this.drawerVisibletwo = false
+				this.$router.go(0)
+				// this.drawerVisibletwo = false
 			},
 			handleshoppingAddress(){
 				uni.navigateTo({

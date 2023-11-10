@@ -135,7 +135,7 @@
 					<my-drawer @viewIndex="handleSelect" v-show="drawerVisible" @close="closeDrawer" @handleClose="handleClose"></my-drawer>
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
-						<website-homepage/>
+						<handlePay :id='id'/>
 				</el-main>
 				<el-footer :style="{backgroundColor:footbg}">
 					<div class="footer">{{footesr}}</div>
@@ -147,11 +147,11 @@
 
 <script>
 	import MyDrawer from '@/components/my-drawer/my-drawer.vue';
-	import WebsiteHomepage from '@/components/website-homepage/website-homepage.vue';
+	import handlePay from '@/components/handlePay/handlePay.vue';
 	export default {
 		components: {
 			MyDrawer,
-			WebsiteHomepage,
+			handlePay,
 		},
 		data() {
 			return {
@@ -182,7 +182,8 @@
 				width: '30%',
 				tanccontent: '<p>这是一段包含HTML标签的内容</p>',
 				type: 0,
-				radio:uni.getLocale()
+				radio:uni.getLocale(),
+				id:''
 			}
 		},
 		mounted(param) {
@@ -195,11 +196,9 @@
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
 			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 		},
-		// onShow() {
-		// 	this.login()
-		// 	this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
-		// 	window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
-		// },
+		onLoad(param) {
+			this.id = param.id
+		},
 		beforeDestroy() {
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
@@ -224,7 +223,7 @@
 					uni.setStorageSync('textlang',1)
 				}
 				this.drawerVisibletwo = false
-				this.$router.go(0)   
+				//this.$router.go(0)   
 			},
 			handleshopping(){
 				uni.navigateTo({

@@ -56,12 +56,29 @@
 					<div class="wu">
 						<div class="wuleft">{{$t('product.Ordernumber')}}</div>
 						<div class="wuleft">{{$t('product.Creationtime')}}</div>
-						<div class="wuleft">{{$t('product.Paymentstatus')}}</div>
 					</div>
 					<div class="wu">
 						<div class="wuright">{{ordersn}}</div>
 						<div class="wuright">{{timestr}}</div>
-						<div class="wuright">{{statusstr}}</div>
+						
+					</div>
+				</div>
+				<div  style="display: flex;justify-content: space-between;width: 100%;">
+					<div class="wu" style="display: flex;">
+						<div class="wuleft">{{$t('product.Paymentstatus')}}</div>
+						<div class="wuright" v-if="status==0"><el-link type="danger">{{statusstr}}</el-link></div>
+						<div class="wuright" v-else-if="status==1"><el-link type="success">{{statusstr}}</el-link>
+						</div>
+						<div  class="wuright" v-else-if="status==2"><el-link
+								type="success">{{statusstr}}</el-link></div>
+						<div  class="wuright" v-else-if="status==3"><el-link
+								type="warning">{{statusstr}}</el-link></div>
+						<div  class="wuright" v-else><el-link
+								type="info">{{statusstr}}</el-link></div>
+
+					</div>
+					<div v-if="payStatus">
+						<el-button type="danger" size="mini" @tap="handlePay">{{$t('genorder.Payimmediately')}}</el-button>
 					</div>
 				</div>
 			</el-card>
@@ -92,7 +109,10 @@
 				sysbankcard:'',
 				sysbankname:'',
 				erPhoto:'',
-				showSataus:true
+				showSataus:true,
+				orderids:'',
+				payStatus:false,
+				status:0
 			};
 		},
 		mounted() {
@@ -101,6 +121,14 @@
 			this.orderInfomation()
 		},
 		methods: {
+			handlePay(){
+				let newsrr = {
+					'status' : true,
+					'id': this.orderids
+				} 
+				this.$emit('payStatus',newsrr)
+				
+			},
 			login() {
 				let self = this
 				this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member')
@@ -131,29 +159,36 @@
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.order.detail&orderid=' + this
 						.orderid)
 					.then(res => {
-						console.log(res)
-						const { status,result:{list:{gmess,addressmes,goodsprice,price,ordersn,statusstr,timestr} }} = res
+						const { status,result:{list:{gmess,addressmes,goodsprice,price,ordersn,statusstr,timestr,id} }} = res
 						_this.$nextTick(function(){
-						if(res.status == 1){
-							_this.timestr = timestr
-							_this.shopping = gmess
-							_this.ordersn = ordersn
-							_this.statusstr = statusstr
-							_this.oldprice = price
-							if(addressmes.length==0){
-								_this.addressSattus = false
+							// console.log()
+							if(res.status == 1){
+								if(res.result.list.status==0){
+									_this.payStatus = true
+								}else{
+									_this.payStatus = false
+								}
+								_this.status = res.result.list.status
+								_this.orderids = id
+								_this.timestr = timestr
+								_this.shopping = gmess
+								_this.ordersn = ordersn
+								_this.statusstr = statusstr
+								_this.oldprice = price
+								if(addressmes.length==0){
+									_this.addressSattus = false
+								}
+								_this.mobile = addressmes.mobile
+								_this.address = addressmes.address
+								_this.showSataus = false
+							}else if(res.status == 0){
+								// const { result:{ message }} = res
+								// _this.$notify({
+								//     title: 'mistake',
+								//     message: message,
+								//     duration: 0
+								// });
 							}
-							_this.mobile = addressmes.mobile
-							_this.address = addressmes.address
-							_this.showSataus = false
-						}else if(res.status == 0){
-							// const { result:{ message }} = res
-							// _this.$notify({
-							//     title: 'mistake',
-							//     message: message,
-							//     duration: 0
-							// });
-						}
 							
 						})
 					})

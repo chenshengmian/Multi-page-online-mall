@@ -44,7 +44,7 @@
 
 					</div>
 
-					<div>
+					<div v-if="idStatus">
 						<el-button type="primary" size="medium" @tap="handleAllprint"
 							class="dangerd">{{$t('history.printing')}}</el-button>
 					</div>
@@ -216,11 +216,11 @@
 			handleAllprint() {
 				this.$emit('disd',true)
 			},
-			// hanldeDeatils(info) {
-			// 	uni.navigateTo({
-			// 		url: '/pages/generateOrder/generateOrder?orderid=' + info.id
-			// 	})
-			// },
+			hanldeDeatils(info) {
+				uni.navigateTo({
+					url: '/pages/generateOrder/generateOrder?orderid=' + info.id
+				})
+			},
 			getMounth() {
 				const current = new Date()
 				const yearNew = current.getFullYear()

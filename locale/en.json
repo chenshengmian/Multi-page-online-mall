@@ -261,5 +261,9 @@
 	"history.printing":"Batch printing",
 	"history.Details":"Order Details",
 	"history.Printorder":"Print the order",
-	"history.selectorder":"Please select the order you want to print"
+	"history.selectorder":"Please select the order you want to print",
+	"genorder.Payimmediately":"Pay",
+	"genorder.Paymentpassword":"Please enter the payment password",
+	"genorder.PaymentCancel":"Cancel payment",
+	"genorder.PaymentConfirm":"Confirm payment"
 }

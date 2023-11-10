@@ -266,7 +266,7 @@
 					uni.setStorageSync('textlang',1)
 				}
 				this.drawerVisibletwo = false
-				//this.$router.go(0)   
+				this.$router.go(0)   
 			},
 			handleshopping(){
 				uni.navigateTo({

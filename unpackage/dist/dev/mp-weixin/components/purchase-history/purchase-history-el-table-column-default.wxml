@@ -1,0 +1,1 @@
+<el-image style="width:100px;height:100px;" vue-id="a114b0fc-12" src="{{scope.row.goods[0].goods[0].thumb}}" bind:__l="__l"></el-image>

@@ -1,0 +1,24 @@
+
+.announcement.data-v-e126d478{
+	display: flex;
+}
+@media screen and (max-width: 990px) {
+.announcement.data-v-e126d478{
+		display: grid;
+}
+}
+.data-v-e126d478 .el-descriptions__table{
+	width: 100% !important;
+}
+.text.data-v-e126d478 {
+	font-size: 28rpx;
+}
+.item.data-v-e126d478 {
+	margin-bottom: 36rpx;
+}
+.pagination.data-v-e126d478 {
+	display: flex;
+	justify-content: center;
+	margin-top: 20rpx;
+}
+

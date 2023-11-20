@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "purchase-history-el-table-column-default": "/components/purchase-history/purchase-history-el-table-column-default",
+    "purchase-history-el-table-column-default1": "/components/purchase-history/purchase-history-el-table-column-default1",
+    "purchase-history-el-table-column-default2": "/components/purchase-history/purchase-history-el-table-column-default2"
+  },
+  "component": true
+}

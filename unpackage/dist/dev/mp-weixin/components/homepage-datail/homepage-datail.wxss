@@ -1,0 +1,288 @@
+
+.data-v-aa00c9c4 .el-carousel__indicator--horizontal .el-carousel__button {
+  width: 25rpx;
+  height: 25rpx;
+  background: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+.data-v-aa00c9c4 .el-carousel__indicator--horizontal.is-active .el-carousel__button{
+  width: 25rpx;
+  height: 25rpx;
+  background: #ffffff;
+  border-radius: 50%;
+  opacity: 1;
+}  
+/* .el-card{
+	position: relative;
+} */
+.el-footer.data-v-aa00c9c4{
+	position: relative;
+}
+.liji.data-v-aa00c9c4{
+	position: relative;
+}
+.el-button--danger.data-v-aa00c9c4{
+	position: absolute;
+	bottom: 0;
+	right: 13%;
+	/* bottom: 100px; */
+	width: 10%;
+	/* margin-top: 10rpx; */
+}
+.time.data-v-aa00c9c4 {
+	font-size: 13px;
+	color: #999;
+}
+.bottom.data-v-aa00c9c4 {
+	margin-top: 13px;
+	line-height: 12px;
+}
+.button.data-v-aa00c9c4 {
+	padding: 0;
+	float: right;
+}
+.images.data-v-aa00c9c4 {
+	width: 200rpx !important;
+	height: 200rpx;
+	display: block;
+}
+.clearfix.data-v-aa00c9c4:before,
+.clearfix.data-v-aa00c9c4:after {
+	display: table;
+	content: "";
+}
+.clearfix.data-v-aa00c9c4:after {
+	clear: both
+}  
+/* 外层盒子 */
+.scroll.data-v-aa00c9c4 {
+	height: 30px;
+	overflow: hidden;
+	color: #409EFF;
+	font-size: 30rpx;
+	/* width: 300px; */
+	/* background: rgb(138, 192, 186); */
+}  
+/* 里面的每一条 */
+.item.data-v-aa00c9c4 {
+	height: 30px;
+	width: 100%;
+}  
+/* .el-header{
+	position: fixed;
+	top: 0;
+	right: 20%;
+	left: 10%;
+	width: 100%;
+	z-index: 999;
+	background-color: #fff;
+} */
+.announcement-item.data-v-aa00c9c4 {
+	flex-shrink: 0;
+	padding: 0 10px;
+	height: 100%;
+	line-height: 50px;
+	background-color: #f5f5f5;
+}
+.announcement.data-v-aa00c9c4 {
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	background-color: #f5f5f5;
+}
+.image-container.data-v-aa00c9c4 {
+	display: flex;
+	flex-wrap: wrap;
+}
+.product-image.data-v-aa00c9c4 {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	transition: -webkit-transform 0.3s;
+	transition: transform 0.3s;
+	transition: transform 0.3s, -webkit-transform 0.3s;
+}
+.product-image.data-v-aa00c9c4:hover {
+	-webkit-transform: scale(1.2);
+	        transform: scale(1.2);
+	/* 鼠标悬停时放大图片 */
+}
+.time.data-v-aa00c9c4 {
+	font-size: 13px;
+	color: #999;
+}
+.bottom.data-v-aa00c9c4 {
+	margin-top: 13px;
+	line-height: 12px;
+}
+.button.data-v-aa00c9c4 {
+	padding: 0;
+	float: right;
+}
+.image.data-v-aa00c9c4 {
+	width: 40%;
+	display: block;
+}
+.clearfix.data-v-aa00c9c4:before,
+.clearfix.data-v-aa00c9c4:after {
+	display: table;
+	content: "";
+}
+.clearfix.data-v-aa00c9c4:after {
+	clear: both
+}
+.el-select.data-v-aa00c9c4 {
+	width: 180rpx;
+}
+.sreach.data-v-aa00c9c4 {
+	width: 100%;
+}
+.el-menu-demo.data-v-aa00c9c4 {
+	width: 100% !important;
+}  
+/* 设置滚动条的轨道样式 */
+.data-v-aa00c9c4::-webkit-scrollbar {
+	width: 8px;
+	/* 滚动条宽度 */
+}  
+/* 设置滚动条的滑块样式 */
+.data-v-aa00c9c4::-webkit-scrollbar-thumb {
+	background-color: #409EFF;
+	/* 滑块背景颜色 */
+	border-radius: 4px;
+	/* 滑块圆角 */
+}  
+/* 设置滚动条的滑道样式 */
+.data-v-aa00c9c4::-webkit-scrollbar-track {
+	background-color: #f1f1f1;
+	/* 滑道背景颜色 */
+	border-radius: 4px;
+	/* 滑道圆角 */
+}
+.input-with-select .el-input-group__prepend.data-v-aa00c9c4 {
+	background-color: #fff;
+}
+.footer.data-v-aa00c9c4 {
+	height: 120rpx;
+	background-color: #F5F5F5;
+	line-height: 120rpx;
+	text-align: center;
+	font-size: 26rpx;
+	width: 100%;
+	color: rgb(91, 98, 107);
+}
+.header.data-v-aa00c9c4 {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	line-height: 140rpx;
+}
+.el-carousel__item ._h3.data-v-aa00c9c4 {
+	color: #475669;
+	font-size: 14px;
+	opacity: 0.75;
+	line-height: 200px;
+	margin: 0;
+}
+.el-carousel__item.data-v-aa00c9c4:nth-child(2n) {
+	background-color: #99a9bf;
+}
+.el-carousel__item.data-v-aa00c9c4:nth-child(2n+1) {
+	background-color: #d3dce6;
+}
+.carousel-image.data-v-aa00c9c4 {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+	/* 适应方式，可根据需求选择合适的值，如：contain、cover、fill 等 */
+}
+.el-footer.data-v-aa00c9c4 {
+	height: 120rpx;
+	line-height: 120rpx;
+	width: 80%;
+	font-size: 26rpx;
+	position: fixed;
+	bottom: 0;
+	background-color: #fff !important;
+	color: rgb(91, 98, 107);
+	text-align: center;
+}
+@media screen and (max-width: 990px) {
+.el-button--danger.data-v-aa00c9c4{
+		width: 30% !important;
+		right: 0;
+}
+.homep.data-v-aa00c9c4,.el-footer.data-v-aa00c9c4{
+		width: 100% !important;
+}
+}
+.home.data-v-aa00c9c4 {
+	/* position: relative; */
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.el-menu.data-v-aa00c9c4 {
+	display: flex;
+	justify-content: space-between;
+}
+.pagination.data-v-aa00c9c4 {
+	display: flex;
+	justify-content: center;
+	margin: 35rpx 0rpx;
+}
+@media screen and (max-width: 990px) {
+.data-v-aa00c9c4 .el-carousel__container {
+		height: 300rpx !important;
+		width: 300rpx !important;
+}
+.data-v-aa00c9c4 .el-carousel__item{
+		width: 300rpx !important;
+		 height: 300rpx !important;
+}
+.carousel-image.data-v-aa00c9c4 {
+		width: 300rpx !important;
+		height: 300rpx !important;
+		object-fit: fill;
+		/* 适应方式，可根据需求选择合适的值，如：contain、cover、fill 等 */
+}
+.titlel.data-v-aa00c9c4{
+		font-size: 30rpx !important;
+}
+.sales.data-v-aa00c9c4{
+		font-size: 26rpx !important;
+}
+.pricess.data-v-aa00c9c4{
+		font-size: 35rpx !important;
+}
+.prices.data-v-aa00c9c4{
+		margin-top: 20rpx !important;
+}
+.contnents.data-v-aa00c9c4{
+		margin-top: 20rpx !important;
+}
+.el-carousel.data-v-aa00c9c4 {
+		width: 300rpx !important;
+}
+.Productdetails.data-v-aa00c9c4{
+		font-size: 34rpx !important;
+}
+.logo ._img.data-v-aa00c9c4 {
+		width: 50rpx;
+}
+.sreach.data-v-aa00c9c4 {
+		width: 100% !important;
+}
+.logo.data-v-aa00c9c4 {
+		width: 25% !important;
+}
+.el-select.data-v-aa00c9c4 {
+		width: 170rpx;
+}
+.el-input-group__append.data-v-aa00c9c4 {
+		width: 50% !important;
+}
+}
+

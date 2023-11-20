@@ -1,0 +1,91 @@
+
+.dome {
+	display: flex;
+	/* justify-content: space-between; */
+}
+.text {
+	font-size: 26rpx;
+}
+.item {
+	padding: 36rpx 0;
+}
+.resgister {
+	display: flex;
+	justify-content: center;
+}
+.el-form-item__label{
+	width: 100% !important;
+}
+.email{
+	display: block !important;
+}
+.email ._div{
+	margin-top: 5rpx;
+}
+/* 设置滚动条的轨道样式 */
+::-webkit-scrollbar {
+	width: 5rpx;
+	/* 滚动条宽度 */
+}
+/* 设置滚动条的滑块样式 */
+::-webkit-scrollbar-thumb {
+	background-color: #409EFF;
+	/* 滑块背景颜色 */
+	border-radius: 4px;
+	/* 滑块圆角 */
+}
+/* 设置滚动条的滑道样式 */
+::-webkit-scrollbar-track {
+	background-color: #f1f1f1;
+	/* 滑道背景颜色 */
+	border-radius: 4px;
+	/* 滑道圆角 */
+}
+/* .sands{
+	width: 20%;
+	margin-top: 10rpx;
+	margin-right: 12rpx;
+}
+.codes{
+	margin-top: 10rpx;
+	width: 79.5%;
+} */
+/* 在屏幕宽度小于990px时 */
+@media screen and (max-width: 990px) {
+	/* .sands{
+		width: 41.5%;
+		margin-top: 10rpx;
+		margin-right: 12rpx;
+	}
+	.codes{
+		margin-top: 10rpx;
+		width: 56%;
+	} */
+.girds{
+		display: grid !important;
+		grid-template-rows: 1fr;
+}
+.radioe{
+		margin-top: 5rpx;
+}
+	/* .sandst{
+		display: flex; */
+		/* justify-content: end; */
+	/* } */
+	
+	/* .el-form-item{
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.el-form .el-form-item__label{
+		width: auto !important;
+	}
+	.el-form-item__content{
+		margin-left: 0rpx;
+	} */
+	/* .email{
+		display: grid !important;
+		grid-template-columns: 1fr;
+	} */
+}
+

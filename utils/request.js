@@ -44,7 +44,7 @@ request.interceptors.request.use(
 		    ...config.params,
 		    textlang: uni.getStorageSync('textlang'), // 你的额外参数的值
 		};
-		Loading.service();
+		// Loading.service();
 		
 		return config
 	},
@@ -55,13 +55,13 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
 	(response) => {
-		let loadingInstance = Loading.service();
-		loadingInstance.close();
+		// let loadingInstance = Loading.service();
+		// loadingInstance.close();
 		return response.data;
 	},
 	(error) => {
-		let loadingInstance = Loading.service();
-		loadingInstance.close();
+		// let loadingInstance = Loading.service();
+		// loadingInstance.close();
 		return Promise.reject(error);
 	}
 )

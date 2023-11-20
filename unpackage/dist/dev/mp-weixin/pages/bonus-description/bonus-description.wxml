@@ -1,0 +1,1 @@
+<view class="content"><home-common vue-id="43abde22-1" transmit="{{transmit}}" bind:__l="__l"></home-common></view>

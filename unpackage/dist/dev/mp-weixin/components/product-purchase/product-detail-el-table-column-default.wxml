@@ -1,0 +1,1 @@
+<el-input-number bind:input="__e" vue-id="5d6fba92-12" size="small" min="{{1}}" value="{{scope.row.buynum}}" data-event-opts="{{[['^input',[['__set_model',['$0','buynum','$event',[]],['scope.row']]]]]}}" class="data-v-2b853618" bind:__l="__l"></el-input-number>

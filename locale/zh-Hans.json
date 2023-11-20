@@ -258,7 +258,7 @@
 	"tree.Left":"左节点数",
 	"tree.Right":"右节点数",
 	"tree.Total":"总节点数",
-	"purse.paytime":"订单完成时间",
+	"purse.paytime":"奖励发放时间",
 	"history.printing":"批量打印",
 	"history.Details":"订单详情",
 	"history.Printorder":"打印订单",
@@ -266,5 +266,9 @@
 	"genorder.Payimmediately":"立即支付",
 	"genorder.Paymentpassword":"请输入支付密码",
 	"genorder.PaymentCancel":"取消支付",
-	"genorder.PaymentConfirm":"确认支付"
+	"genorder.PaymentConfirm":"确认支付",
+	"index.login":"已有账号返回登录",
+	"index.Registernow":"立即注册",
+	"index.regs":"注册成功！",
+	"index.Registrationfailed":"注册失败！"
 }

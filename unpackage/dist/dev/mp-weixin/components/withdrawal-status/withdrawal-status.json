@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "withdrawal-status-el-table-column-default": "/components/withdrawal-status/withdrawal-status-el-table-column-default"
+  },
+  "component": true
+}

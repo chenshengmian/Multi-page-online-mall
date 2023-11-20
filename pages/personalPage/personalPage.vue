@@ -378,22 +378,21 @@
 				return str.replace(/&amp;|&lt;|&gt;|&quot;|&#39;/g, (match) => entityMap[match]);
 			},
 			changeads() {
-				const {
-					userinfo
-				} = uni.getStorageSync('tokenArray')
 				let _this = this
-				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.newAdstauts&userid=' +
-						userinfo)
-					.then(res => {
-						console.log(res)
-						if (res.status == 1) {
-							_this.centerDialogVisible = false
-							_this.checked = false
-						}
-					})
-					.catch(err => {
-						console.log(err)
-					})
+				uni.setStorageSync('loginStatus',1)
+				_this.centerDialogVisible = false
+				_this.checked = false
+				// _this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.newAdstauts&userid=' +
+				// 		userinfo)
+				// 	.then(res => {
+				// 		console.log(res)
+				// 		if (res.status == 1) {
+						
+				// 		}
+				// 	})
+				// 	.catch(err => {
+				// 		console.log(err)
+				// 	})
 			},
 			newindex(param) {
 				this.index = param
@@ -410,6 +409,7 @@
 								content
 							}
 						} = res
+						self.titlet = self.$t('home.Information')
 						self.tanccontent = self.htmlEntityDecode(content)
 					})
 					.catch(err => {
@@ -430,10 +430,10 @@
 						uni.setStorageSync('mobile', mobile)
 						self.username = nickname
 						// console.log('登录状态',res)
-						if (adstatus == 0) {
-							self.centerDialogVisible = false
-						} else {
+						if(uni.getStorageSync('loginStatus')==0){
 							self.centerDialogVisible = true
+						}else{
+							self.centerDialogVisible = false
 						}
 						if (status == 100) {
 							self.$message({
@@ -545,7 +545,7 @@
 	.content {
 		/* position: fixed; */
 		width: 100%;
-		height: 100%;
+		height: 100vh;
 		overflow: hidden;
 	}
 

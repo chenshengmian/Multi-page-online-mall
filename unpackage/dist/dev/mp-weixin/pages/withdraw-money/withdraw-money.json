@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "my-drawer": "/components/my-drawer/my-drawer",
+    "withdraw-money": "/components/withdraw-money/withdraw-money"
+  }
+}

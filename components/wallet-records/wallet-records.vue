@@ -14,9 +14,9 @@
 						<div>
 							<el-select v-model="select" slot="prepend" :placeholder="$t('purse.Pleaseselect')" size="medium"
 								style="width: 1820rpx">
-								<el-option :label="$t('purse.Cashcredits')" value="1"></el-option>
-								<el-option :label="$t('purse.Travelcredits')" value="2"></el-option>
-								<el-option :label="$t('purse.ProductPoints')" value="3"></el-option>
+								<el-option :label="$t('purse.Cashcredits')" value="3"></el-option>
+								<el-option :label="$t('purse.Travelcredits')" value="1"></el-option>
+								<el-option :label="$t('purse.ProductPoints')" value="2"></el-option>
 							</el-select>
 						</div>
 					</div>
@@ -60,8 +60,8 @@
 					</el-table-column>
 					<el-table-column prop="credittype" :label="$t('purse.type')" align="center">
 						<template slot-scope="scope">
-							<div v-if="scope.row.credittype=='credit1'">{{$t('purse.Cashcredits')}}</div>
-							<div v-else-if="scope.row.credittype=='credit2'">{{$t('purse.Travelcredits')}}</div>
+							<div v-if="scope.row.credittype=='credit5'">{{$t('purse.Cashcredits')}}</div>
+							<div v-else-if="scope.row.credittype=='credit1'">{{$t('purse.Travelcredits')}}</div>
 							<div v-else>{{$t('purse.ProductPoints')}}</div>
 						</template>
 					</el-table-column>
@@ -84,8 +84,8 @@
 							<div style="display: flex;justify-content: space-between;">
 								<div style="color: red;"><span style="font-size: 23rpx;">MYR</span> {{data.num}}</div>
 								<div>
-									<div v-if="data.credittype=='credit1'"><el-link type="danger">{{$t('purse.Cashcredits')}}</el-link></div>
-									<div v-else-if="data.credittype=='credit2'"><el-link type="success">{{$t('purse.Travelcredits')}}</el-link></div> 
+									<div v-if="data.credittype=='credit5'"><el-link type="danger">{{$t('purse.Cashcredits')}}</el-link></div>
+									<div v-else-if="data.credittype=='credit1'"><el-link type="success">{{$t('purse.Travelcredits')}}</el-link></div> 
 									<div v-else><el-link>{{$t('purse.ProductPoints')}}</el-link></div>
 								</div>
 							</div>
@@ -195,7 +195,7 @@
 						} = res
 						list.forEach(res=>{
 							res.timestr = res.timestr.substring(5,16)
-							var index = res.remark.indexOf("OPENID");
+							var index = res.remark.indexOf("MemberID");
 							var result = res.remark.substring(0, index);
 							res.remark = result
 						})

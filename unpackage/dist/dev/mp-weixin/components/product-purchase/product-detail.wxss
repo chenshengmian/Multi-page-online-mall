@@ -1,0 +1,28 @@
+
+.tablediv ._div.data-v-2b853618{
+	margin-top: 5rpx;
+}
+.text.data-v-2b853618 {
+	font-size: 14px;
+}
+.item.data-v-2b853618 {
+	margin-bottom: 18px;
+}
+.equal-width-column.data-v-2b853618 {
+	width: 100%;
+}
+.sumbit.data-v-2b853618 {
+	margin-top: 20rpx;
+	display: flex;
+	justify-content: center;
+}
+.selectAddress.data-v-2b853618{
+	display: flex;
+	font-size: 30rpx;
+}
+@media screen and (max-width: 990px) {
+.selectAddress.data-v-2b853618{
+		display: grid;
+}
+}
+

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "my-drawer": "/components/my-drawer/my-drawer",
+    "wallet-records": "/components/wallet-records/wallet-records"
+  }
+}

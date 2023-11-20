@@ -1,0 +1,10 @@
+
+.el-card {
+	font-size: 26rpx;
+}
+.title {
+	text-align: center;
+	font-size: 26rpx;
+	color: #5B626B;
+}
+

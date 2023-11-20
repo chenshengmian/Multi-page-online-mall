@@ -1,0 +1,64 @@
+
+.image.data-v-04aaec84 {
+    width: 200rpx;
+	height: 200rpx;
+    display: block;
+}
+.four.data-v-04aaec84{
+	display: flex;
+	justify-content: space-between;
+}
+.fourleft.data-v-04aaec84{
+	margin-top: 15rpx;
+	color: #666666;
+}
+.fourright.data-v-04aaec84{
+	font-size: 28rpx;
+}
+.wuleft.data-v-04aaec84{
+	margin-top: 20rpx;
+	color: #1a1a1a;
+}
+.wu.data-v-04aaec84{
+	font-size: 28rpx;
+	color: #9F9CA5;
+}
+.wuright.data-v-04aaec84{
+	margin-left: 25rpx;
+	margin-top: 20rpx;
+}
+@media screen and (max-width: 990px) {
+.erPhoto.data-v-04aaec84{
+		width: 400rpx !important;
+		height: 400rpx !important;
+}
+.image.data-v-04aaec84{
+		width: 100rpx;
+		height: 100rpx;
+}
+.wuleft.data-v-04aaec84,.wuright.data-v-04aaec84{
+		margin-top: 10rpx;
+		font-size: 22rpx;
+}
+.four.data-v-04aaec84,.fourright.data-v-04aaec84{
+		margin-top: 5rpx;
+		font-size: 22rpx;
+}
+.fourrights.data-v-04aaec84{
+		font-size: 25rpx !important;
+}
+.title.data-v-04aaec84{
+		font-size: 25rpx !important;
+}
+.price.data-v-04aaec84{
+		font-size: 30rpx !important;
+}
+.time.data-v-04aaec84{
+		font-size: 20rpx;
+}
+.sysbank.data-v-04aaec84{
+		font-size: 25rpx !important;
+		padding-top: 8rpx !important;
+}
+}
+

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "website-homepage": "/components/website-homepage/website-homepage"
+  }
+}

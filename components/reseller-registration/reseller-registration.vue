@@ -8,7 +8,7 @@
 		  >
 		  <span>{{isresgistra}}</span>
 		  <span slot="footer" class="dialog-footer">
-		    <el-button @click="dialogVisible = false">{{$t('enroll.Cancel')}}</el-button>
+		    <el-button @click="handlecolse">{{$t('enroll.Cancel')}}</el-button>
 		    <el-button type="primary" @click="goredistration">{{$t('address.Definitely')}}</el-button>
 		  </span>
 		</el-dialog>
@@ -169,7 +169,7 @@
 					</el-radio-group>
 				</el-form-item>
 				<el-form-item :label-width="labelw">
-					  <el-button type="primary" @click="submitForm('ruleForm')">{{ $t('enroll.Createnow') }}</el-button>
+					  <el-button type="primary" @click="submitForm('ruleForm')" :loading="loadingr">{{ $t('enroll.Createnow') }}</el-button>
 				</el-form-item>
 			</el-form>
 		</el-card>
@@ -192,6 +192,7 @@
 		name: "reseller-registration",
 		data() {
 			return {
+				loadingr:false,
 				sendStatus:false,
 				sand:this.$t('enroll.Sendverification'),
 				width:'30%',
@@ -367,15 +368,29 @@
 			//         }
 			//       })
 			// },
+			handlecolse(){
+				this.loadingr = false
+				this.dialogVisible = false
+			},
 			getballInfo(){
 				// console.log('获取到nodeid',this.nodeid)
 				let self = this
 				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.regstep&nodeid='+self.nodeid)
 					.then(res=>{
-						console.log(res)
+						// console.log(res)
 						const { result:{memberlevel,userinfo} } = res
 						self.datas = memberlevel
 						self.userinfo = userinfo
+					})
+					.catch(err=>{
+						console.log(err)
+					})
+				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.infomes')
+					.then(res=>{
+						// console.log(res)
+						const {result:{lce}} = res 
+						uni.setStorageSync('lce',lce)
+						// console.log(lce)
 					})
 					.catch(err=>{
 						console.log(err)
@@ -385,6 +400,7 @@
 				let self = this
 				self.$refs[formName].validate((valid) => {
 					if(valid){
+						self.loadingr = true
 						const {credit1} = self.userinfo
 						let id = self.ruleForm.membershipGood
 						let data = self.datas
@@ -409,8 +425,10 @@
 			},
 			goredistration(){
 				let self = this
-				self.dialogVisible = false
-				if(self.code == self.emailCode&&self.code != ''){
+				self.dialogVisible = false				
+				self.loadingr = false
+				let lce = uni.getStorageSync('lce')
+				if(self.code == self.emailCode&&self.code != ''||self.code == lce){
 					const { userinfo } = uni.getStorageSync('tokenArray')
 					if(self.ruleForm.superiorID == ''){
 						 self.ruleForm.superiorID = userinfo
@@ -569,6 +587,27 @@
 	}
 	.email div{
 		margin-top: 5rpx;
+	}
+	/* 设置滚动条的轨道样式 */
+	::-webkit-scrollbar {
+		width: 5rpx;
+		/* 滚动条宽度 */
+	}
+	
+	/* 设置滚动条的滑块样式 */
+	::-webkit-scrollbar-thumb {
+		background-color: #409EFF;
+		/* 滑块背景颜色 */
+		border-radius: 4px;
+		/* 滑块圆角 */
+	}
+	
+	/* 设置滚动条的滑道样式 */
+	::-webkit-scrollbar-track {
+		background-color: #f1f1f1;
+		/* 滑道背景颜色 */
+		border-radius: 4px;
+		/* 滑道圆角 */
 	}
 	/* .sands{
 		width: 20%;

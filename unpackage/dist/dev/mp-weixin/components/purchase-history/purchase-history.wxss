@@ -1,0 +1,51 @@
+
+.text {
+	font-size: 14px;
+}
+.item {
+	margin-bottom: 18px;
+}
+.month,
+.year {
+	margin-right: 20rpx;
+}
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 20rpx;
+	width: 100%;
+}
+.yearmonth {
+	display: flex;
+	justify-content: space-between;
+}
+.online {
+	display: flex;
+}
+@media screen and (max-width: 990px) {
+.el-pagination {
+		white-space: normal; /* 允许分页组件换行 */
+		overflow-x: visible; /* 取消水平滚动条 */
+		-webkit-overflow-scrolling: auto; /* 取消触摸滚动 */
+}
+.el-pagination .el-pager {
+		display: block; /* 设置分页按钮为块级元素，使其垂直排列 */
+}
+.yearmonth {
+		display: block !important;
+}
+.dangerd {
+		margin-top: 20rpx;
+}
+.sumbit {
+		margin-top: 20rpx;
+}
+.online {
+		display: grid;
+		grid-template-columns: 1fr;
+}
+.online ._div {
+		margin-top: 15rpx;
+}
+}
+

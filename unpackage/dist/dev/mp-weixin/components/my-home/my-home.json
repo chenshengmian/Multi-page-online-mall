@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "announcement-table": "/components/announcement-table/announcement-table"
+  }
+}

@@ -546,7 +546,7 @@
 	.content{
 		/* position: fixed; */
 		width: 100%;
-		height: 100%;
+		height: 100vh;
 		overflow: hidden;
 	}
 	/deep/table{

@@ -1,0 +1,32 @@
+
+.my-drawer.data-v-932f9dac {
+	/* 样式规则 */
+	height: 100vh;
+	background-color: white;
+	width: 100%;
+	z-index: 9999;
+}
+.overlay.data-v-932f9dac {
+	position: fixed; /* 声明为固定定位 */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+	z-index: 999; /* 设置层级关系，使其在其他元素上方 */
+}
+.my-drawer.data-v-932f9dac {
+	position: relative; /* 声明为相对定位 */
+	z-index: 1000; /* 设置层级关系，使其在遮盖层上方 */
+}
+.my-drawer.data-v-932f9dac::before {
+	content: ""; /* 使用伪元素来实现高亮效果 */
+	position: absolute; /* 声明为绝对定位 */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.5); /* 半透明白色背景 */
+	z-index: -1; /* 设置层级关系，使其在内容下方 */
+}
+

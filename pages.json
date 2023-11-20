@@ -203,6 +203,24 @@
                 "enablePullDownRefresh": false
             }
             
+        },
+		{
+		    "path" : "components/reseller-registration/reseller-registration",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+        ,{
+            "path" : "pages/UserRegistration/UserRegistration",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
         }
     ],
 	"globalStyle": {

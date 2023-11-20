@@ -1,0 +1,12 @@
+{
+  "component": true,
+  "usingComponents": {
+    "my-drawer": "/components/my-drawer/my-drawer",
+    "announcement-table": "/components/announcement-table/announcement-table",
+    "binary-tree": "/components/binary-tree/binary-tree",
+    "shipping-address": "/components/shippingAddress/shippingAddress",
+    "bonus-description": "/components/bonus-description/bonus-description",
+    "generate-order": "/components/generate-order/generate-order",
+    "homepagedatail": "/components/homepage-datail/homepage-datail"
+  }
+}

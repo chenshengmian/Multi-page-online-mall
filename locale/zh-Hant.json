@@ -259,7 +259,7 @@
 	"tree.Left":"左節點數",
 	"tree.Right":"右節點數",
 	"tree.Total":"縂節點數",
-	"purse.paytime":"訂單完成時間",
+	"purse.paytime":"獎勵發放時間",
 	"history.printing":"批量打印",
 	"history.Details":"訂單詳情",
 	"history.Printorder":"打印訂單",
@@ -267,5 +267,9 @@
 	"genorder.Payimmediately":"立即支付",
 	"genorder.Paymentpassword":"請輸入支付密碼",
 	"genorder.PaymentCancel":"取消支付",
-	"genorder.PaymentConfirm":"確認支付"
+	"genorder.PaymentConfirm":"確認支付",
+	"index.login":"已有賬號返回登錄",
+	"index.Registernow":"立即注冊",
+	"index.regs":"注冊成功！",
+	"index.Registrationfailed":"注冊失敗！"
 }

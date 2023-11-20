@@ -1,0 +1,12 @@
+
+.bonustype {
+	display: flex;
+	justify-content: space-between;
+}
+@media screen and (max-width: 990px) {
+.huan{
+		display: block;
+		margin-top: 20rpx;
+}
+}
+

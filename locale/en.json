@@ -257,7 +257,7 @@
 	"tree.Left":"Left",
 	"tree.Right":"Right",
 	"tree.Total":"Total",
-	"purse.paytime":"Order completion time",
+	"purse.paytime":"Reward distribution time",
 	"history.printing":"Batch printing",
 	"history.Details":"Order Details",
 	"history.Printorder":"Print the order",
@@ -265,5 +265,9 @@
 	"genorder.Payimmediately":"Pay",
 	"genorder.Paymentpassword":"Please enter the payment password",
 	"genorder.PaymentCancel":"Cancel payment",
-	"genorder.PaymentConfirm":"Confirm payment"
+	"genorder.PaymentConfirm":"Confirm payment",
+	"index.login":"Go back to Login",
+	"index.Registernow":"Register now",
+	"index.regs":"Registration is successful！",
+	"index.Registrationfailed":"Registration failed！"
 }

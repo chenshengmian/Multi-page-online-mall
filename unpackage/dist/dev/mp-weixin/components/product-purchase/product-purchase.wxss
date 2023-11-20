@@ -1,0 +1,16 @@
+
+.text {
+	font-size: 14px;
+}
+.item {
+	margin-bottom: 18px;
+}
+.equal-width-column {
+	width: 100%;
+}
+.sumbit {
+	margin-top: 20rpx;
+	display: flex;
+	justify-content: center;
+}
+

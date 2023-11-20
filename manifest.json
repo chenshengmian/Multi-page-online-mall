@@ -87,5 +87,7 @@
             "mode" : "history"
         },
         "title" : ""
-    }
+    },
+    "locale" : "zh-Hans",
+    "fallbackLocale" : "zh-Hans"
 }

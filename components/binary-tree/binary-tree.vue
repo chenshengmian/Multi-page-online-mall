@@ -29,7 +29,7 @@
 			</div>
 			<div>
 				<div>
-					<l-echart ref="chart" style="height: 71.5vh;width: 100%;max-width: 1366px;" v-if="treeStatus"></l-echart>
+					<l-echart class="chart" ref="chart" style="height: 71.5vh;width: 100%;" v-if="treeStatus"></l-echart>
 					<el-empty :description="$t('tree.notpurchaseballs')" v-else></el-empty>
 				</div>
 				<!-- <div style="position: absolute;right: 20rpx;top: 120px;">
@@ -141,7 +141,21 @@
 											// 		return node.nickname;
 											// 	}
 											// },
+											toolbox:{
+												feature:{
+													dataZoom:{
+														type:'inside',
+														start:0,
+														end:50
+													}
+												}
+											},
 											series: [{
+												roam:true,
+												scaleLimit:{
+													min:0.5,
+													max:3
+												},
 												type: 'tree',
 												initialTreeDepth: self.initialTreeDepthNum,
 												name: data1[0].name,
@@ -269,6 +283,12 @@
 	.bonustype {
 		display: flex;
 		justify-content: space-between;
+	}
+	
+	@media screen and (max-width: 1200px) {
+		.chart{
+			max-width: 1000px;
+		}
 	}
 	@media screen and (max-width: 990px) {
 		.huan{

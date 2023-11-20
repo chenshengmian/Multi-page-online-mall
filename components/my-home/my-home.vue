@@ -197,26 +197,8 @@
 				// this.mouth = this.$t('home.year')
 				// this.year = this.$t('home.month')
 			},
-			getinfo() {
+			getsr(){
 				let _this = this
-				const {
-					userinfo
-				} = uni.getStorageSync('tokenArray')
-				let array = {
-					'userid': userinfo
-				}
-				_this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.selectTree',
-						array)
-					.then(res => {
-						const {
-							result
-						} = res
-						uni.setStorageSync('data', result)
-						console.log('更新', res)
-					})
-					.catch(err => {
-						console.log(err)
-					})
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.infomes')
 					.then(res => {
 						console.log(res)
@@ -242,7 +224,7 @@
 									level,
 									levelname,
 									levelname_en,
-
+				
 								}
 							}
 						} = res
@@ -276,11 +258,58 @@
 							_this.sumbonus = lastmormoney
 							_this.totalWithdraw = allglobonus
 							_this.homeStatus = false
+						}else{
+							const {result:{message}} = res
+							_this.$message(message)
+							uni.navigateTo({
+								url:'/pages/userLogin/userLogin'
+							})
 						}
 					})
 					.catch(err => {
 						console.log(err)
 					})
+			},
+			getinfo() {
+				let _this = this
+				const {
+					userinfo
+				} = uni.getStorageSync('tokenArray')
+				let array = {
+					'userid': userinfo
+				}
+				
+				_this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.selectTree',
+						array)
+					.then(res => {
+						const {
+							result
+						} = res
+						uni.setStorageSync('data', result)
+						console.log('更新', res)
+					})
+					.catch(err => {
+						console.log(err)
+					})
+				let textlang =  uni.getStorageSync('textlang')
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.banner&textlang='+textlang)
+					.then(res=>{
+						// console.log(res)
+						const {status,result:{shopmes:{name,copyrighttext,logo}}} = res
+						if(status==1){
+							uni.setStorageSync('footer',copyrighttext)
+							uni.setStorageSync('logo',logo)
+							uni.setStorageSync('name',name)
+							uni.setNavigationBarTitle({
+								title:name
+							})
+							_this.getsr()
+						}
+					})
+					.catch(err=>{
+						console.log(err)
+					})
+				
 			}
 		}
 	}

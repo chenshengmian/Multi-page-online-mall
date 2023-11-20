@@ -37,8 +37,8 @@
 						</el-form-item>
 						<el-form-item>
 							<!-- <el-input v-model="ruleForm.eamils" :placeholder="$t('login.eamil')"></el-input> -->
-							<el-button style="float: right;" type="text" @click="handleEamil"><b><i
-										class="el-icon-thumb"></i> {{$t('home.Verifymailbox')}}</b></el-button>
+							<el-button style="float: right;" type="text" @click="handleEamil" :loading="loadingq"><b><i
+										class="el-icon-thumb" v-show="thumb"></i> {{wait}}</b><span v-show="loadingq">s</span></el-button>
 						</el-form-item>
 						<el-form-item :label="$t('home.Emailcode')" prop="eamilVerifycode">
 							<el-input v-model="ruleForm.eamilVerifycode"></el-input>
@@ -92,6 +92,9 @@
 				}
 			};
 			return {
+				loadingq:false,
+				thumb:true,
+				wait:this.$t('home.Verifymailbox'),
 				url:'',
 				typeStatus1: 'info',
 				typeStatus2: 'info',
@@ -135,6 +138,9 @@
 			}
 		},
 		mounted() {
+			uni.setNavigationBarTitle({
+				title: uni.getStorageSync('name')
+			})
 			this.change(uni.getLocale())
 			// this.getUserInfo()
 			this.names()
@@ -154,32 +160,66 @@
 				})
 			},
 			handleEamil() {
-				let _this = this
-				let array = {
-					'email': _this.ruleForm.eamils
-				}
-				_this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.verifyUserexists', array)
-					.then(res => {
-						console.log(res)
-						const {
-							status,
-							result: {
-								message
+				if(this.ruleForm.eamils==''){
+					this.$message(this.$t('withdrawal.fillemail'))
+				}else{
+					this.thumb = false
+					this.loadingq = true
+					this.wait = 60
+					let _this = this
+					let array = {
+						'email': _this.ruleForm.eamils
+					}
+					_this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.verifyUserexists', array)
+						.then(res => {
+							_this.loadingq = true
+							console.log(res)
+							if(typeof(res) == 'string'){
+								_this.loadingq = false
+								_this.thumb = true
+								clearInterval(_this.timer);
+								_this.wait = _this.$t('home.Verifymailbox')
+								_this.$message(this.$t('enroll.codeiscorrect'))
+							}else{
+								const {
+									status,
+									result: {
+										message
+									}
+								} = res
+								_this.rogerThat = message
+								if (status == 1) {
+									// _this.loadingq = false
+									_this.$message({
+										message: this.$t('enroll.sentagain'),
+										type: 'success'
+									})
+								} else {
+									_this.loadingq = false
+									_this.thumb = true
+									clearInterval(_this.timer);
+									_this.wait = _this.$t('home.Verifymailbox')
+									_this.$message(message)
+								}
 							}
-						} = res
-						_this.rogerThat = message
-						if (status == 1) {
-							_this.$message({
-								message: this.$t('enroll.sentagain'),
-								type: 'success'
-							})
+							
+						})
+						.catch(err => {
+							console.log(err)
+						})
+					this.timer = setInterval(() => {
+						
+						if (_this.wait > 0 && _this.wait <= 60) {
+							_this.wait-- ;
 						} else {
-							_this.$message(message)
-						}
-					})
-					.catch(err => {
-						console.log(err)
-					})
+							_this.loadingq = false
+							_this.wait = _this.$t('home.Verifymailbox');
+							clearInterval(_this.timer);
+							_this.thumb = true
+							_this.timer = null;
+						  }
+						}, 1000);
+					}
 			},
 			handleresrt() {
 				this.ruleForm = {}

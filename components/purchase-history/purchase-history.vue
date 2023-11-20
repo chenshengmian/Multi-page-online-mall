@@ -293,6 +293,8 @@
 		display: flex;
 		justify-content: center;
 		margin-top: 20rpx;
+		width: 100%;
+		
 	}
 
 	.yearmonth {
@@ -305,6 +307,15 @@
 	}
 
 	@media screen and (max-width: 990px) {
+		.el-pagination {
+			white-space: normal; /* 允许分页组件换行 */
+			overflow-x: visible; /* 取消水平滚动条 */
+			-webkit-overflow-scrolling: auto; /* 取消触摸滚动 */
+		}
+		
+		.el-pagination .el-pager {
+			display: block; /* 设置分页按钮为块级元素，使其垂直排列 */
+		}
 		.yearmonth {
 			display: block !important;
 		}

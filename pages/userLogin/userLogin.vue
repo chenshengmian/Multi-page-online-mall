@@ -33,8 +33,10 @@
 							<el-input v-model="formLabelAlign.verifycode"></el-input>
 						</el-form-item>
 						<el-form-item style="display: flex;justify-content: end;">
+							<!-- <el-button 
+								@click="handlereg" type="danger" plain>{{$t('enroll.Registered')}}</el-button> -->
 							<el-button type="primary"
-								@click="submitForm('ruleForm')">{{$t('login.debarkation')}}</el-button>
+								@click="submitForm('ruleForm')" :loading="loadings">{{$t('login.debarkation')}}</el-button>
 						</el-form-item>
 						<el-form-item>
 							<div @tap="handleRecover"><i class="el-icon-lock"></i> <span
@@ -57,6 +59,7 @@
 	export default {
 		data() {
 			return {
+				dialogVisible:false,
 				url:'',
 				typeStatus1:'info',
 				typeStatus2:'info',
@@ -66,6 +69,7 @@
 				showCaptcha: false,
 				name:'',
 				footer:'',
+				loadings:false,
 				formLabelAlign: {
 					useraccount: '',
 					userpass: '',
@@ -128,6 +132,11 @@
 				this.$i18n.locale = lan
 				// //this.$router.go(0)   
 			},
+			handlereg(){
+				uni.navigateTo({
+					url:'/pages/UserRegistration/UserRegistration'
+				})
+			},
 			names(){
 				let _this = this
 				let textlang =  uni.getStorageSync('textlang')
@@ -188,6 +197,7 @@
 			},
 			submitForm() {
 				let self = this
+				self.loadings = true
 				let textlang =  uni.getStorageSync('textlang')
 				uni.request({
 					url: config.https +
@@ -202,6 +212,7 @@
 							}
 						} = res
 						if (status == 1) {
+							self.loadings = false
 							const {
 								data: {
 									result: {
@@ -222,12 +233,14 @@
 							}
 							uni.setStorageSync('tokenArray', refid)
 							uni.setStorageSync('pageSize', 10)
+							uni.setStorageSync('loginStatus',0)
 							self.formLabelAlign = {}
 							self.getUserInfo()
 							uni.navigateTo({
 								url: '/pages/personalPage/personalPage'
 							})
 						} else {
+							self.loadings = false
 							const {
 								data: {
 									result: {

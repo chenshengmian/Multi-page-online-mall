@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/userLogin/userLogin",
+    "pages/index/index",
+    "pages/personalPage/personalPage",
+    "pages/wallet-records/wallet-records",
+    "pages/withdraw-money/withdraw-money",
+    "pages/withdrawal-status/withdrawal-status",
+    "pages/bonus-description/bonus-description",
+    "pages/know-yourCustomer/know-yourCustomer",
+    "pages/product-purchase/product-purchase",
+    "pages/product-purchase/product-detail",
+    "pages/purchase-history/purchase-history",
+    "pages/binary-tree/binary-tree",
+    "pages/announcement-table/announcement-table",
+    "pages/login-password/login-password",
+    "pages/wallet-password/wallet-password",
+    "pages/reseller-registration/reseller-registration",
+    "pages/homepageDatail/homepageDatail",
+    "pages/shopping/shopping",
+    "pages/recoverPassword/recoverPassword",
+    "pages/shippingAddress/shippingAddress",
+    "components/shippingAddress/shippingAddress",
+    "pages/generateOrder/generateOrder",
+    "pages/handlePay/handlePay",
+    "components/reseller-registration/reseller-registration",
+    "pages/UserRegistration/UserRegistration"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "TWJ",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8",
+    "enablePullDownRefresh": false
+  },
+  "usingComponents": {}
+}

@@ -41,5 +41,8 @@
 			width: 700rpx !important;
 		}
 	}
+	*{
+		font-family: '微软雅黑';
+	}
 	
 </style>
